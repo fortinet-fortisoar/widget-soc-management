@@ -1,0 +1,22 @@
+{
+    "metadata": {
+        "pages": [
+            "Dashboard"
+        ],
+        "certified": "No",
+        "publisher": "Fortinet",
+        "snapshots": [
+            "https:\/\/repo.fortisoar.fortinet.com/\/widgets\/socManagement-1.0.0\/images\/soc-management.png"
+        ],
+        "description": "SOC Management Dashboard",
+        "help_online": "",
+        "compatibility": [
+            "7.2.2"
+        ]
+    },
+    "name": "socManagement",
+    "title": "SOC Management",
+    "subTitle": "SOC Management Dashboard",
+    "version": "1.0.0",
+    "published_date": 1659019010
+}

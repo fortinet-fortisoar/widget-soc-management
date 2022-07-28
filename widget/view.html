@@ -1,0 +1,39 @@
+<!-- Copyright start
+  Copyright (C) 2008 - 2022 Fortinet Inc.
+  All rights reserved.
+  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  Copyright end -->
+<link rel="stylesheet" type="text/css" href="socManagement-1.0.0/assets/css/socManagement.css" />
+<script src="socManagement-1.0.0/assets/service/socManagement.service.js"></script>
+<div class="{{currentTheme}} widget widget-container">
+  <div class="display-flex-space-between widget-title widget-title-padding">
+    <div class="widget-title-width padding-right-0 padding-left-0">
+      <h5 class="margin-top-0 margin-bottom-0 text-overflow font-1em">{{ config.title }}&nbsp;&nbsp;</h5>
+    </div>
+  </div>
+  <div class="widget-content-{{currentTheme}} margin-left-15 margin-right-15" data-ng-hide="collapsed">
+    <div class="widget-cardview">
+      <div id="svg-container">
+        <object
+          data="widgets/installed/socManagement-1.0.0/assets/soc_background_{{currentTheme}}.svg"
+          id="socSvgBackground" alt="soc background"></object>
+        <div class="bottomContainer">
+          <div class="bottomSections" data-ng-repeat="data in percentageData">
+            <div class="bottomSectionBlocks">
+            </div>
+            <div class="titleData">{{data.title}}</div>
+            <div class="valueData">{{data.value}}</div>
+            <div data-ng-class="{'increasePercent': data.increase,'decreasePercent': !data.increase}">
+              <i data-ng-class="{'icon-arrow_line_up-small': data.increase,'icon-arrow_line_up-down-small': !data.increase}"
+                class="icon"></i>
+              {{data.percentChange | number:0}} %
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-ng-show="processing">
+    <cs-spinner data-show-background="true"></cs-spinner>
+  </div>
+</div>
