@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 26.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1920 750" style="enable-background:new 0 0 1920 750;" xml:space="preserve">
+	 viewBox="0 0 1920 850" style="enable-background:new 0 0 1920 850;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
 	.st1{fill:#4D74AF;}
@@ -90,7 +90,6 @@
 	.st84{opacity:0.6;fill:url(#SVGID_00000022555908699531269370000010581048261982012320_);enable-background:new    ;}
 	.st85{fill:#EAEAEA;stroke:#40E2D6;stroke-miterlimit:10;}
 	.st86{fill:#219BE0;}
-	.st87{font-family:'Lato-Regular';}
 	.st88{font-size:22.0377px;}
 	.st89{fill:#788C94;}
 	.st90{fill:#00F486;}
@@ -121,10 +120,12 @@
 	.st115{opacity:0.8;fill:url(#idArtifactsDivision_00000077320639965904218490000018209547310736501635_);}
 	.st116{opacity:0.8;fill:url(#idArtifactsDivision_00000069358597433993209900000016552791735765371275_);}
 	.st117{fill:#42BF13;}
-	.st118{font-size:14.7395px;}
+	.st118{font-size:19.7395px;}
 	.st119{fill:#FFB800;}
 	.st120{fill:#EE3357;}
 	.st121{fill:none;stroke:#73FFF5;stroke-width:2;stroke-miterlimit:10;}
+	.st122{fill:#000000;}
+	.st123{font-size:19.0377px;}
 </style>
 <image style="display:none;overflow:visible;" width="3402" height="3168" id="cV121w_00000085221135289044869510000005451668358957897617_" xlink:href="EC2753E198AC8253.jpg"  transform="matrix(0.5644 0 0 0.2367 -0.3333 -2.564103e-02)">
 </image>
@@ -1614,35 +1615,35 @@
 		<path id="idAlertLabel_00000129166631769910742980000003490989270303222447_" class="st86" d="M254.2,656.5h-17.8
 			c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C255.4,656,254.9,656.5,254.2,656.5z"/>
 		<g id="idAlertLabel">
-			<text transform="matrix(1 0 0 1 262.7342 655.1221)" class="st86 st87 st88">Alerts</text>
+			<text transform="matrix(1 0 0 1 262.7342 655.1221)" class="st122  st88">Alerts</text>
 		</g>
 	</g>
 	<g id="idFlasePositiveLabel">
 		<path id="idFlasePositiveLabel_00000083801477144849997420000013145287765266693035_" class="st89" d="M781.8,582.4h-17.8
 			c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C782.9,581.9,782.4,582.4,781.8,582.4z"/>
 		<g id="idFlasePositiveLabel_00000031921419398685952610000008663327207851523972_">
-			<text transform="matrix(1 0 0 1 790.2819 581.0194)" class="st89 st87 st88">False Positive</text>
+			<text transform="matrix(1 0 0 1 790.2819 581.0194)" class="st122  st88">False Positive</text>
 		</g>
 	</g>
 	<g id="idClosedLabel">
 		<path id="idClosedLabel_00000129173926198823422300000004506937161904849038_" class="st90" d="M966.5,373h-17.8
 			c-0.6,0-1.2-0.5-1.2-1.2V354c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C967.6,372.4,967.1,373,966.5,373z"/>
 		<g id="idClosedLabel_00000099625925142311045060000012951823112892044723_">
-			<text transform="matrix(1 0 0 1 974.9964 371.6052)" class="st90 st87 st88">Closed</text>
+			<text transform="matrix(1 0 0 1 974.9964 371.6052)" class="st122  st88">Closed</text>
 		</g>
 	</g>
 	<g id="idTruePositiveLabel">
 		<path id="idTruePositiveLabel_00000132047126050724715940000004537085045047476654_" class="st91" d="M757.6,182.3h-17.8
 			c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C758.8,181.8,758.3,182.3,757.6,182.3z"/>
 		<g id="idTruePositiveLabel_00000137117443418569834170000012651702823853702822_">
-			<text transform="matrix(1 0 0 1 766.127 180.9198)" class="st91 st87 st88">True Positive</text>
+			<text transform="matrix(1 0 0 1 766.127 180.9198)" class="st122  st88">True Positive</text>
 		</g>
 	</g>
 	<g id="idIncidentsLabel">
 		<path id="idIncidentsLabel_00000092448448196019902950000001893794301515550106_" class="st92" d="M1291,534.5h-17.8
 			c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C1292.2,533.9,1291.7,534.5,1291,534.5z"/>
 		<g id="idIncidentsLabel_00000120517052139975807500000017257733691153001906_">
-			<text transform="matrix(1 0 0 1 1299.5605 533.102)" class="st92 st87 st88">Incidents</text>
+			<text transform="matrix(1 0 0 1 1299.5605 533.102)" class="st122  st88">Incidents</text>
 		</g>
 	</g>
 	<g id="idImpactDivision">
@@ -2020,17 +2021,17 @@
 				1766.4,474.3 1767.3,529.4 1767.3,333.9 1766.4,278.7 			"/>
 		</g>
 	</g>
-	<g>
-		<text transform="matrix(1 0 0 1 1497.2506 339.697)" class="st117 st87 st118">Impact</text>
+	<g id="idImpactDivisionLabel">
+		<text transform="matrix(1 0 0 1 1497.2506 339.697)" class="st122  st118">Impact</text>
 	</g>
 	<g>
-		<g>
-			<text transform="matrix(1 0 0 1 1648.1451 339.697)" class="st119 st87 st118">Assets</text>
+		<g id="idAssetsDivisionLabel">
+			<text transform="matrix(1 0 0 1 1648.1451 339.697)" class="st122  st118">Assets</text>
 		</g>
 	</g>
 	<g>
-		<g>
-			<text transform="matrix(1 0 0 1 1781.192 339.697)"><tspan x="0" y="0" class="st120 st87 st118">Artifacts</tspan><tspan x="0.2" y="14.7" class="st120 st87 st118">Analysed</tspan></text>
+		<g id="idArtifactsDivisionLabel">
+			<text transform="matrix(1 0 0 1 1781.192 339.697)"><tspan x="0" y="0" class="st122  st118">Artifacts</tspan><tspan x="-1" y="18.7" class="st122  st118">Analysed</tspan></text>
 		</g>
 	</g>
 	<g>

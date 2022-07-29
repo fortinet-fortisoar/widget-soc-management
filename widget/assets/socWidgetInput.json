@@ -1,5 +1,5 @@
 {
-    "title": "SOC Widget", 
+    "title": "", 
     "timeRange": "createDate",
     "days": 30,
     "resource": "alerts", 
@@ -67,10 +67,13 @@
         "averageTime":5
     },
     "alertMttr":{
-        "title":"Alert MTTR"
+        "title":"Alert MTTR",
+        "criteria":"createDate",
+        "resolveCriteria":"respDate"
     },
     "incidentMttr":{
-        "title":"Incident MTTR"
-    },
-    "showPercentageChanges": true
+        "title":"Incident MTTR",
+        "criteria":"resolveddate",
+        "resolveCriteria":"identificationDate"
+    }
 }

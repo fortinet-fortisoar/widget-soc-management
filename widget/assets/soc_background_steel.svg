@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 750"
-	 style="enable-background:new 0 0 1920 750;" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 850"
+	 style="enable-background:new 0 0 1920 850;" xml:space="preserve">
 <style type="text/css">
 	.st0{display:none;}
 	.st1{display:inline;}
@@ -4589,11 +4589,11 @@ GAAg4t1xKE1efgAAAABJRU5ErkJggg==" transform="matrix(0.24 0 0 0.24 424.56 453.12)
 							1766.747,474.359 1767.628,529.462 1767.628,333.879 1766.741,278.776 						"/>
 					</g>
 				</g>
-				<g id="idAssetsDivisionLabel">
+				<g id="idImpactDivisionLabel">
 					<text transform="matrix(1 0 0 1 1497.584 339.7227)" class="st184 st185">Impact</text>
 				</g>
 				<g>
-					<g id="idImpactDivisionLabel">
+					<g id="idAssetsDivisionLabel">
 						<text transform="matrix(1 0 0 1 1648.4785 339.7227)" class="st184 st185">Assets</text>
 					</g>
 				</g>
