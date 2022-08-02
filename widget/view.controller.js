@@ -71,9 +71,7 @@
       mainDiv.setAttribute('style', 'color:' + $scope.textColor + '; font-size: 1em; font-family:' + fontFamily + ';');
       mainDiv.innerHTML = '<span>' + element.title + '</span>'; // add section tiile
       if (element.data) { // add section data if present
-        //if(element.id === 'idAutomationCalculation'){
-          var iriCount = 0;
-        //}
+        var iriCount = 0;
         var mainTable = document.createElement('table');
         mainTable.setAttribute('style', 'width: 100%;margin-top:5px;font-weight:lighter;');
         for (let [key, value] of Object.entries(element.data)) {
@@ -121,7 +119,7 @@
       let width = 300;
       let height = bbox.height + 100;
       if(element.id === 'idTruePositiveLabel'){
-        y = bbox.y - 30;
+        y = bbox.y - 20;
       }
       let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
       labelElem.setAttribute('x', x);
@@ -137,7 +135,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count +' <span style="font-size:25px">' + element.title +'</span>';
+      countDiv.innerHTML = element.count +'<span style="font-size:25px;margin-left: 2px;">' + element.title +'</span>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
