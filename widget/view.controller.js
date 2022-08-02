@@ -12,9 +12,9 @@
     .controller('socManagement100Ctrl', socManagement100Ctrl);
 
   socManagement100Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'picklistsService', 'socManagementService', 'ALL_RECORDS_SIZE','$state','$window'];
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE','$state','$window'];
 
-  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, picklistsService, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
+  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
 
     var loadedSVGDocument;
     $scope.percentageData = [];
@@ -489,7 +489,7 @@
 
     function getClosedAlerts() {
       var picklist_name = 'AlertStatus';
-      picklistsService.getPicklistByName(picklist_name).then(function (response) {
+      socManagementService.getStatusByPicklistName(picklist_name).then(function (response) {
         var picklist = response[0].picklists;
         var picklistId = _.findWhere(picklist, { 'itemValue': 'Closed' })['@id'];
         var queryObject = {
@@ -603,7 +603,7 @@
 
     function getTrueFalsePositiveAlerts() {
       var picklist_name2 = 'Closure Reason';
-      picklistsService.getPicklistByName(picklist_name2).then(function (response) {
+      socManagementService.getStatusByPicklistName(picklist_name2).then(function (response) {
         var picklist2 = response[0].picklists;
         var picklistId2 = _.findWhere(picklist2, { 'itemValue': 'False Positive' })['@id'];
         var queryObject = {
