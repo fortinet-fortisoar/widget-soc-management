@@ -12,21 +12,21 @@
     .controller('socManagement100Ctrl', socManagement100Ctrl);
 
   socManagement100Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'picklistsService', 'socManagementService', 'ALL_RECORDS_SIZE'];
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE','$state','$window'];
 
-  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, picklistsService, socManagementService, ALL_RECORDS_SIZE) {
+  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
 
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
     var svgLoaded = false;
-    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 120px;';
+    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 120px;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
 
     function _init() {
       $scope.currentTheme = $rootScope.theme.id;
       $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
-
+      $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
       checkForSVGLoad();
       socManagementService.getConfig().then(function (response) {
@@ -71,9 +71,9 @@
       mainDiv.setAttribute('style', 'color:' + $scope.textColor + '; font-size: 1em; font-family:' + fontFamily + ';');
       mainDiv.innerHTML = '<span>' + element.title + '</span>'; // add section tiile
       if (element.data) { // add section data if present
+        var iriCount = 0;
         var mainTable = document.createElement('table');
-        mainTable.setAttribute('style', 'width: 100%;margin-top:2px;font-weight:lighter;');
-
+        mainTable.setAttribute('style', 'width: 100%;margin-top:5px;font-weight:lighter;');
         for (let [key, value] of Object.entries(element.data)) {
           var _row = document.createElement('tr');
           var _col1 = document.createElement('td');
@@ -81,9 +81,27 @@
           _col1.setAttribute('title', key);
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
-          _row.appendChild(_col1);
-          _col1.setAttribute('style', overflowStyle);
+          if(element.id === 'idAutomationCalculation'){
+            var _a = document.createElement('a');
+            _a.appendChild(_col1);
+            _a.setAttribute('style', overflowStyle + 'cursor:pointer;color:'+ $scope.hoverColor +';text-decoration:underline');
+            _row.appendChild(_a);
+            _col1.addEventListener('click', function() {
+              var state = 'main.playbookDetail';
+              var params = {
+                id: $filter('getEndPathName')(element.template_iri[iriCount])
+              };
+              var url = $state.href(state, params);
+              $window.open(url, '_blank');
+              iriCount++;
+            });
+          }
+          else{
+            _col1.setAttribute('style', overflowStyle);
+            _row.appendChild(_col1);
+          }
           _row.appendChild(_col2);
+          _col2.setAttribute('style', 'opacity:0.8;text-align:left;');
           mainTable.appendChild(_row);
         }
         mainDiv.appendChild(mainTable);
@@ -97,13 +115,12 @@
       source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
       let bbox = source.getBBox();
       let x = bbox.x;
-      if (element.id === 'idAlertLabel') {
-        x = x - 30;
-      }
-      let y = bbox.y - 40;
+      let y = bbox.y;
       let width = 300;
       let height = bbox.height + 100;
-
+      if(element.id === 'idTruePositiveLabel'){
+        y = bbox.y - 20;
+      }
       let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
       labelElem.setAttribute('x', x);
       labelElem.setAttribute('y', y);
@@ -118,7 +135,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count;
+      countDiv.innerHTML = element.count +'<span style="font-size:25px;margin-left: 2px;">' + element.title +'</span>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -132,7 +149,7 @@
       let x = bbox.x;
       let y = bbox.y;
       let width = bbox.width;
-      let height = 50;
+      let height = 100;
 
       let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
       labelElem.setAttribute('x', x);
@@ -148,7 +165,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;text-align: center;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count;
+      countDiv.innerHTML = element.count +' <div style="font-size:20px">' + element.title +'</div>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -225,7 +242,7 @@
             'type': 'datetime'
           }
         ],
-        'limit': ALL_RECORDS_SIZE,
+        'limit': 3,
         'logic': 'AND',
         '__selectFields': ['source']
       };
@@ -249,6 +266,10 @@
     function getAutomationCalculation() {
       var _fromDate = currentDateMinusService($scope.config.days);
       var queryObject = {
+        sort: [{
+          'field': 'total',
+          'direction': 'DESC'
+        }],
         'limit': 3,
         'filters': [{
           'field': 'tags',
@@ -268,6 +289,7 @@
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
         $scope.socResult.playbookSource = result.data;
         var _dataSource = {};
+        var _iri = [];
         var promises = [];
         if ($scope.socResult.playbookSource.length > 0) {
           $scope.socResult.playbookSource.forEach(element => {
@@ -276,10 +298,11 @@
                 var _appendText = element.total > 1 ? ' times' : ' time';
                 _dataSource[result.data.name] = element.total + _appendText;
               }));
+              _iri.push(element.template_iri);
             }
           });
           $q.all(promises).then(function () {
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource });
+            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
           });
         }
       });
@@ -457,7 +480,7 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAlerts = result['hydra:member'][0].alerts;
         }
-        addLabelCounts({ 'id': 'idAlertLabel', 'count': $scope.socResult.totalAlerts });
+        addLabelCounts({ 'id': 'idAlertLabel', 'count': $scope.socResult.totalAlerts, 'title': $scope.config.alerts.title});
       }));
       $scope.alertIncidentPromises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
         $scope.socResult.previousTotalAlerts = result['hydra:member'][0].alerts;
@@ -466,7 +489,7 @@
 
     function getClosedAlerts() {
       var picklist_name = 'AlertStatus';
-      picklistsService.getPicklistByName(picklist_name).then(function (response) {
+      socManagementService.getStatusByPicklistName(picklist_name).then(function (response) {
         var picklist = response[0].picklists;
         var picklistId = _.findWhere(picklist, { 'itemValue': 'Closed' })['@id'];
         var queryObject = {
@@ -560,7 +583,7 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.closedAlerts = result['hydra:member'][0].status;
           }
-          addLabelCounts({ 'id': 'idClosedLabel', 'count': $scope.socResult.closedAlerts });
+          addLabelCounts({ 'id': 'idClosedLabel', 'count': $scope.socResult.closedAlerts, 'title': $scope.config.closed.title});
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
           $scope.socResult.previousClosedAlerts = result['hydra:member'][0].status;
@@ -580,7 +603,7 @@
 
     function getTrueFalsePositiveAlerts() {
       var picklist_name2 = 'Closure Reason';
-      picklistsService.getPicklistByName(picklist_name2).then(function (response) {
+      socManagementService.getStatusByPicklistName(picklist_name2).then(function (response) {
         var picklist2 = response[0].picklists;
         var picklistId2 = _.findWhere(picklist2, { 'itemValue': 'False Positive' })['@id'];
         var queryObject = {
@@ -628,8 +651,8 @@
         socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.falsePositiveAlerts = result['hydra:member'][0].status;
-            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $scope.socResult.falsePositiveAlerts });
-            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': ($scope.socResult.totalAlerts - $scope.socResult.falsePositiveAlerts) });
+            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $scope.socResult.falsePositiveAlerts ,'title': $scope.config.falsePositive.title});
+            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': ($scope.socResult.totalAlerts - $scope.socResult.falsePositiveAlerts) ,'title': $scope.config.truePositive.title});
 
           }
         });
@@ -698,9 +721,9 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalIncidents = result['hydra:member'][0].incidents;
         }
-        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents });
+        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents,'title': $scope.config.incident.title });
       }, function(){
-        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents });
+        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents,'title': $scope.config.incident.title });
       }));
 
       $scope.alertIncidentPromises.push(socManagementService.getResourceData($scope.config.relatedResource, _previousQueryObj).then(function (result) {
@@ -764,7 +787,7 @@
           $scope.socResult.totalImpact = result['hydra:member'][0].impact;
           impactResult = ($scope.socResult.totalImpact * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
         }
-        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult) });
+        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
       });
     }
 
@@ -806,7 +829,7 @@
       socManagementService.getResourceData($scope.config.relatedResource2, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAssets = result['hydra:member'][0].assets;
-          addBlockData({ 'id': 'idAssetsDivision', 'count': $scope.socResult.totalAssets });
+          addBlockData({ 'id': 'idAssetsDivision', 'count': $scope.socResult.totalAssets ,'title': $scope.config.assets.title});
         }
       });
     }
@@ -850,7 +873,7 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalArtifactsAnalysed = result['hydra:member'][0].indicators;
           var artifactsResult = ($scope.socResult.totalArtifactsAnalysed * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
-          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')(artifactsResult) });
+          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')(artifactsResult),'title': $scope.config.artifacts.title });
         }
       });
     }
@@ -1168,7 +1191,6 @@
       getMTTRAlert();
       getMTTRIncident();
     }
-
 
     _init();
   }

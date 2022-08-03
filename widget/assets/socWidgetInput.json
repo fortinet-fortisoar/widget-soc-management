@@ -15,11 +15,14 @@
     "topAlerts":{
         "title":"Top 3 Alert Types"
     },
+    "alerts":{
+        "title":"Alerts"
+    },
     "truePositive":{
-        "title":"True Positive"
+        "title":"True positive"
     },
     "falsePositive":{
-        "title":"False Positive"
+        "title":"False positive"
     },
     "closed":{
         "title":"Closed"
@@ -39,7 +42,7 @@
         "title":"Assets"
     },
     "artifacts":{
-        "title":"Artifacts Analysed",
+        "title":"Artifacts analysed",
         "averageTime":5,
         "dollarValue":60
     },
@@ -63,7 +66,7 @@
         "title":"Alert Resolved"
     },
     "timeSaved":{
-        "title":"Overall time saved",
+        "title":"Overall Time Saved",
         "averageTime":5
     },
     "alertMttr":{
