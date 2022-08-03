@@ -22,6 +22,7 @@
     var svgLoaded = false;
     var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 120px;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
+    var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
 
     function _init() {
       $scope.currentTheme = $rootScope.theme.id;
@@ -82,10 +83,8 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if(element.id === 'idAutomationCalculation'){
-            var _a = document.createElement('a');
-            _a.appendChild(_col1);
-            _a.setAttribute('style', overflowStyle + 'cursor:pointer;color:'+ $scope.hoverColor +';text-decoration:underline');
-            _row.appendChild(_a);
+            _col1.setAttribute('style', overflowStyle + 'cursor:pointer;color:'+ $scope.hoverColor +';text-decoration:underline');
+            _row.appendChild(_col1);
             _col1.addEventListener('click', function() {
               var state = 'main.playbookDetail';
               var params = {
@@ -105,6 +104,12 @@
           mainTable.appendChild(_row);
         }
         mainDiv.appendChild(mainTable);
+      }
+      else{
+        var infoDiv = document.createElement('div');
+        infoDiv.innerHTML = 'No records';
+        infoDiv.setAttribute('style', noRecordStyle);
+        mainDiv.appendChild(infoDiv);
       }
       textElem.appendChild(mainDiv);
       source.after(textElem);
@@ -248,18 +253,19 @@
       };
       var _queryObj = new Query(queryObject);
       socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
+        var _dataSource = null;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.alertSources = result['hydra:member'];
-          var _dataSource = {};
+          _dataSource = {};
           if ($scope.socResult.alertSources.length > 0) {
             $scope.socResult.alertSources.forEach(element => {
               if (element.source !== null) {
                 _dataSource[element.source] = element.total;
               }
             });
-            addForeignObject({ 'id': 'idIncomingAlertSources', 'title': $scope.config.alertSource.title, 'data': _dataSource });
           }
         }
+        addForeignObject({ 'id': 'idIncomingAlertSources', 'title': $scope.config.alertSource.title, 'data': _dataSource });
       });
     }
 
@@ -288,10 +294,11 @@
       };
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
         $scope.socResult.playbookSource = result.data;
-        var _dataSource = {};
+        var _dataSource = null;
         var _iri = [];
         var promises = [];
         if ($scope.socResult.playbookSource.length > 0) {
+          _dataSource = {};
           $scope.socResult.playbookSource.forEach(element => {
             if (element.template_iri !== null) {
               promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
@@ -346,9 +353,10 @@
       };
       var _queryObj = new Query(queryObject);
       socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
+        var _dataSource = null;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.alertSources = result['hydra:member'];
-          var _dataSource = {};
+          _dataSource = {};
           if ($scope.socResult.alertSources.length > 0) {
             $scope.socResult.alertSources.forEach(element => {
               if (element.type !== null) {
@@ -356,9 +364,9 @@
 
               }
             });
-            addForeignObject({ 'id': 'idTopThreeAlerts', 'title': $scope.config.topAlerts.title, 'data': _dataSource });
           }
         }
+        addForeignObject({ 'id': 'idTopThreeAlerts', 'title': $scope.config.topAlerts.title, 'data': _dataSource });
       });
     }
 
@@ -400,8 +408,9 @@
       };
       var _queryObj = new Query(queryObject);
       socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
-        var _dataSource = {};
+        var _dataSource = null;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
+          _dataSource = {};
           $scope.socResult.incidentTypes = result['hydra:member'];
           if ($scope.socResult.incidentTypes.length > 0) {
             $scope.socResult.incidentTypes.forEach(element => {
