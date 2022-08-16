@@ -3,7 +3,7 @@
         "pages": [
             "Dashboard"
         ],
-        "certified": "No",
+        "certified": "Yes",
         "publisher": "Fortinet",
         "snapshots": [
             "https:\/\/repo.fortisoar.fortinet.com/\/widgets\/socManagement-1.0.0\/images\/soc-management.png"
@@ -18,5 +18,5 @@
     "title": "SOC Management",
     "subTitle": "SOC Management Dashboard",
     "version": "1.0.0",
-    "published_date": 1659504282
+    "published_date": 1660663226
 }

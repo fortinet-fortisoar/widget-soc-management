@@ -312,6 +312,10 @@
             addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
           });
         }
+        else{
+          _dataSource = null;
+          addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
+        }
       });
     }
 
@@ -790,13 +794,17 @@
 
       };
       var _queryObj = new Query(_query);
+      var impactResult = 0;
       socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
-        var impactResult = 0;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalImpact = result['hydra:member'][0].impact;
           impactResult = ($scope.socResult.totalImpact * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
         }
         addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
+      },function(error){
+        if(error){
+        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
+        }
       });
     }
 
