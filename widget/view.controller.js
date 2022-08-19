@@ -825,10 +825,8 @@
           impactResult = ($scope.socResult.totalImpact * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
         }
         addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
-      },function(error){
-        if(error){
+      },function(){
         addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
-        }
       });
     }
 
