@@ -124,7 +124,7 @@
       let width = 300;
       let height = bbox.height + 100;
       if(element.id === 'idTruePositiveLabel'){
-        y = bbox.y - 20;
+        y = bbox.y - 27;
       }
       let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
       labelElem.setAttribute('x', x);
@@ -140,7 +140,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count +'<span style="font-size:25px;margin-left: 2px;">' + element.title +'</span>';
+      countDiv.innerHTML = element.count +'<span style="font-size:25px;margin-left: 5px;">' + element.title +'</span>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -181,16 +181,17 @@
         element.percentChange = _percent;
         if (_percent < 0) {
           element.percentChange = Math.abs(_percent);
-          element.increase = false;
+          element.increase = true;
         }
         else {
-          element.increase = true;
+          element.increase = false;
         }
       }
       else if (element.lastValue === 0 && element.currentValue === 0) {
         element.percentChange = 0;
       }
       $scope.percentageData.push(element);
+      $scope.percentageData.sort((a, b) => a.sequence - b.sequence);
     }
 
     function calculateRatio() {
@@ -203,15 +204,35 @@
           num_2 = num_2 / num;
         }
       }
-      var ratio = num_1 + ':' + num_2;
+      var ratio = $filter('numberToDisplay')(num_1) + ':' + $filter('numberToDisplay')(num_2);
       return ratio;
     }
 
     function formulateRatio(ratio) {
+      var result = 0;
       var ratio1 = ratio.split(':')[0];
       var ratio2 = ratio.split(':')[1];
-      var result = Number(ratio1) / Number(ratio2);
+      if(Number(ratio2) !== 0){
+        result = Number(ratio1) / Number(ratio2);
+      }
       return result;
+    }
+
+    function sortObjectByKeys(object) {
+      var sortable = [];
+      for (var o in object) {
+        sortable.push([o, object[o]]);
+      }
+    
+      sortable.sort(function(a, b) {
+          return b[1] - a[1];
+      });
+
+      let objSorted = {};
+      sortable.forEach(function(item){
+          objSorted[item[0]]= item[1] > 1 ? item[1] + ' times' : item[1] + ' time';
+      });
+      return objSorted;
     }
 
     //Query functions
@@ -302,15 +323,19 @@
           $scope.socResult.playbookSource.forEach(element => {
             if (element.template_iri !== null) {
               promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
-                var _appendText = element.total > 1 ? ' times' : ' time';
-                _dataSource[result.data.name] = element.total + _appendText;
+                _dataSource[result.data.name] = element.total;
               }));
               _iri.push(element.template_iri);
             }
           });
           $q.all(promises).then(function () {
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
+            var sortedDataSource = sortObjectByKeys(_dataSource);
+            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource , 'template_iri': _iri });
           });
+        }
+        else{
+          _dataSource = null;
+          addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
         }
       });
     }
@@ -489,7 +514,7 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAlerts = result['hydra:member'][0].alerts;
         }
-        addLabelCounts({ 'id': 'idAlertLabel', 'count': $scope.socResult.totalAlerts, 'title': $scope.config.alerts.title});
+        addLabelCounts({ 'id': 'idAlertLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalAlerts), 'title': $scope.config.alerts.title});
       }));
       $scope.alertIncidentPromises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
         $scope.socResult.previousTotalAlerts = result['hydra:member'][0].alerts;
@@ -592,7 +617,7 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.closedAlerts = result['hydra:member'][0].status;
           }
-          addLabelCounts({ 'id': 'idClosedLabel', 'count': $scope.socResult.closedAlerts, 'title': $scope.config.closed.title});
+          addLabelCounts({ 'id': 'idClosedLabel', 'count': $filter('numberToDisplay')($scope.socResult.closedAlerts), 'title': $scope.config.closed.title});
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
           $scope.socResult.previousClosedAlerts = result['hydra:member'][0].status;
@@ -600,8 +625,9 @@
         $q.all(promises).then(function () {
           calculatePercentage({
             'id': 'alertResolved',
+            'sequence':5,
             'title': $scope.config.alertResolved.title,
-            'value': $scope.socResult.closedAlerts,
+            'value': $filter('numberToDisplay')($scope.socResult.closedAlerts),
             'currentValue': $scope.socResult.closedAlerts,
             'lastValue': $scope.socResult.previousClosedAlerts
           });
@@ -660,8 +686,9 @@
         socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.falsePositiveAlerts = result['hydra:member'][0].status;
-            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $scope.socResult.falsePositiveAlerts ,'title': $scope.config.falsePositive.title});
-            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': ($scope.socResult.totalAlerts - $scope.socResult.falsePositiveAlerts) ,'title': $scope.config.truePositive.title});
+            $scope.socResult.truePositiveAlerts = ($scope.socResult.totalAlerts - $scope.socResult.falsePositiveAlerts);
+            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.falsePositiveAlerts) ,'title': $scope.config.falsePositive.title});
+            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.truePositiveAlerts) ,'title': $scope.config.truePositive.title});
 
           }
         });
@@ -730,7 +757,7 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalIncidents = result['hydra:member'][0].incidents;
         }
-        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents,'title': $scope.config.incident.title });
+        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalIncidents),'title': $scope.config.incident.title });
       }, function(){
         addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents,'title': $scope.config.incident.title });
       }));
@@ -745,6 +772,7 @@
 
         calculatePercentage({
           'id': 'ratio',
+          'sequence':1,
           'title': $scope.config.ratio.title,
           'value': ratioCalculated,
           'currentValue': formulateRatio(ratioCalculated),
@@ -790,12 +818,14 @@
 
       };
       var _queryObj = new Query(_query);
+      var impactResult = 0;
       socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
-        var impactResult = 0;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalImpact = result['hydra:member'][0].impact;
           impactResult = ($scope.socResult.totalImpact * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
         }
+        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
+      },function(){
         addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
       });
     }
@@ -966,6 +996,7 @@
         $q.all(promises).then(function () {
           calculatePercentage({
             'id': 'alertMttr',
+            'sequence':7,
             'title': $scope.config.alertMttr.title,
             'value': $filter('dayToSeconds')($scope.socResult.alertMttr),
             'currentValue': $scope.socResult.alertMttr,
@@ -1063,6 +1094,7 @@
         $q.all(promises).then(function () {
           calculatePercentage({
             'id': 'incidentMttr',
+            'sequence':8,
             'title': $scope.config.incidentMttr.title,
             'value': $filter('dayToSeconds')($scope.socResult.incidentMttr),
             'currentValue': $scope.socResult.incidentMttr,
@@ -1096,6 +1128,7 @@
       $q.all(promises).then(function () {
         calculatePercentage({
           'id': 'playbookRun',
+          'sequence':2,
           'title': $scope.config.playbookRun.title,
           'value': $scope.playbookRun,
           'currentValue': $scope.playbookRun,
@@ -1130,6 +1163,7 @@
       $q.all(promises).then(function () {
         calculatePercentage({
           'id': 'actionExecuted',
+          'sequence':3,
           'title': $scope.config.actionsExecuted.title,
           'value': currentValue,
           'currentValue': currentValue,
@@ -1145,6 +1179,7 @@
       var _roiPreviousValue = (previousValue * $scope.config.roi.averageTime * $scope.config.roi.dollarValue) / 60;
       calculatePercentage({
         'id': 'roi',
+        'sequence':4,
         'title': $scope.config.roi.title,
         'value': '$'+$filter('numberToDisplay')(_roiCurrentValue),
         'currentValue': _roiCurrentValue,
@@ -1157,6 +1192,7 @@
       var _timeSavingPreviousValue = (previousValue * $scope.config.timeSaved.averageTime) * 60;
       calculatePercentage({
         'id': 'overallTimeSaved',
+        'sequence':6,
         'title': $scope.config.timeSaved.title,
         'value': (_timeSavingCurrentValue !== 0) ? secondsToString(_timeSavingCurrentValue) : 0,
         'currentValue': _timeSavingCurrentValue,

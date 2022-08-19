@@ -24,7 +24,7 @@
             <div class="titleData">{{data.title}}</div>
             <div class="valueData">{{data.value}}</div>
             <div data-ng-class="{'increasePercent': data.increase,'decreasePercent': !data.increase}">
-              <i data-ng-class="{'icon-arrow_line_up-small': data.increase,'icon-arrow_line_up-down-small': !data.increase}"
+              <i data-ng-show="data.percentChange !== 0" data-ng-class="{'icon-arrow_line_up-small': data.increase,'icon-arrow_line_up-down-small': !data.increase}"
                 class="icon"></i>
               {{data.percentChange | number:0}} %
             </div>
