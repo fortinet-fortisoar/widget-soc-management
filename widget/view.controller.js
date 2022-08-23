@@ -283,6 +283,9 @@
               if (element.source !== null) {
                 _dataSource[element.source] = element.total;
               }
+              else{
+                _dataSource.Unknown = element.total;
+              }
             });
           }
         }
@@ -982,10 +985,8 @@
 
       var promises = [];
       promises.push(socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
-        var secondsResult = 0;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.alertMttr = result['hydra:member'][0].value || 0;
-            secondsResult = $filter('dayToSeconds')($scope.socResult.alertMttr);
           }
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _previousQueryObj).then(function (result) {
@@ -998,7 +999,7 @@
             'id': 'alertMttr',
             'sequence':7,
             'title': $scope.config.alertMttr.title,
-            'value': $filter('dayToSeconds')($scope.socResult.alertMttr),
+            'value': fixDecimal($filter('dayToSeconds')($scope.socResult.alertMttr)),
             'currentValue': $scope.socResult.alertMttr,
             'lastValue': $scope.socResult.previousAlertMttr
           });
@@ -1080,10 +1081,8 @@
 
       var promises = [];
       promises.push(socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
-        var secondsResult = 0;
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.incidentMttr = result['hydra:member'][0].value || 0;
-            secondsResult = $filter('dayToSeconds')($scope.socResult.incidentMttr);
           }
         }));
         promises.push(socManagementService.getResourceData($scope.config.relatedResource, _previousQueryObj).then(function (result) {
@@ -1096,7 +1095,7 @@
             'id': 'incidentMttr',
             'sequence':8,
             'title': $scope.config.incidentMttr.title,
-            'value': $filter('dayToSeconds')($scope.socResult.incidentMttr),
+            'value': fixDecimal($filter('dayToSeconds')($scope.socResult.incidentMttr)),
             'currentValue': $scope.socResult.incidentMttr,
             'lastValue': $scope.socResult.previousIncidentMttr
           });
@@ -1216,6 +1215,10 @@
       }
 
       return result.toString().replace(',', ' ');
+    }
+
+    function fixDecimal(number){
+      return (Number.parseFloat(number).toFixed(2)) * 1;
     }
 
     // --      queries
