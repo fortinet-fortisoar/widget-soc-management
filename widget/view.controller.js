@@ -455,22 +455,20 @@
     //label counts
 
     function getAlertCount() {
-      var dateRangeFilter = {
-        filters: [
+      var dateRangeFilter = [
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(0)'
           }
-        ]
-      };
+        ];
 
       var countAggregate = {
         alias: 'alerts',
@@ -478,32 +476,29 @@
         operator: 'count'
       };
       var _query = {
-        filters: [dateRangeFilter],
+        filters: dateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
-
       };
       var _queryObj = new Query(_query);
 
-      var previousDateRangeFilter = {
-        filters: [
+      var previousDateRangeFilter =  [
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           }
-        ]
-      };
+        ];
 
       var _previousQuery = {
-        filters: [previousDateRangeFilter],
+        filters: previousDateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
 
@@ -686,6 +681,7 @@
         };
         var _queryObj = new Query(queryObject);
         $scope.socResult.falsePositiveAlerts = 0;
+        $scope.socResult.truePositiveAlerts = 0;
         socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.falsePositiveAlerts = result['hydra:member'][0].status;
@@ -700,39 +696,35 @@
     }
 
     function getTotalIncidentCount() {
-      var dateRangeFilter = {
-        filters: [
+      var dateRangeFilter = [
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(0)'
           }
         ]
-      };
 
-      var previousDateRangeFilter = {
-        filters: [
+      var previousDateRangeFilter =  [
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           }
-        ]
-      };
+        ];
 
       var countAggregate = {
         alias: 'incidents',
@@ -740,13 +732,13 @@
         operator: 'count'
       };
       var _query = {
-        filters: [dateRangeFilter],
+        filters: dateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
 
       };
       var _previousQuery = {
-        filters: [previousDateRangeFilter],
+        filters: previousDateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
       };
@@ -772,7 +764,6 @@
       $q.all($scope.alertIncidentPromises).then(function () {
         var ratioCalculated = calculateRatio($scope.socResult.totalAlerts, $scope.socResult.totalIncidents);
         var previousRatioCalculated = calculateRatio($scope.socResult.previousTotalAlerts, $scope.socResult.previousTotalIncidents);
-
         calculatePercentage({
           'id': 'ratio',
           'sequence':1,
@@ -792,13 +783,13 @@
           {
             field: $scope.config.relatedResource.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
             field: $scope.config.relatedResource.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(0)'
           },
           {
@@ -822,6 +813,7 @@
       };
       var _queryObj = new Query(_query);
       var impactResult = 0;
+
       socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalImpact = result['hydra:member'][0].impact;
@@ -839,13 +831,13 @@
           {
             field: $scope.config.relatedResource2.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
             field: $scope.config.relatedResource2.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(0)'
           },
           {
@@ -868,11 +860,14 @@
 
       };
       var _queryObj = new Query(_query);
+      $scope.socResult.totalAssets = 0;
       socManagementService.getResourceData($scope.config.relatedResource2, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAssets = result['hydra:member'][0].assets;
-          addBlockData({ 'id': 'idAssetsDivision', 'count': $scope.socResult.totalAssets ,'title': $scope.config.assets.title});
+          addBlockData({ 'id': 'idAssetsDivision', 'count':  $filter('numberToDisplay')($scope.socResult.totalAssets) ,'title': $scope.config.assets.title});
         }
+      },function(){
+        addBlockData({ 'id': 'idAssetsDivision', 'count':  $filter('numberToDisplay')($scope.socResult.totalAssets) ,'title': $scope.config.assets.title});
       });
     }
 
@@ -882,13 +877,13 @@
           {
             field: $scope.config.relatedResource3.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
             field: $scope.config.relatedResource3.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'currentDateMinus(0)'
           },
           {
@@ -914,9 +909,10 @@
       socManagementService.getResourceData($scope.config.relatedResource3, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalArtifactsAnalysed = result['hydra:member'][0].indicators;
-          var artifactsResult = ($scope.socResult.totalArtifactsAnalysed * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
-          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')(artifactsResult),'title': $scope.config.artifacts.title });
+          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed),'title': $scope.config.artifacts.title });
         }
+      },function(){
+        addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed),'title': $scope.config.artifacts.title });
       });
     }
 
@@ -931,13 +927,13 @@
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0, 0, 0, 0, 0)'
           }
         ]
@@ -953,13 +949,13 @@
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
           }
         ]
@@ -1017,13 +1013,13 @@
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0, 0, 0, 0, 0)'
           }
         ]
@@ -1048,13 +1044,13 @@
           {
             field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
           },
           {
             field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'primitive',
+            type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
           }
         ]
@@ -1129,7 +1125,7 @@
           'id': 'playbookRun',
           'sequence':2,
           'title': $scope.config.playbookRun.title,
-          'value': $scope.playbookRun,
+          'value': $filter('numberToDisplay')($scope.playbookRun),
           'currentValue': $scope.playbookRun,
           'lastValue': $scope.playbookLastRun
         });
@@ -1164,7 +1160,7 @@
           'id': 'actionExecuted',
           'sequence':3,
           'title': $scope.config.actionsExecuted.title,
-          'value': currentValue,
+          'value': $filter('numberToDisplay')(currentValue),
           'currentValue': currentValue,
           'lastValue': previousValue
         });
