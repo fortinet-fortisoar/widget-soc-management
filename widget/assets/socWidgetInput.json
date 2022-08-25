@@ -76,7 +76,7 @@
     },
     "incidentMttr":{
         "title":"Incident MTTR",
-        "criteria":"resolveddate",
-        "resolveCriteria":"identificationDate"
+        "criteria":"createDate",
+        "resolveCriteria":"respDate"
     }
 }
