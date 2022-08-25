@@ -962,7 +962,7 @@
       };
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.alertMttr.criteria+','+$scope.config.alertMttr.resolveCriteria,
+        field: $scope.dateFilterField+','+$scope.config.alertMttr.resolveCriteria,
         operator: 'avg'
       };
       var _query = {
@@ -1058,7 +1058,7 @@
 
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.incidentMttr.criteria+','+$scope.config.incidentMttr.resolveCriteria,
+        field: $scope.dateFilterField+','+$scope.config.incidentMttr.resolveCriteria,
         operator: 'avg'
       };
       var _query = {
