@@ -709,7 +709,7 @@
             type: 'date',
             value: 'currentDateMinus(0)'
           }
-        ]
+        ];
 
       var previousDateRangeFilter =  [
           {
@@ -920,18 +920,18 @@
       var dateRangeFilter = {
         logic: 'AND',
         type: 'datetime',
-        _field: $scope.dateFilterField,
+        _field: $scope.config.alertMttr.resolveCriteria,
         _operator: 'date',
         _value: 'getRelativeDate(0, 0,' + $scope.config.days + ', 0, 0, 0)',
         filters: [
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.alertMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
             value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           },
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.alertMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
             value: 'getRelativeDate(0, 0, 0, 0, 0, 0)'
@@ -942,18 +942,18 @@
       var previousDateRangeFilter = {
         logic: 'AND',
         type: 'datetime',
-        _field: $scope.dateFilterField,
+        _field: $scope.config.alertMttr.resolveCriteria,
         _operator: 'date',
         _value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)',
         filters:[
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.alertMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
           },
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.alertMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
@@ -962,7 +962,7 @@
       };
       var queryAggregates = {
         alias: 'value',
-        field: $scope.dateFilterField+','+$scope.config.alertMttr.resolveCriteria,
+        field: $scope.config.alertMttr.criteria+','+$scope.config.alertMttr.resolveCriteria,
         operator: 'avg'
       };
       var _query = {
@@ -995,7 +995,7 @@
             'id': 'alertMttr',
             'sequence':7,
             'title': $scope.config.alertMttr.title,
-            'value': fixDecimal($filter('dayToSeconds')($scope.socResult.alertMttr)),
+            'value': $filter('dayToDisplay')($scope.socResult.alertMttr),
             'currentValue': $scope.socResult.alertMttr,
             'lastValue': $scope.socResult.previousAlertMttr
           });
@@ -1006,18 +1006,18 @@
       var dateRangeFilter = {
         logic: 'AND',
         type: 'datetime',
-        _field: $scope.dateFilterField,
+        _field: $scope.config.incidentMttr.resolveCriteria,
         _operator: 'date',
         _value: 'getRelativeDate(0, 0,' + $scope.config.days + ', 0, 0, 0)',
         filters: [
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
             value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           },
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
             value: 'getRelativeDate(0, 0, 0, 0, 0, 0)'
@@ -1037,18 +1037,18 @@
       var previousDateRangeFilter = {
         logic: 'AND',
         type: 'datetime',
-        _field: $scope.dateFilterField,
+        _field: $scope.config.incidentMttr.resolveCriteria,
         _operator: 'date',
         _value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)',
         filters:[
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
           },
           {
-            field: $scope.dateFilterField,
+            field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
             value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
@@ -1058,7 +1058,7 @@
 
       var queryAggregates = {
         alias: 'value',
-        field: $scope.dateFilterField+','+$scope.config.incidentMttr.resolveCriteria,
+        field: $scope.config.incidentMttr.criteria+','+$scope.config.incidentMttr.resolveCriteria,
         operator: 'avg'
       };
       var _query = {
@@ -1091,7 +1091,7 @@
             'id': 'incidentMttr',
             'sequence':8,
             'title': $scope.config.incidentMttr.title,
-            'value': fixDecimal($filter('dayToSeconds')($scope.socResult.incidentMttr)),
+            'value': $filter('dayToDisplay')($scope.socResult.incidentMttr),
             'currentValue': $scope.socResult.incidentMttr,
             'lastValue': $scope.socResult.previousIncidentMttr
           });

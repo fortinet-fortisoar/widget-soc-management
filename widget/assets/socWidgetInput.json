@@ -72,11 +72,11 @@
     "alertMttr":{
         "title":"Alert MTTR",
         "criteria":"createDate",
-        "resolveCriteria":"respDate"
+        "resolveCriteria":"resolveddate"
     },
     "incidentMttr":{
         "title":"Incident MTTR",
         "criteria":"createDate",
-        "resolveCriteria":"respDate"
+        "resolveCriteria":"resolveddate"
     }
 }
