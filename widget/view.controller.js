@@ -176,19 +176,18 @@
     }
 
     function calculatePercentage(element) {
-      if (element.currentValue > 0) {
-        var _percent = ((element.lastValue - element.currentValue) / element.currentValue) * 100;
+      var _percent = 0;
+      element.percentChange = 0;
+      if (element.lastValue > 0) {
+        _percent = ((element.currentValue - element.lastValue) / element.lastValue) * 100;
         element.percentChange = _percent;
-        if (_percent < 0) {
-          element.percentChange = Math.abs(_percent);
+        if (_percent > 0) {
           element.increase = true;
         }
         else {
           element.increase = false;
         }
-      }
-      else if (element.lastValue === 0 && element.currentValue === 0) {
-        element.percentChange = 0;
+        element.percentChange = Math.abs(_percent);
       }
       $scope.percentageData.push(element);
       $scope.percentageData.sort((a, b) => a.sequence - b.sequence);
@@ -778,16 +777,15 @@
     }
 
     function getImpactCount() {
-      var dateRangeFilter = {
-        filters: [
+      var dateRangeFilter =  [
           {
-            field: $scope.config.relatedResource.dateFilterField,
+            field: $scope.dateFilterField,
             operator: 'gte',
             type: 'date',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
-            field: $scope.config.relatedResource.dateFilterField,
+            field: $scope.dateFilterField,
             operator: 'lte',
             type: 'date',
             value: 'currentDateMinus(0)'
@@ -797,8 +795,7 @@
             'operator': 'isnull',
             'value': 'false'
           }
-        ]
-      };
+        ];
 
       var countAggregate = {
         alias: 'impact',
@@ -806,7 +803,7 @@
         operator: 'sum'
       };
       var _query = {
-        filters: [dateRangeFilter],
+        filters: dateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
 
@@ -826,27 +823,20 @@
     }
 
     function getTotalAssetsCount() {
-      var dateRangeFilter = {
-        filters: [
+      var dateRangeFilter = [
           {
-            field: $scope.config.relatedResource2.dateFilterField,
+            field: $scope.dateFilterField,
             operator: 'gte',
-            type: 'date',
+            type: 'datetime',
             value: 'currentDateMinus(' + $scope.config.days + ')'
           },
           {
-            field: $scope.config.relatedResource2.dateFilterField,
+            field: $scope.dateFilterField,
             operator: 'lte',
-            type: 'date',
+            type: 'datetime',
             value: 'currentDateMinus(0)'
-          },
-          {
-            'field': 'incidents',
-            'operator': 'isnull',
-            'value': 'false'
           }
-        ]
-      };
+        ];
 
       var countAggregate = {
         alias: 'assets',
@@ -854,7 +844,7 @@
         operator: 'countdistinct'
       };
       var _query = {
-        filters: [dateRangeFilter],
+        filters: dateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
 
@@ -872,27 +862,20 @@
     }
 
     function getArtifactsAnalysed() {
-      var dateRangeFilter = {
-        filters: [
-          {
-            field: $scope.config.relatedResource3.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          },
-          {
-            field: $scope.config.relatedResource3.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(0)'
-          },
-          {
-            'field': 'incidents',
-            'operator': 'isnull',
-            'value': 'false'
-          }
-        ]
-      };
+      var dateRangeFilter = [
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'datetime',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'datetime',
+          value: 'currentDateMinus(0)'
+        }
+      ];
 
       var countAggregate = {
         alias: 'indicators',
@@ -900,7 +883,7 @@
         operator: 'countdistinct'
       };
       var _query = {
-        filters: [dateRangeFilter],
+        filters: dateRangeFilter,
         aggregates: [countAggregate],
         limit: ALL_RECORDS_SIZE
 
@@ -962,7 +945,7 @@
       };
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.alertMttr.criteria+','+$scope.config.alertMttr.resolveCriteria,
+        field: $scope.config.alertMttr.resolveCriteria+','+$scope.config.alertMttr.criteria,
         operator: 'avg'
       };
       var _query = {
@@ -1058,7 +1041,7 @@
 
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.incidentMttr.criteria+','+$scope.config.incidentMttr.resolveCriteria,
+        field: $scope.config.incidentMttr.resolveCriteria +','+ $scope.config.incidentMttr.criteria,
         operator: 'avg'
       };
       var _query = {
