@@ -26,28 +26,31 @@ The SOC Management widget provides an overall view of an investigation scenario 
 
 The following matrices are displayed by the SOC Management Widget:
 
-- The total number of alerts present on your system that are filtered based on the field and time range you have specified. In our case, we have specified alerts that were created in the last 7 days, which comes to 14 alerts (in our example).  The total alerts are further classified into:
-  - True Positive alerts (12)
-  - False Positive alerts (2)
-  - Closed alerts (4)
-  - Total number of incidents (8) 
-- The **Top 3 Data Sources** for the alerts created in the specified time range. In our example they are, Splunk, QRadar, and Splunk-IMAP.
-- The **Top 3 Playbooks** that were executed in the specified time range. In our example they are, Compute Alert Priority Weight (Post Indicator Extraction), Create Alerts, and Create Data > Child PB.
+- The total number of alerts present on your system that are filtered based on the field and time range you have specified. In our case, we have specified alerts that were created in the last 7 days, which comes to 1.3K alerts (in our example).  The total alerts are further classified into:
+  - True Positive alerts (1.3K)
+  - False Positive alerts (1)
+  - Closed alerts (2)
+  - Total number of incidents (13) 
+- The **Top 3 Data Sources** for the alerts created in the specified time range. In our example they are, FortiSIEM, Splunk, and User Reported.
+- The **Top 3 Playbooks** that were executed in the specified time range. In our example they are, Indicator (Type IP) - Get Reputation, Compute Alert Priority Weight (Post Indicator Extraction), and Create Alerts.
   You can click the names of the playbook to open the respective playbook in the Playbook Designer. 
-- The **Top 3 Alert Types** of the alerts created in the specified time range. In our example they are, Brute Force Attack, Malware, and Other / Unknown.
-- The **Top 3 Incident Types** of the incidents that were created in the specified time range. In our example they are, Brute Force Attack, Malware, and Policy Violation.
-- The **Impact** of the incidents in terms of savings in the dollars in the specified time range. 
+- The **Top 3 Alert Types** of the alerts created in the specified time range. In our example they are, Denial of Service, Lost / Stolen, and Brute Force Attack.
+- The **Top 3 Incident Types** of the incidents that were created in the specified time range. In our example they are, Malware, Beaconing, and Denial of Service.
+- The **Impact** of the incidents in terms of savings in the dollars in the specified time range.  In our example, it is $385.   
+    **Important**: To view this information, a new field named '**Impact ROI**' is added to the 'Incident' module. The 'Impact ROI' field can be added using any of the following methods:
+    - Upgrade the SOAR Framework Solution pack to version 2.0.0 or later.
+    - Add the **Impact ROI** as an 'Integer' type field to the Incident module in your system. For information on adding fields to a module see the 'Module Editor' topic in the 'Administration Guide' that is part of the FortiSOAR product documentation.
 - The count of **Assets** associated with the incidents in the specified time range. 
 - The number of **Artifacts Analyzed** that are associated with the incidents in the specified time range.    
 - Apart from these matrices, the widget also includes the following matrices:
-  - **Ratio Alert to Incident** displays the ratio of the total number of alerts to the number of alerts that were escalated to incidents within the specified time range.
-  - **Alert MTTR** displays the mean time it took to resolve alerts within the specified time range.
-  - **Incident MTTR** displays the mean time it took to resolve incidents within the specified time range.
-  - **Actions Executed** displays the total number of playbook actions executed within the specified time range.
+  - **Ratio Alert to Incident** displays the ratio of the total number of alerts to the number of alerts that were escalated to incidents in the specified time range.
+  - **Playbook Run** displays the total number of playbooks executed in the specified time range.
+  - **Actions Executed** displays the total number of playbook actions executed in the specified time range.
   - **ROI** displays the ROI of playbook actions executed in terms of savings in the dollars in the specified time range. 
-  - **Alert Resolved** displays the total number of alerts resolved within the specified time range.
-  - **Playbook Run** displays the total number of playbooks executed within the specified time range.
-  - **Overall time saved** displays the time saved by executing playbook actions in the specified time range. 
+  - **Alert Resolved** displays the total number of alerts resolved in the specified time range.
+  - **Overall Time Saved** displays the time saved by executing playbook actions in the specified time range. 
+  - **Alert MTTR** displays the mean time it took to resolve alerts in the specified time range.
+  - **Incident MTTR** displays the mean time it took to resolve incidents in the specified time range.
 
 ## SOC Management Widget Settings
 
