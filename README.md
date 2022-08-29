@@ -39,7 +39,7 @@ The following matrices are displayed by the SOC Management Widget:
 - The **Impact** of the incidents in terms of savings in the dollars in the specified time range.  In our example, it is $385.   
     **Important**: To view this information, a new field named '**Impact ROI**' is added to the 'Incident' module. The 'Impact ROI' field can be added using any of the following methods:
     - Upgrade the SOAR Framework Solution pack to version 2.0.0 or later.
-    - Add the **Impact ROI** as an 'Integer' type field to the Incident module in your system. For information on adding fields to a module see the 'Module Editor' topic in the 'Administration Guide' that is part of the FortiSOAR product documentation.
+    - Add the **Impact ROI** as an 'Integer' type field to the Incident module in your system and then add the field to the System View Templates (SVT)  of the incident module. For information on adding fields to a module, see the 'Module Editor' topic in the 'Administration Guide', and for adding a field to the SVT of the module, see the 'Dashboards, Templates, and Widgets' chapter in the 'User Guide'; both the guides are part of the FortiSOAR product documentation.
 - The count of **Assets** associated with the incidents in the specified time range. 
 - The number of **Artifacts Analyzed** that are associated with the incidents in the specified time range.    
 - Apart from these matrices, the widget also includes the following matrices:
