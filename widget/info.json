@@ -6,7 +6,7 @@
         "certified": "Yes",
         "publisher": "Fortinet",
         "snapshots": [
-            "https://repo.fortisoar.fortinet.com/content-hub/socManagement-1.0.0/latest/images/soc-management.png"
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/socManagement-1.0.0/latest/images/soc-management.png"
         ],
         "description": "SOC Management Dashboard",
         "help_online": "https://github.com/fortinet-fortisoar/widget-soc-management/blob/release/1.0.0/README.md",
