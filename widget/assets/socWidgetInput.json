@@ -1,0 +1,82 @@
+{
+    "title": "", 
+    "timeRange": "createDate",
+    "days": 30,
+    "resource": "alerts", 
+    "relatedResource": "incidents",
+    "relatedResource2":"assets",
+    "relatedResource3":"indicators",
+    "alertSource":{
+        "title":"Top 3 Data Sources"
+    },
+    "top3PlaybookRun":{
+        "title":"Top 3 Playbooks"
+    },
+    "topAlerts":{
+        "title":"Top 3 Alert Types"
+    },
+    "alerts":{
+        "title":"Alerts"
+    },
+    "truePositive":{
+        "title":"True positive"
+    },
+    "falsePositive":{
+        "title":"False positive"
+    },
+    "closed":{
+        "title":"Closed"
+    },
+    "topIncidents":{
+        "title":"Top 3 Incident Types"
+    },
+    "incident":{
+        "title":"Incidents"
+    },
+    "impact":{
+        "title":"Impact",
+        "averageTime":5,
+        "dollarValue":60
+    },
+    "assets":{
+        "title":"Assets"
+    },
+    "artifacts":{
+        "title":"Artifacts analysed",
+        "averageTime":5,
+        "dollarValue":60
+    },
+    "ratio":{
+        "title":"Ratio Alert to Incident"
+    },
+    "playbookRun":{
+        "title":"Playbook Run"
+    },
+    "actionsExecuted":{
+        "title":"Actions Executed",
+        "includeConfigActions": false,
+        "includeFailedActions": true
+    },
+    "roi":{
+        "title":"ROI",
+        "dollarValue":60,
+        "averageTime":5
+    },
+    "alertResolved":{
+        "title":"Alert Resolved"
+    },
+    "timeSaved":{
+        "title":"Overall Time Saved",
+        "averageTime":5
+    },
+    "alertMttr":{
+        "title":"Alert MTTR",
+        "criteria":"createDate",
+        "resolveCriteria":"resolveddate"
+    },
+    "incidentMttr":{
+        "title":"Incident MTTR",
+        "criteria":"createDate",
+        "resolveCriteria":"resolveddate"
+    }
+}
