@@ -9,12 +9,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement100Ctrl', socManagement100Ctrl);
+    .controller('socManagement101Ctrl', socManagement101Ctrl);
 
-  socManagement100Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+  socManagement101Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
     'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
 
-  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
+  function socManagement101Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
 
     var loadedSVGDocument;
     $scope.percentageData = [];
