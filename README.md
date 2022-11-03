@@ -4,7 +4,7 @@ The SOC Management widget provides an overall view of an investigation scenario 
 
 ## Version Information
 
-**Version**: 1.0.0
+**Version**: 1.0.1
 
 **Certified**: Yes
 

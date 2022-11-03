@@ -9,12 +9,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement100Ctrl', socManagement100Ctrl);
+    .controller('socManagement101Ctrl', socManagement101Ctrl);
 
-  socManagement100Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE','$state','$window'];
+  socManagement101Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
 
-  function socManagement100Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
+  function socManagement101Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
 
     var loadedSVGDocument;
     $scope.percentageData = [];
@@ -82,10 +82,10 @@
           _col1.setAttribute('title', key);
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
-          if(element.id === 'idAutomationCalculation'){
-            _col1.setAttribute('style', overflowStyle + 'cursor:pointer;color:'+ $scope.hoverColor +';text-decoration:underline');
+          if (element.id === 'idAutomationCalculation') {
+            _col1.setAttribute('style', overflowStyle + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
             _row.appendChild(_col1);
-            _col1.addEventListener('click', function() {
+            _col1.addEventListener('click', function () {
               var state = 'main.playbookDetail';
               var params = {
                 id: $filter('getEndPathName')(element.template_iri[iriCount])
@@ -95,7 +95,7 @@
               iriCount++;
             });
           }
-          else{
+          else {
             _col1.setAttribute('style', overflowStyle);
             _row.appendChild(_col1);
           }
@@ -105,7 +105,7 @@
         }
         mainDiv.appendChild(mainTable);
       }
-      else{
+      else {
         var infoDiv = document.createElement('div');
         infoDiv.innerHTML = 'No records';
         infoDiv.setAttribute('style', noRecordStyle);
@@ -123,7 +123,7 @@
       let y = bbox.y;
       let width = 300;
       let height = bbox.height + 100;
-      if(element.id === 'idTruePositiveLabel'){
+      if (element.id === 'idTruePositiveLabel') {
         y = bbox.y - 27;
       }
       let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
@@ -140,7 +140,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count +'<span style="font-size:25px;margin-left: 5px;">' + element.title +'</span>';
+      countDiv.innerHTML = element.count + '<span style="font-size:25px;margin-left: 5px;">' + element.title + '</span>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -170,7 +170,7 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;text-align: center;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = element.count +' <div style="font-size:20px">' + element.title +'</div>';
+      countDiv.innerHTML = element.count + ' <div style="font-size:20px">' + element.title + '</div>';
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -211,7 +211,7 @@
       var result = 0;
       var ratio1 = ratio.split(':')[0];
       var ratio2 = ratio.split(':')[1];
-      if(Number(ratio2) !== 0){
+      if (Number(ratio2) !== 0) {
         result = Number(ratio1) / Number(ratio2);
       }
       return result;
@@ -222,14 +222,14 @@
       for (var o in object) {
         sortable.push([o, object[o]]);
       }
-    
-      sortable.sort(function(a, b) {
-          return b[1] - a[1];
+
+      sortable.sort(function (a, b) {
+        return b[1] - a[1];
       });
 
       let objSorted = {};
-      sortable.forEach(function(item){
-          objSorted[item[0]]= item[1] > 1 ? item[1] + ' times' : item[1] + ' time';
+      sortable.forEach(function (item) {
+        objSorted[item[0]] = item[1] > 1 ? item[1] + ' times' : item[1] + ' time';
       });
       return objSorted;
     }
@@ -282,7 +282,7 @@
               if (element.source !== null) {
                 _dataSource[element.source] = element.total;
               }
-              else{
+              else {
                 _dataSource.Unknown = element.total;
               }
             });
@@ -332,12 +332,12 @@
           });
           $q.all(promises).then(function () {
             var sortedDataSource = sortObjectByKeys(_dataSource);
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource , 'template_iri': _iri });
+            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
           });
         }
-        else{
+        else {
           _dataSource = null;
-          addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource , 'template_iri': _iri });
+          addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri });
         }
       });
     }
@@ -455,19 +455,19 @@
 
     function getAlertCount() {
       var dateRangeFilter = [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(0)'
-          }
-        ];
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'date',
+          value: 'currentDateMinus(0)'
+        }
+      ];
 
       var countAggregate = {
         alias: 'alerts',
@@ -481,20 +481,20 @@
       };
       var _queryObj = new Query(_query);
 
-      var previousDateRangeFilter =  [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          }
-        ];
+      var previousDateRangeFilter = [
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        }
+      ];
 
       var _previousQuery = {
         filters: previousDateRangeFilter,
@@ -511,7 +511,7 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAlerts = result['hydra:member'][0].alerts;
         }
-        addLabelCounts({ 'id': 'idAlertLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalAlerts), 'title': $scope.config.alerts.title});
+        addLabelCounts({ 'id': 'idAlertLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalAlerts), 'title': $scope.config.alerts.title });
       }));
       $scope.alertIncidentPromises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
         $scope.socResult.previousTotalAlerts = result['hydra:member'][0].alerts;
@@ -614,7 +614,7 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.closedAlerts = result['hydra:member'][0].status;
           }
-          addLabelCounts({ 'id': 'idClosedLabel', 'count': $filter('numberToDisplay')($scope.socResult.closedAlerts), 'title': $scope.config.closed.title});
+          addLabelCounts({ 'id': 'idClosedLabel', 'count': $filter('numberToDisplay')($scope.socResult.closedAlerts), 'title': $scope.config.closed.title });
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
           $scope.socResult.previousClosedAlerts = result['hydra:member'][0].status;
@@ -622,7 +622,7 @@
         $q.all(promises).then(function () {
           calculatePercentage({
             'id': 'alertResolved',
-            'sequence':5,
+            'sequence': 5,
             'title': $scope.config.alertResolved.title,
             'value': $filter('numberToDisplay')($scope.socResult.closedAlerts),
             'currentValue': $scope.socResult.closedAlerts,
@@ -685,8 +685,8 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.falsePositiveAlerts = result['hydra:member'][0].status;
             $scope.socResult.truePositiveAlerts = ($scope.socResult.totalAlerts - $scope.socResult.falsePositiveAlerts);
-            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.falsePositiveAlerts) ,'title': $scope.config.falsePositive.title});
-            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.truePositiveAlerts) ,'title': $scope.config.truePositive.title});
+            addLabelCounts({ 'id': 'idFlasePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.falsePositiveAlerts), 'title': $scope.config.falsePositive.title });
+            addLabelCounts({ 'id': 'idTruePositiveLabel', 'count': $filter('numberToDisplay')($scope.socResult.truePositiveAlerts), 'title': $scope.config.truePositive.title });
 
           }
         });
@@ -696,34 +696,34 @@
 
     function getTotalIncidentCount() {
       var dateRangeFilter = [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(0)'
-          }
-        ];
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'date',
+          value: 'currentDateMinus(0)'
+        }
+      ];
 
-      var previousDateRangeFilter =  [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          }
-        ];
+      var previousDateRangeFilter = [
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        }
+      ];
 
       var countAggregate = {
         alias: 'incidents',
@@ -751,9 +751,9 @@
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalIncidents = result['hydra:member'][0].incidents;
         }
-        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalIncidents),'title': $scope.config.incident.title });
-      }, function(){
-        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents,'title': $scope.config.incident.title });
+        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $filter('numberToDisplay')($scope.socResult.totalIncidents), 'title': $scope.config.incident.title });
+      }, function () {
+        addLabelCounts({ 'id': 'idIncidentsLabel', 'count': $scope.socResult.totalIncidents, 'title': $scope.config.incident.title });
       }));
 
       $scope.alertIncidentPromises.push(socManagementService.getResourceData($scope.config.relatedResource, _previousQueryObj).then(function (result) {
@@ -765,7 +765,7 @@
         var previousRatioCalculated = calculateRatio($scope.socResult.previousTotalAlerts, $scope.socResult.previousTotalIncidents);
         calculatePercentage({
           'id': 'ratio',
-          'sequence':1,
+          'sequence': 1,
           'title': $scope.config.ratio.title,
           'value': ratioCalculated,
           'currentValue': formulateRatio(ratioCalculated),
@@ -777,25 +777,25 @@
     }
 
     function getImpactCount() {
-      var dateRangeFilter =  [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'date',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'date',
-            value: 'currentDateMinus(0)'
-          },
-          {
-            'field': 'impactROI',
-            'operator': 'isnull',
-            'value': 'false'
-          }
-        ];
+      var dateRangeFilter = [
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'date',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'date',
+          value: 'currentDateMinus(0)'
+        },
+        {
+          'field': 'impactROI',
+          'operator': 'isnull',
+          'value': 'false'
+        }
+      ];
 
       var countAggregate = {
         alias: 'impact',
@@ -816,27 +816,27 @@
           $scope.socResult.totalImpact = result['hydra:member'][0].impact;
           impactResult = ($scope.socResult.totalImpact * $scope.config.artifacts.averageTime * $scope.config.artifacts.dollarValue) / 60;
         }
-        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
-      },function(){
-        addBlockData({ 'id': 'idImpactDivision', 'count': '$'+$filter('numberToDisplay')(impactResult),'title': $scope.config.impact.title});
+        addBlockData({ 'id': 'idImpactDivision', 'count': '$' + $filter('numberToDisplay')(impactResult), 'title': $scope.config.impact.title });
+      }, function () {
+        addBlockData({ 'id': 'idImpactDivision', 'count': '$' + $filter('numberToDisplay')(impactResult), 'title': $scope.config.impact.title });
       });
     }
 
     function getTotalAssetsCount() {
       var dateRangeFilter = [
-          {
-            field: $scope.dateFilterField,
-            operator: 'gte',
-            type: 'datetime',
-            value: 'currentDateMinus(' + $scope.config.days + ')'
-          },
-          {
-            field: $scope.dateFilterField,
-            operator: 'lte',
-            type: 'datetime',
-            value: 'currentDateMinus(0)'
-          }
-        ];
+        {
+          field: $scope.dateFilterField,
+          operator: 'gte',
+          type: 'datetime',
+          value: 'currentDateMinus(' + $scope.config.days + ')'
+        },
+        {
+          field: $scope.dateFilterField,
+          operator: 'lte',
+          type: 'datetime',
+          value: 'currentDateMinus(0)'
+        }
+      ];
 
       var countAggregate = {
         alias: 'assets',
@@ -854,10 +854,10 @@
       socManagementService.getResourceData($scope.config.relatedResource2, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalAssets = result['hydra:member'][0].assets;
-          addBlockData({ 'id': 'idAssetsDivision', 'count':  $filter('numberToDisplay')($scope.socResult.totalAssets) ,'title': $scope.config.assets.title});
+          addBlockData({ 'id': 'idAssetsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalAssets), 'title': $scope.config.assets.title });
         }
-      },function(){
-        addBlockData({ 'id': 'idAssetsDivision', 'count':  $filter('numberToDisplay')($scope.socResult.totalAssets) ,'title': $scope.config.assets.title});
+      }, function () {
+        addBlockData({ 'id': 'idAssetsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalAssets), 'title': $scope.config.assets.title });
       });
     }
 
@@ -892,10 +892,10 @@
       socManagementService.getResourceData($scope.config.relatedResource3, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
           $scope.socResult.totalArtifactsAnalysed = result['hydra:member'][0].indicators;
-          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed),'title': $scope.config.artifacts.title });
+          addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed), 'title': $scope.config.artifacts.title });
         }
-      },function(){
-        addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed),'title': $scope.config.artifacts.title });
+      }, function () {
+        addBlockData({ 'id': 'idArtifactsDivision', 'count': $filter('numberToDisplay')($scope.socResult.totalArtifactsAnalysed), 'title': $scope.config.artifacts.title });
       });
     }
 
@@ -927,25 +927,25 @@
         type: 'datetime',
         _field: $scope.config.alertMttr.resolveCriteria,
         _operator: 'date',
-        _value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)',
-        filters:[
+        _value: 'getRelativeDate(0, 0,' + (-1 * ($scope.config.days + $scope.config.days)) + ', 0, 0, 0)',
+        filters: [
           {
             field: $scope.config.alertMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
-            value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
+            value: 'getRelativeDate(0, 0,' + (-1 * ($scope.config.days + $scope.config.days)) + ', 0, 0, 0)'
           },
           {
             field: $scope.config.alertMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
-            value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
+            value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           }
         ]
       };
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.alertMttr.resolveCriteria+','+$scope.config.alertMttr.criteria,
+        field: $scope.config.alertMttr.resolveCriteria + ',' + $scope.config.alertMttr.criteria,
         operator: 'avg'
       };
       var _query = {
@@ -965,24 +965,24 @@
       var promises = [];
       promises.push(socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-            $scope.socResult.alertMttr = result['hydra:member'][0].value || 0;
-          }
-        }));
-        promises.push(socManagementService.getResourceData($scope.config.resource, _previousQueryObj).then(function (result) {
-          if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-              $scope.socResult.previousAlertMttr = result['hydra:member'][0].value || 0;
-            }
-          }));
-        $q.all(promises).then(function () {
-          calculatePercentage({
-            'id': 'alertMttr',
-            'sequence':7,
-            'title': $scope.config.alertMttr.title,
-            'value': $filter('dayToDisplay')($scope.socResult.alertMttr),
-            'currentValue': $scope.socResult.alertMttr,
-            'lastValue': $scope.socResult.previousAlertMttr
-          });
-        });       
+          $scope.socResult.alertMttr = result['hydra:member'][0].value || 0;
+        }
+      }));
+      promises.push(socManagementService.getResourceData($scope.config.resource, _previousQueryObj).then(function (result) {
+        if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
+          $scope.socResult.previousAlertMttr = result['hydra:member'][0].value || 0;
+        }
+      }));
+      $q.all(promises).then(function () {
+        calculatePercentage({
+          'id': 'alertMttr',
+          'sequence': 7,
+          'title': $scope.config.alertMttr.title,
+          'value': $filter('dayToDisplay')($scope.socResult.alertMttr),
+          'currentValue': $scope.socResult.alertMttr,
+          'lastValue': $scope.socResult.previousAlertMttr
+        });
+      });
     }
 
     function getMTTRIncident() {
@@ -1022,37 +1022,37 @@
         type: 'datetime',
         _field: $scope.config.incidentMttr.resolveCriteria,
         _operator: 'date',
-        _value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)',
-        filters:[
+        _value: 'getRelativeDate(0, 0,' + (-1 * ($scope.config.days + $scope.config.days)) + ', 0, 0, 0)',
+        filters: [
           {
             field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'gte',
             type: 'date',
-            value: 'getRelativeDate(0, 0,'+(-1*($scope.config.days+$scope.config.days))+', 0, 0, 0)'
+            value: 'getRelativeDate(0, 0,' + (-1 * ($scope.config.days + $scope.config.days)) + ', 0, 0, 0)'
           },
           {
             field: $scope.config.incidentMttr.resolveCriteria,
             operator: 'lte',
             type: 'date',
-            value: 'getRelativeDate(0, 0,'+(-1*$scope.config.days)+', 0, 0, 0)'
+            value: 'getRelativeDate(0, 0,' + (-1 * $scope.config.days) + ', 0, 0, 0)'
           }
         ]
       };
 
       var queryAggregates = {
         alias: 'value',
-        field: $scope.config.incidentMttr.resolveCriteria +','+ $scope.config.incidentMttr.criteria,
+        field: $scope.config.incidentMttr.resolveCriteria + ',' + $scope.config.incidentMttr.criteria,
         operator: 'avg'
       };
       var _query = {
-        filters: [dateRangeFilter,_queryFilter],
+        filters: [dateRangeFilter, _queryFilter],
         aggregates: [queryAggregates],
         limit: ALL_RECORDS_SIZE
       };
       var _queryObj = new Query(_query);
 
       var _previousQuery = {
-        filters: [previousDateRangeFilter,_queryFilter],
+        filters: [previousDateRangeFilter, _queryFilter],
         aggregates: [queryAggregates],
         limit: ALL_RECORDS_SIZE
       };
@@ -1061,24 +1061,24 @@
       var promises = [];
       promises.push(socManagementService.getResourceData($scope.config.relatedResource, _queryObj).then(function (result) {
         if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-            $scope.socResult.incidentMttr = result['hydra:member'][0].value || 0;
-          }
-        }));
-        promises.push(socManagementService.getResourceData($scope.config.relatedResource, _previousQueryObj).then(function (result) {
-          if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-              $scope.socResult.previousIncidentMttr = result['hydra:member'][0].value || 0;
-            }
-          }));
-        $q.all(promises).then(function () {
-          calculatePercentage({
-            'id': 'incidentMttr',
-            'sequence':8,
-            'title': $scope.config.incidentMttr.title,
-            'value': $filter('dayToDisplay')($scope.socResult.incidentMttr),
-            'currentValue': $scope.socResult.incidentMttr,
-            'lastValue': $scope.socResult.previousIncidentMttr
-          });
-        });       
+          $scope.socResult.incidentMttr = result['hydra:member'][0].value || 0;
+        }
+      }));
+      promises.push(socManagementService.getResourceData($scope.config.relatedResource, _previousQueryObj).then(function (result) {
+        if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
+          $scope.socResult.previousIncidentMttr = result['hydra:member'][0].value || 0;
+        }
+      }));
+      $q.all(promises).then(function () {
+        calculatePercentage({
+          'id': 'incidentMttr',
+          'sequence': 8,
+          'title': $scope.config.incidentMttr.title,
+          'value': $filter('dayToDisplay')($scope.socResult.incidentMttr),
+          'currentValue': $scope.socResult.incidentMttr,
+          'lastValue': $scope.socResult.previousIncidentMttr
+        });
+      });
     }
 
     function getPlaybookRunCount() {
@@ -1106,7 +1106,7 @@
       $q.all(promises).then(function () {
         calculatePercentage({
           'id': 'playbookRun',
-          'sequence':2,
+          'sequence': 2,
           'title': $scope.config.playbookRun.title,
           'value': $filter('numberToDisplay')($scope.playbookRun),
           'currentValue': $scope.playbookRun,
@@ -1125,9 +1125,11 @@
       var _lastToDate = currentDateMinusService($scope.config.days);
       var _lastFromDate = currentDateMinusService($scope.config.days + $scope.config.days);
       var _lastActionQuery = {
-        'type': 'absolute',
-        'startTime': $filter('date')(_lastFromDate, 'yyyy-MM-dd HH:mm:ss', 'UTC'),
-        'endTime': $filter('date')(_lastToDate, 'yyyy-MM-dd HH:mm:ss', 'UTC')
+        timeWindow: {
+          'type': 'absolute',
+          'startTime': $filter('date')(_lastFromDate, 'yyyy-MM-dd HH:mm:ss', 'UTC'),
+          'endTime': $filter('date')(_lastToDate, 'yyyy-MM-dd HH:mm:ss', 'UTC')
+        }
       };
       var promises = [];
       var currentValue = 0;
@@ -1141,7 +1143,7 @@
       $q.all(promises).then(function () {
         calculatePercentage({
           'id': 'actionExecuted',
-          'sequence':3,
+          'sequence': 3,
           'title': $scope.config.actionsExecuted.title,
           'value': $filter('numberToDisplay')(currentValue),
           'currentValue': currentValue,
@@ -1157,9 +1159,9 @@
       var _roiPreviousValue = (previousValue * $scope.config.roi.averageTime * $scope.config.roi.dollarValue) / 60;
       calculatePercentage({
         'id': 'roi',
-        'sequence':4,
+        'sequence': 4,
         'title': $scope.config.roi.title,
-        'value': '$'+$filter('numberToDisplay')(_roiCurrentValue),
+        'value': '$' + $filter('numberToDisplay')(_roiCurrentValue),
         'currentValue': _roiCurrentValue,
         'lastValue': _roiPreviousValue
       });
@@ -1170,7 +1172,7 @@
       var _timeSavingPreviousValue = (previousValue * $scope.config.timeSaved.averageTime) * 60;
       calculatePercentage({
         'id': 'overallTimeSaved',
-        'sequence':6,
+        'sequence': 6,
         'title': $scope.config.timeSaved.title,
         'value': (_timeSavingCurrentValue !== 0) ? secondsToString(_timeSavingCurrentValue) : 0,
         'currentValue': _timeSavingCurrentValue,
@@ -1196,7 +1198,7 @@
       return result.toString().replace(',', ' ');
     }
 
-    function fixDecimal(number){
+    function fixDecimal(number) {
       return (Number.parseFloat(number).toFixed(2)) * 1;
     }
 
