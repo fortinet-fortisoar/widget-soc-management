@@ -20,7 +20,7 @@
     $scope.percentageData = [];
     var configLoaded = false;
     var svgLoaded = false;
-    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 120px;opacity: 0.8;';
+    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 165px;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
     var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
 
@@ -229,7 +229,7 @@
 
       let objSorted = {};
       sortable.forEach(function (item) {
-        objSorted[item[0]] = item[1] > 1 ? item[1] + ' times' : item[1] + ' time';
+        objSorted[item[0]] = item[1];
       });
       return objSorted;
     }
@@ -280,10 +280,10 @@
           if ($scope.socResult.alertSources.length > 0) {
             $scope.socResult.alertSources.forEach(element => {
               if (element.source !== null) {
-                _dataSource[element.source] = element.total;
+                _dataSource[element.source] = $filter('numberToDisplay')(element.total);
               }
               else {
-                _dataSource.Unknown = element.total;
+                _dataSource.Unknown = $filter('numberToDisplay')(element.total);
               }
             });
           }
@@ -325,7 +325,7 @@
           $scope.socResult.playbookSource.forEach(element => {
             if (element.template_iri !== null) {
               promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
-                _dataSource[result.data.name] = element.total;
+                _dataSource[result.data.name] = $filter('numberToDisplay')(element.total);
               }));
               _iri.push(element.template_iri);
             }
@@ -387,7 +387,7 @@
           if ($scope.socResult.alertSources.length > 0) {
             $scope.socResult.alertSources.forEach(element => {
               if (element.type !== null) {
-                _dataSource[element.type] = element.total;
+                _dataSource[element.type] = $filter('numberToDisplay')(element.total);
 
               }
             });
@@ -442,7 +442,7 @@
           if ($scope.socResult.incidentTypes.length > 0) {
             $scope.socResult.incidentTypes.forEach(element => {
               if (element.category !== null) {
-                _dataSource[element.category] = element.total;
+                _dataSource[element.category] = $filter('numberToDisplay')(element.total);
               }
             });
           }
