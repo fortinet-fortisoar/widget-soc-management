@@ -1945,16 +1945,16 @@
 				1766.7,474.4 1767.6,529.5 1767.6,333.9 1766.7,278.8 			"/>
 		</g>
 	</g>
-	<g class="st69">
+	<g class="st69" id="idImpactDivisionLabel">
 		<text transform="matrix(1 0 0 1 1497.2266 339.7227)" class="st102 st71 st103">IMPACT</text>
 	</g>
 	<g class="st69">
-		<g>
+		<g id="idAssetsDivisionLabel">
 			<text transform="matrix(1 0 0 1 1648.71 339.7227)" class="st104 st71 st103">ASSETS</text>
 		</g>
 	</g>
 	<g class="st69">
-		<g>
+		<g id="idArtifactsDivisionLabel">
 			<text transform="matrix(1 0 0 1 1781.249 339.7227)" class="st105 st71 st103">AFTIFACTS</text>
 			<text transform="matrix(1 0 0 1 1781.749 354.4227)" class="st105 st71 st103">ANALYSED</text>
 		</g>
