@@ -19,9 +19,9 @@ The SOC Management widget provides an overall view of an investigation scenario 
 
 Following enhancements have been made to the SOC Management Widget in version 1.0.1:
 
-- Fixed bug: Incorrect "Percentage change" value for ROI, Actions Executed and Overall Time Saved
-- Changed the dimensions of "Top 3 playbooks" and "Top 3 Alerts" SVG
-- Modified the background colour for white themed widget
+- "Percentage change" value for ROI, ove, is now correctly displayed.
+- Changed the dimensions of "Top 3 playbooks" and "Top 3 Alerts" box
+- Modified the widget’s background so that it now appears with theme-friendly colours
 
 
 ## SOC Management Views
