@@ -20,7 +20,7 @@
     $scope.percentageData = [];
     var configLoaded = false;
     var svgLoaded = false;
-    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;width: 165px;opacity: 0.8;';
+    var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
     var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
 
@@ -83,7 +83,7 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if (element.id === 'idAutomationCalculation') {
-            _col1.setAttribute('style', overflowStyle + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
+            _col1.setAttribute('style', overflowStyle +'width: 175px;' +'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
             _row.appendChild(_col1);
             _col1.addEventListener('click', function () {
               var state = 'main.playbookDetail';
@@ -96,11 +96,11 @@
             });
           }
           else {
-            _col1.setAttribute('style', overflowStyle);
+            _col1.setAttribute('style', overflowStyle+'width: 165px;');
             _row.appendChild(_col1);
           }
           _row.appendChild(_col2);
-          _col2.setAttribute('style', 'opacity:0.8;text-align:left;');
+          _col2.setAttribute('style', 'opacity:0.8;text-align:left;padding-right: 7px');
           mainTable.appendChild(_row);
         }
         mainDiv.appendChild(mainTable);
