@@ -73,6 +73,7 @@
       mainDiv.innerHTML = '<span>' + element.title + '</span>'; // add section tiile
       if (element.data) { // add section data if present
         var iriCount = 0;
+        var playbookCount = 0;
         var mainTable = document.createElement('table');
         mainTable.setAttribute('style', 'width: 100%;margin-top:5px;font-weight:lighter;');
         for (let [key, value] of Object.entries(element.data)) {
@@ -83,20 +84,30 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if (element.id === 'idAutomationCalculation') {
-            _col1.setAttribute('style', overflowStyle +'width: 175px;' +'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
-            _row.appendChild(_col1);
-            _col1.addEventListener('click', function () {
-              var state = 'main.playbookDetail';
-              var params = {
-                id: $filter('getEndPathName')(element.template_iri[iriCount])
-              };
-              var url = $state.href(state, params);
-              $window.open(url, '_blank');
-              iriCount++;
-            });
+
+            if (!element.deletedPlaybooks.includes(playbookCount)) {
+              _col1.setAttribute('style', overflowStyle + 'width: 175px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
+              _row.appendChild(_col1);
+              _col1.addEventListener('click', function () {
+                var state = 'main.playbookDetail';
+                var params = {
+                  id: $filter('getEndPathName')(element.template_iri[iriCount])
+                };
+                var url = $state.href(state, params);
+                $window.open(url, '_blank');
+                iriCount++;
+              });
+            }
+            else {
+
+              _col1.setAttribute('style', 'color: red;width: 175px;text-decoration:underline');
+              _col1.setAttribute('title', '(Deleted) ' + key);
+              _row.appendChild(_col1);
+            }
+            playbookCount++;
           }
           else {
-            _col1.setAttribute('style', overflowStyle+'width: 165px;');
+            _col1.setAttribute('style', overflowStyle + 'width: 165px;');
             _row.appendChild(_col1);
           }
           _row.appendChild(_col2);
@@ -310,37 +321,71 @@
           'value': $filter('date')(_fromDate, 'yyyy-MM-dd HH:mm', 'UTC')
         }],
         'logic': 'AND',
-        'aggregates': [{
-          'field': 'template_iri',
-          'operator': 'count'
-        }]
+        'aggregates': [
+          {
+            'field': 'template_iri',
+            'operator': 'count'
+          }]
+      };
+      var queryToGetName = {
+        sort: [{
+          'field': 'total',
+          'direction': 'DESC'
+        }],
+        'limit': 3,
+        'filters': [{
+          'field': 'tags',
+          'operator': 'ncontains',
+          'value': 'system'
+        }, {
+          'field': 'modified',
+          'operator': 'gte',
+          'value': $filter('date')(_fromDate, 'yyyy-MM-dd HH:mm', 'UTC')
+        }],
+        'logic': 'AND',
+        'aggregates': [
+          {
+            'field': 'name',
+            'operator': 'count'
+          }]
       };
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
-        $scope.socResult.playbookSource = result.data;
-        var _dataSource = null;
-        var _iri = [];
-        var promises = [];
-        if ($scope.socResult.playbookSource.length > 0) {
-          _dataSource = {};
-          $scope.socResult.playbookSource.forEach(element => {
-            if (element.template_iri !== null) {
-              promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
-                _dataSource[result.data.name] = $filter('numberToDisplay')(element.total);
-              }));
-              _iri.push(element.template_iri);
-            }
-          });
-          $q.all(promises).then(function () {
-            var sortedDataSource = sortObjectByKeys(_dataSource);
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
-          });
-        }
-        else {
-          _dataSource = null;
-          addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri });
-        }
-      });
+        var names = {};
+        socManagementService.getPlaybookRun(queryToGetName).then(function (resultName) {
+          names = resultName.data;
+          $scope.socResult.playbookSource = result.data;
+          var _dataSource = null;
+          var _iri = [];
+          var promises = [];
+          var deletedPlaybooks = []
+          if ($scope.socResult.playbookSource.length > 0) {
+            _dataSource = {};
+            $scope.socResult.playbookSource.forEach((element, index) => {
+              if (element.template_iri !== null) {
+                promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
+                  _dataSource[result.data.name] = $filter('numberToDisplay')(element.total);
+                },
+                  function (error) {
+                    _dataSource[names[index].name] = $filter('numberToDisplay')(element.total);
+                    deletedPlaybooks.push(index);
+                  }));
+                _iri.push(element.template_iri);
+              }
+            });
+            $q.all(promises).then(function () {
+              var sortedDataSource = sortObjectByKeys(_dataSource);
+              addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri, 'deletedPlaybooks': deletedPlaybooks });
+            });
+          }
+          else {
+            _dataSource = null;
+            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri, 'deletedPlaybooks': deletedPlaybooks });
+          }
+
+        });
+      })
     }
+
 
     function getTop3AlertType() {
       var queryObject = {
