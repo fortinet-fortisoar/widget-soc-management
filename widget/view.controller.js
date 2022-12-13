@@ -200,6 +200,10 @@
         }
         element.percentChange = Math.abs(_percent);
       }
+      else{
+        element.percentChange = 100;
+        element.increase = true;
+      }
       $scope.percentageData.push(element);
       $scope.percentageData.sort((a, b) => a.sequence - b.sequence);
     }
