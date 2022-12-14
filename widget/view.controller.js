@@ -73,7 +73,6 @@
       mainDiv.innerHTML = '<span>' + element.title + '</span>'; // add section tiile
       if (element.data) { // add section data if present
         var iriCount = 0;
-        var playbookCount = 0;
         var mainTable = document.createElement('table');
         mainTable.setAttribute('style', 'width: 100%;margin-top:5px;font-weight:lighter;');
         for (let [key, value] of Object.entries(element.data)) {
@@ -84,27 +83,18 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if (element.id === 'idAutomationCalculation') {
-
-            if (!element.deletedPlaybooks.includes(playbookCount)) {
-              _col1.setAttribute('style', overflowStyle + 'width: 175px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
-              _row.appendChild(_col1);
-              _col1.addEventListener('click', function () {
-                var state = 'main.playbookDetail';
-                var params = {
-                  id: $filter('getEndPathName')(element.template_iri[iriCount])
-                };
-                var url = $state.href(state, params);
-                $window.open(url, '_blank');
-                iriCount++;
-              });
-            }
-            else {
-
-              _col1.setAttribute('style', 'color: red;width: 175px;text-decoration:underline');
-              _col1.setAttribute('title', '(Deleted) ' + key);
-              _row.appendChild(_col1);
-            }
-            playbookCount++;
+            _col1.setAttribute('style', overflowStyle + 'width: 175px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
+            var state = 'main.playbookDetail';
+            var params = {
+              id: $filter('getEndPathName')(element.template_iri[iriCount])
+            };
+            var url = $state.href(state, params);
+            iriCount++;
+            _col1.setAttribute('id', url);
+            _row.appendChild(_col1);
+            _col1.addEventListener('click', function (event) {
+              $window.open(event.currentTarget.id, '_blank');
+            });
           }
           else {
             _col1.setAttribute('style', overflowStyle + 'width: 165px;');
@@ -199,6 +189,10 @@
           element.increase = false;
         }
         element.percentChange = Math.abs(_percent);
+      }
+      else if( element.currentValue === 0){
+        element.percentChange = 0;
+        element.increase = true;
       }
       else{
         element.percentChange = 100;
@@ -361,29 +355,22 @@
           var _dataSource = null;
           var _iri = [];
           var promises = [];
-          var deletedPlaybooks = []
           if ($scope.socResult.playbookSource.length > 0) {
             _dataSource = {};
             $scope.socResult.playbookSource.forEach((element, index) => {
               if (element.template_iri !== null) {
-                promises.push(socManagementService.getIriElement(element.template_iri).then(function (result) {
-                  _dataSource[result.data.name] = $filter('numberToDisplay')(element.total);
-                },
-                  function (error) {
-                    _dataSource[names[index].name] = $filter('numberToDisplay')(element.total);
-                    deletedPlaybooks.push(index);
-                  }));
+                _dataSource[names[index].name] = $filter('numberToDisplay')(element.total);
                 _iri.push(element.template_iri);
               }
             });
             $q.all(promises).then(function () {
               var sortedDataSource = sortObjectByKeys(_dataSource);
-              addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri, 'deletedPlaybooks': deletedPlaybooks });
+              addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
             });
           }
           else {
             _dataSource = null;
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri, 'deletedPlaybooks': deletedPlaybooks });
+            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri });
           }
 
         });
