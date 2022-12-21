@@ -72,7 +72,7 @@
         }
         
         function getConfig() {
-            return $http.get('widgets/installed/socManagement-1.0.1/assets/socWidgetInput.json');
+            return $http.get('widgets/installed/socManagement-2.0.0/assets/socWidgetInput.json');
         }
     }
 })();

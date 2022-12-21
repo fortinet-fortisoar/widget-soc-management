@@ -9,11 +9,11 @@
   (function() {
     angular
       .module('cybersponse')
-      .controller('editSocManagement101Ctrl', editSocManagement101Ctrl);
+      .controller('editSocManagement200Ctrl', editSocManagement200Ctrl);
   
-      editSocManagement101Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity'];
+      editSocManagement200Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity'];
   
-    function editSocManagement101Ctrl($scope, $uibModalInstance, config, Entity) {
+    function editSocManagement200Ctrl($scope, $uibModalInstance, config, Entity) {
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config || {};

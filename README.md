@@ -4,7 +4,7 @@ The SOC Management widget provides an overall view of an investigation scenario 
 
 ## Version Information
 
-**Version**: 1.0.1
+**Version**: 2.0.0
 
 **Certified**: Yes
 
@@ -15,24 +15,15 @@ The SOC Management widget provides an overall view of an investigation scenario 
 **Applicable**: Dashboards
 
 
-## Release Notes
-
-Following enhancements have been made to the SOC Management Widget in version 1.0.1:
-
-- "Percentage change" value for ROI, Overall Time Saved is now correctly displayed.
-- Changed the dimensions of "Top 3 playbooks" and "Top 3 Alerts" box
-- Modified the widget’s background so that it now appears with theme-friendly colours
-
-
 ## SOC Management Views
 
 **SOC Management Widget Edit View**:
 
-<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/1.0.0/docs/media/soc_mngt_edit.png" alt="Editing the SOC Management widget" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
+<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.0.0/docs/media/soc_mngt_edit.png" alt="Editing the SOC Management widget" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
 
 **SOC Management Widget - Dashboard View**:
 
-<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/1.0.0/docs/media/soc_mngt_dashboard.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
+<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.0.0/docs/media/soc_mngt_dashboard.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
 
 The following matrices are displayed by the SOC Management Widget:
 
