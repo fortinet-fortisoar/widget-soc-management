@@ -11,7 +11,6 @@
         var service = {
             getResourceData: getResourceData,
             getPlaybookRun: getPlaybookRun,
-            getIriElement: getIriElement,
             getPlaybookActionExecuted: getPlaybookActionExecuted,
             getStatusByPicklistName: getStatusByPicklistName,
             getConfig: getConfig
@@ -32,16 +31,6 @@
             var defer = $q.defer();
             var url = API.WORKFLOW + 'api/query/workflow_logs/';
             $resource(url,{}, {}, {stripTrailingSlashes: false}).save(queryObject).$promise.then(function (response) {
-                defer.resolve(response);
-            }, function (error) {
-                defer.reject(error);
-            });
-            return defer.promise;
-        }
-
-        function getIriElement(iri){
-            var defer = $q.defer();
-            $http.get(iri).then(function (response) {
                 defer.resolve(response);
             }, function (error) {
                 defer.reject(error);
