@@ -62,3 +62,7 @@ Provide the following details to customize the SOC Management widget to suit you
 | Title      | Specify the heading or title of the image that represents the overall view of an investigation scenario in a SOC. |
 | Time Range | Specify the time range for which you want to represent the SOC investigation details on the dashboard. The field that you select to specify the time range must of type *DateTime*. For example, `Created On is in the last 7 days`. |
 
+## Next Steps
+
+| [Configuration](./docs/setup.md) | [Usage](./docs/usage.md) |
+|----------------------------------------------|------------------------------------------------|
