@@ -68,3 +68,4 @@ Provide the following details to customize the SOC Management widget to suit you
 
 | [Installation](./docs/setup.md#installation) | [Configuration](./docs/setup.md#configuration) | [Usage](./docs/usage.md) | [Contents](./docs/contents.md) |
 |----------------------------------------------|------------------------------------------------|--------------------------|--------------------------------|
+
