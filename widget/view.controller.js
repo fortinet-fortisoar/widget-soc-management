@@ -202,9 +202,9 @@
       $scope.percentageData.sort((a, b) => a.sequence - b.sequence);
     }
 
-    function calculateRatio() {
-      var num_1 = $scope.socResult.totalAlerts;
-      var num_2 = $scope.socResult.totalIncidents;
+    function calculateRatio(alert, incident) {
+      var num_1 = alert;
+      var num_2 = incident;
       var num = num_2;
       for (num_2; num > 1; num--) {
         if ((num_1 % num) === 0 && (num_2 % num) === 0) {
