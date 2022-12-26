@@ -808,8 +808,6 @@
           'lastValue': formulateRatio(previousRatioCalculated)
         });
       });
-
-
     }
 
     function getImpactCount() {
