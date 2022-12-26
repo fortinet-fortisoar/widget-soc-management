@@ -203,16 +203,16 @@
     }
 
     function calculateRatio(alert, incident) {
-      var num_1 = alert;
-      var num_2 = incident;
-      var num = num_2;
-      for (num_2; num > 1; num--) {
-        if ((num_1 % num) === 0 && (num_2 % num) === 0) {
-          num_1 = num_1 / num;
-          num_2 = num_2 / num;
+      var alerts = alert;
+      var incedents = incident;
+      var numOfIncidents = incedents;
+      for (incedents; numOfIncidents > 1; numOfIncidents--) {
+        if ((alerts % numOfIncidents) === 0 && (incedents % numOfIncidents) === 0) {
+          alerts = alerts / numOfIncidents;
+          incedents = incedents / numOfIncidents;
         }
       }
-      var ratio = $filter('numberToDisplay')(num_1) + ':' + $filter('numberToDisplay')(num_2);
+      var ratio = $filter('numberToDisplay')(alerts) + ':' + $filter('numberToDisplay')(incedents);
       return ratio;
     }
 
