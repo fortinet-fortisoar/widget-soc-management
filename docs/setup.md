@@ -8,10 +8,11 @@
 4. Click **Install** on the bottom to begin installation.
 
 # Configuration
-**Edit Configuration Parameters**
-1. Where (Filter) :- Such as "Created On", "Resolved Date", "Response Date"
-2. Last (Time Period) :- In days eg. 10 days
-Entire Filter would look like:
+**SOC Management Widget Settings** 
 
-Where "Created On" in last "10" days.
-Where "Modified on" in last "7" days.
+Provide the following details to customize the SOC Management widget to suit your requirements:
+
+| Fields     | Description                              |
+| ---------- | ---------------------------------------- |
+| Title      | Specify the heading or title of the image that represents the overall view of an investigation scenario in a SOC. |
+| Time Range | Specify the time range for which you want to represent the SOC investigation details on the dashboard. The field that you select to specify the time range must of type *DateTime*. For example, `Created On is in the last 7 days`. |
