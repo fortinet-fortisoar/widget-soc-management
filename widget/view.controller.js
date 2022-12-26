@@ -202,17 +202,15 @@
       $scope.percentageData.sort((a, b) => a.sequence - b.sequence);
     }
 
-    function calculateRatio() {
-      var num_1 = $scope.socResult.totalAlerts;
-      var num_2 = $scope.socResult.totalIncidents;
-      var num = num_2;
-      for (num_2; num > 1; num--) {
-        if ((num_1 % num) === 0 && (num_2 % num) === 0) {
-          num_1 = num_1 / num;
-          num_2 = num_2 / num;
+    function calculateRatio(alerts, incidents) {
+      var numOfIncidents = incidents;
+      for (incidents; numOfIncidents > 1; numOfIncidents--) {
+        if ((alerts % numOfIncidents) === 0 && (incidents % numOfIncidents) === 0) {
+          alerts = alerts / numOfIncidents;
+          incidents = incidents / numOfIncidents;
         }
       }
-      var ratio = $filter('numberToDisplay')(num_1) + ':' + $filter('numberToDisplay')(num_2);
+      var ratio = $filter('numberToDisplay')(alerts) + ':' + $filter('numberToDisplay')(incidents);
       return ratio;
     }
 
