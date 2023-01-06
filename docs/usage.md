@@ -43,7 +43,7 @@ The following matrices are displayed by the SOC Management Widget:
   - **Alert Resolved** displays the total number of alerts resolved in the specified time range.
   - **Overall Time Saved** displays the time saved by executing playbook actions in the specified time range. 
     Overall time saved is calculated by multiplying the actions executed count by 5 minutes,  i.e. the time taken by an analyst to manually do the task. The value is displayed in hrs. 
-    eg. if the actions executed are 97, the overall time saved will be (97x5)/60 = 8Hrs
+    eg. if the actions executed are 97, the overall time saved will be (97x5)/60 = 8hrs.
   - **Alert MTTR** displays the mean time it took to resolve alerts in the specified time range.
   - **Incident MTTR** displays the mean time it took to resolve incidents in the specified time range.
 
@@ -51,9 +51,7 @@ The following matrices are displayed by the SOC Management Widget:
   The Percentage value is the difference between the time period given while configuration and the the data prior to the number of days given while configuration.  
   eg. For ROI if the date is 20/12/2022 and the widget is configured for 10 days then the percentage is for the (ROI obtained from 10/12-20/12) - (ROI obtained from 1/12-9/12) .
   
-  Note:
+  Known behaviour:
     1. If no data is present for the time period before for which the widget has been configured, then the percentage increase will be 100%.
     2. If a playbook has execution history but has been deleted and comes into the top3playbooks box then the hyperlink will redirect to "Page not found".
-
-
 
