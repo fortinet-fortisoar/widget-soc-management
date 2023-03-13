@@ -71,8 +71,8 @@
             return deferredPicklists.promise;
         }
         
-        function getConfig() {
-            return $http.get('widgets/installed/socManagement-2.0.1/assets/socWidgetInput.json');
+        function getConfig(widgetBasePath) {
+            return $http.get(widgetBasePath + 'assets/socWidgetInput.json');
         }
     }
 })();
