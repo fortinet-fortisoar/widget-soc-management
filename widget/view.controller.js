@@ -9,13 +9,14 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement201Ctrl', socManagement201Ctrl);
+    .controller('socManagement202Ctrl', socManagement202Ctrl);
 
-  socManagement201Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
+  socManagement202Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'widgetBasePath'];
 
-  function socManagement201Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
-
+  function socManagement202Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, widgetBasePath) {
+    
+    $scope.widgetBasePath = widgetBasePath;
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -30,7 +31,7 @@
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
       checkForSVGLoad();
-      socManagementService.getConfig().then(function (response) {
+      socManagementService.getConfig(widgetBasePath).then(function (response) {
         $scope.config = angular.extend(response.data, config);
         configLoaded = true;
         initializeData();
