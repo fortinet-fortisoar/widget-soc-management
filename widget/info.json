@@ -11,7 +11,7 @@
         "description": "SOC Management Widget to overview all the metrics",
         "help_online": "https://github.com/fortinet-fortisoar/widget-soc-management/blob/release/2.0.2/README.md",
         "compatibility": [
-            "7.2.2"
+            "7.4.1"
         ]
     },
     "name": "socManagement",
