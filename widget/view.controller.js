@@ -16,7 +16,7 @@
 
   function socManagement202Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, widgetBasePath) {
     
-    $scope.widgetBasePath = widgetBasePath;
+    $scope.widgetBasePath = widgetBasePath || 'widgets/installed/socManagement-2.0.2/';
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -31,7 +31,7 @@
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
       checkForSVGLoad();
-      socManagementService.getConfig(widgetBasePath).then(function (response) {
+      socManagementService.getConfig($scope.widgetBasePath).then(function (response) {
         $scope.config = angular.extend(response.data, config);
         configLoaded = true;
         initializeData();
