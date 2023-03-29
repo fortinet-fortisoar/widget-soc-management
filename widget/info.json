@@ -6,18 +6,18 @@
         "certified": "Yes",
         "publisher": "Fortinet",
         "snapshots": [
-            "https://repo.fortisoar.fortinet.com/fsr-widgets/socManagement-2.0.2/images/soc-management.png"
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/socManagement-2.1.0/images/soc-management.png"
         ],
         "description": "SOC Management Widget to overview all the metrics",
-        "help_online": "https://github.com/fortinet-fortisoar/widget-soc-management/blob/release/2.0.2/README.md",
+        "help_online": "https://github.com/fortinet-fortisoar/widget-soc-management/blob/release/2.1.0/README.md",
         "compatibility": [
-            "7.4.1"
+            "7.2.2"
         ]
     },
     "name": "socManagement",
     "title": "SOC Management",
     "subTitle": "SOC Management Dashboard",
-    "version": "2.0.2",
-    "published_date": 1678705379,
+    "version": "2.1.0",
+    "published_date": 1680095834,
     "releaseNotes": "available"
 }
