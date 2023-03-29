@@ -9,14 +9,14 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement202Ctrl', socManagement202Ctrl);
+    .controller('socManagement210Ctrl', socManagement210Ctrl);
 
-  socManagement202Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+  socManagement210Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
     'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'widgetBasePath'];
 
-  function socManagement202Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, widgetBasePath) {
+  function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, widgetBasePath) {
     
-    $scope.widgetBasePath = widgetBasePath || 'widgets/installed/socManagement-2.0.2/';
+    $scope.widgetBasePath = widgetBasePath || 'widgets/installed/socManagement-2.1.0/';
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
