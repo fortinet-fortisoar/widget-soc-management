@@ -16,7 +16,7 @@
 
   function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, widgetBasePath) {
     
-    $scope.widgetBasePath = widgetBasePath || 'widgets/installed/socManagement-2.1.0/';
+    $scope.widgetBasePath = widgetBasePath;
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
