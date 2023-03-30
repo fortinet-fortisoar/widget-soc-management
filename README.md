@@ -6,7 +6,7 @@
 
 - **Publisher**: Fortinet  
 
-- **Compatibility**: 7.2.2 and later
+- **Compatibility**: 7.4.1 and later
 
 - **Applicable**: Dashboards
 
