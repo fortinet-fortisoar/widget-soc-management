@@ -11,14 +11,15 @@
       .module('cybersponse')
       .controller('editSocManagement201Ctrl', editSocManagement201Ctrl);
   
-      editSocManagement201Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity'];
+      editSocManagement201Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity', 'Field'];
   
-    function editSocManagement201Ctrl($scope, $uibModalInstance, config, Entity) {
+    function editSocManagement201Ctrl($scope, $uibModalInstance, config, Entity, Field) {
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config || {};
       $scope.params = {};
-  
+
+
        function loadAttributes() {
         var entity = new Entity('alerts');
         $scope.params.dateField = [];
@@ -36,6 +37,16 @@
       }
       
       function init() {
+        $scope.tagsField  = 
+          new Field({
+          name: 'Tags',
+          writeable: true,
+          title: 'Tags',
+          formType: 'tags',
+          dataSource: {
+              model: 'recordTags'
+          }
+        }),
         loadAttributes();
       }
 

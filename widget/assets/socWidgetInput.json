@@ -7,7 +7,7 @@
     "relatedResource2":"assets",
     "relatedResource3":"indicators",
     "alertSource":{
-        "title":"Top 3 Data Sources"
+        "title":"Top 3 Detections"
     },
     "top3PlaybookRun":{
         "title":"Top 3 Playbooks"
@@ -26,6 +26,9 @@
     },
     "closed":{
         "title":"Closed"
+    },
+    "automatedResolved":{
+        "title":"by Automation"
     },
     "topIncidents":{
         "title":"Top 3 Incident Types"

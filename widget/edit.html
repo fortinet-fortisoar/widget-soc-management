@@ -3,57 +3,75 @@
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end -->
-  <form data-ng-submit="save()" class="noMargin" name="socManagementForm" novalidate>
-    <div class="modal-header">
-      <h3 class="modal-title col-md-10">Edit SOC Management</h3>
-      <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close" id="close-edit-soc-management-btn">
-        <div aria-hidden="true" class="version-button">+</div>
-      </button>
+<form data-ng-submit="save()" class="noMargin" name="socManagementForm" novalidate>
+  <div class="modal-header">
+    <h3 class="modal-title col-md-10">Edit SOC Management</h3>
+    <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
+      id="close-edit-soc-management-btn">
+      <div aria-hidden="true" class="version-button">+</div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group"
+      data-ng-class="{ 'has-error': socManagementForm.title.$invalid && socManagementForm.title.$touched }">
+      <label for="title" class="control-label">Title</label>
+      <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title">
+      <div data-cs-messages="socManagementForm.title"></div>
     </div>
-    <div class="modal-body">
-      <div class="form-group" data-ng-class="{ 'has-error': socManagementForm.title.$invalid && socManagementForm.title.$touched }">
-        <label for="title" class="control-label">Title</label>
-        <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title">
-        <div data-cs-messages="socManagementForm.title"></div>
+    <div data-ng-show="params.fields">
+      <div class="form-group">
+        <label for="filters" class="control-label">Time Range</label>
       </div>
-      <div data-ng-show="params.fields">
-        <div class="form-group">
-          <label for="filters" class="control-label">Time Range</label>
+      <div class="row margin-bottom-sm">
+        <div class="col-md-1 padding-right-0">
+          <div class="form-group">
+            <label class="control-label margin-top-sm">where</label>
+          </div>
         </div>
-        <div class="row margin-bottom-sm">
-          <div class="col-md-1 padding-right-0">
-            <div class="form-group">
-              <label class="control-label margin-top-sm">where</label>
-            </div>
-          </div>
-          <div class="col-md-4 padding-right-0">
-            <div class="form-group margin-bottom-0" data-ng-class="{ 'has-error': socManagementForm.timeRange.$invalid && socManagementForm.timeRange.$touched }">
-              <div class="cs-select">
-                <select name="timeRange" id="timeRange" class="form-control input-sm" data-ng-options="fields.name as fields.title for fields in params.dateField" data-ng-model="config.timeRange" required>
-                  <option value="">Select a field</option>
-                </select>
-                <span class="fa fa-sort-desc"></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-1 padding-right-0">
-            <div class="form-group">
-              <label class="control-label margin-top-sm">is in</label>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group margin-bottom-0 display-inline-flex" data-ng-class="{ 'has-error': socManagementForm.dayRange.$invalid && socManagementForm.dayRange.$touched }">
-              <label class="control-label margin-top-sm"> Last </label>
-              <input name="dayRange" id="dayRange" type="number" step="1" data-ng-min="1" min="1" class="form-control input-sm margin-left-md margin-right-md" data-ng-model="config.days" required>
-              <label class="control-label margin-top-sm"> Days</label>
+        <div class="col-md-4 padding-right-0">
+          <div class="form-group margin-bottom-0"
+            data-ng-class="{ 'has-error': socManagementForm.timeRange.$invalid && socManagementForm.timeRange.$touched }">
+            <div class="cs-select">
+              <select name="timeRange" id="timeRange" class="form-control input-sm"
+                data-ng-options="fields.name as fields.title for fields in params.dateField"
+                data-ng-model="config.timeRange" required>
+                <option value="">Select a field</option>
+              </select>
+              <span class="fa fa-sort-desc"></span>
             </div>
           </div>
         </div>
+        <div class="col-md-1 padding-right-0">
+          <div class="form-group">
+            <label class="control-label margin-top-sm">is in</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group margin-bottom-0 display-inline-flex"
+            data-ng-class="{ 'has-error': socManagementForm.dayRange.$invalid && socManagementForm.dayRange.$touched }">
+            <label class="control-label margin-top-sm"> Last </label>
+            <input name="dayRange" id="dayRange" type="number" step="1" data-ng-min="1" min="1"
+              class="form-control input-sm margin-left-md margin-right-md" data-ng-model="config.days" required>
+            <label class="control-label margin-top-sm"> Days</label>
+          </div>
+        </div>
+        <!-- Add Tags -->
+        <div class="form-group padding-bottom-md padding-top-lg padding-left-lg">
+          <label class="control-label">Tags to exclude</label>
+          <div class="cs-tags-container">
+            <div class="tags-custom">
+              <div data-cs-tags="tagsField" cs-allow-add-tag="true" data-ng-model="config.recordTags"
+                data-placeholder="'+ Add Tags'" class="position-relative width-100pt"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button id="widget-edit-save" type="submit" data-ng-disabled="socManagementForm.$invalid" class="btn btn-sm btn-primary"><i class="icon icon-check margin-right-sm"></i>Save</button>
-      <button id="widget-edit-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i class="icon icon-close margin-right-sm"></i>Close</button>
-    </div>
-  </form>
-  
+  </div>
+  <div class="modal-footer">
+    <button id="widget-edit-save" type="submit" data-ng-disabled="socManagementForm.$invalid"
+      class="btn btn-sm btn-primary"><i class="icon icon-check margin-right-sm"></i>Save</button>
+    <button id="widget-edit-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
+        class="icon icon-close margin-right-sm"></i>Close</button>
+  </div>
+</form>
