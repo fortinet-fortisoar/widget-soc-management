@@ -1,4 +1,4 @@
 # What's New
 
-Minor bug fixes
-
+- Filter criteria to Exclude playbooks with tags mentioned
+- Visual changes 
