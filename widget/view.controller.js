@@ -9,13 +9,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement201Ctrl', socManagement201Ctrl);
+    .controller('socManagement210Ctrl', socManagement210Ctrl);
 
-  socManagement201Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+  socManagement210Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
     'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
 
-  function socManagement201Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
-
+  function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -83,7 +82,7 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if (element.id === 'idAutomationCalculation') {
-            _col1.setAttribute('style', overflowStyle + 'width: 250px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
+            _col1.setAttribute('style', overflowStyle + 'width: 265px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
             var state = 'main.playbookDetail';
             var params = {
               id: $filter('getEndPathName')(element.template_iri[iriCount])
