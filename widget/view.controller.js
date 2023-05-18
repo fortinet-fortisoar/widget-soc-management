@@ -9,12 +9,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement200Ctrl', socManagement200Ctrl);
+    .controller('socManagement201Ctrl', socManagement201Ctrl);
 
-  socManagement200Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+  socManagement201Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
     'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
 
-  function socManagement200Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
+  function socManagement201Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
 
     var loadedSVGDocument;
     $scope.percentageData = [];
@@ -245,7 +245,7 @@
     function getAlertSources() {
       var queryObject = {
         sort: [{
-          field: 'source',
+          field: 'total',
           direction: 'DESC'
         }],
         aggregates: [
