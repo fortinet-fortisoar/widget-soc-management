@@ -12,9 +12,9 @@
     .controller('socManagement210Ctrl', socManagement210Ctrl);
 
   socManagement210Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection'];
 
-  function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
+  function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection) {
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -22,6 +22,7 @@
     var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
     var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
+    $scope.config.moduleType = $scope.config.moduleType ? $scope.config.moduleType : 'Across Modules';
 
     function _init() {
       $scope.currentTheme = $rootScope.theme.id;
@@ -38,8 +39,13 @@
 
     function initializeData() {
       if (configLoaded && svgLoaded) {
-        $scope.dateFilterField = $scope.config.timeRange || 'createDate';
-        getResult();
+        if ($scope.config.moduleType === 'Across Modules') {
+          $scope.dateFilterField = $scope.config.timeRange || 'createDate';
+          getResult();
+        }
+        else {
+          populateCustomData();
+        }
       }
     }
 
@@ -49,6 +55,51 @@
         svgLoaded = true;
         initializeData();
       });
+    }
+    //to populate funnel for custom module
+    function populateCustomData() {
+      var filters = {
+        query: $scope.config.query
+      };
+      var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
+      pagedTotalData.loadByPost(filters).then(function () {
+        if (pagedTotalData.fieldRows.length === 0) {
+          $scope.filterValidation = true;
+          return;
+        }
+        var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
+        populateByJson(data);
+      })
+    }
+
+    function populateByJson(customData) {
+      for (let key in customData) {
+        if (key === "dataBoxes") {
+          for (var i = 0; i < customData[key].length; i++) {
+            var element = customData[key][i];
+            addForeignObject(element);
+          }
+        }
+        else if (key === "alertsFlow") {
+          for (var i = 0; i < customData[key].length; i++) {
+            var element = customData[key][i];
+            element.count = element.value;
+            addLabelCounts(element);
+          }
+        }
+        else if (key === "impactAnalysis") {
+          for (var i = 0; i < customData[key].length; i++) {
+            var element = customData[key][i];
+            element.count = element.value;
+            addBlockData(element);
+          }
+        }
+        else if (key === "kpi"){
+          for (var i = 0; i < customData[key].length; i++) {
+            $scope.percentageData.push(customData[key][i]);
+          }
+        }
+      }
     }
 
     function addForeignObject(element) {
@@ -96,11 +147,10 @@
             });
           }
           else {
-            if(element.id === 'idTopThreeAlerts')
-            {
+            if (element.id === 'idTopThreeAlerts') {
               _col1.setAttribute('style', overflowStyle + 'width: 165px;');
             }
-            else{
+            else {
               _col1.setAttribute('style', overflowStyle + 'width: 120px;');
             }
             _row.appendChild(_col1);
@@ -148,7 +198,7 @@
       }
 
       countDiv.innerHTML = element.count + '<span style="font-size:25px;margin-left: 5px;">' + element.title + '</span>';
-      if(element.id === 'idResolvedAutomated'){
+      if (element.id === 'idResolvedAutomated') {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + ';font-size: 16px;font-style: italic;margin-top: 16px;font-family:' + fontFamily + ';')
         countDiv.innerHTML = element.count + '<span style="font-size:16px;margin-left: 5px;">' + element.title + '</span>';
       }
@@ -200,11 +250,11 @@
         }
         element.percentChange = Math.abs(_percent);
       }
-      else if( element.currentValue === 0){
+      else if (element.currentValue === 0) {
         element.percentChange = 0;
         element.increase = true;
       }
-      else{
+      else {
         element.percentChange = 100;
         element.increase = true;
       }
@@ -344,7 +394,7 @@
           'field': 'tags',
           'operator': 'ncontains',
           'value': 'system'
-        }, 
+        },
         {
           'field': 'modified',
           'operator': 'gte',
@@ -357,10 +407,10 @@
             'operator': 'count'
           }]
       };
-      if($scope.config.recordTags){
+      if ($scope.config.recordTags) {
         var playbookExcludeTag = []
-        for(var i= 0; i< $scope.config.recordTags.length; i++){
-          var tagArr = $scope.config.recordTags[i].split('/'); 
+        for (var i = 0; i < $scope.config.recordTags.length; i++) {
+          var tagArr = $scope.config.recordTags[i].split('/');
           var tag = tagArr.pop();
           playbookExcludeTag.push({
             'field': 'tags',
@@ -732,8 +782,8 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.automatedClosed = result['hydra:member'][0].status;
           }
-          var closedAutomatedAlerts = '( '+ Math.round(($scope.socResult.automatedClosed * 100 )/$scope.socResult.closedAlerts) + '%';
-          addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title+ ' )' });
+          var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
+          addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title + ' )' });
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
           $scope.socResult.previousClosedAlerts = result['hydra:member'][0].status;
