@@ -783,7 +783,7 @@
             $scope.socResult.automatedClosed = result['hydra:member'][0].status;
           }
           if($scope.socResult.closedAlerts === 0){
-            var closedAutomatedAlerts = 0;
+            var closedAutomatedAlerts = '(0%';
           }
           else{
             var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';

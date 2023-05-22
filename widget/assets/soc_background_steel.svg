@@ -1966,9 +1966,9 @@
 				<text transform="matrix(1 0 0 1 1025.3297 330.9266)" class="st105 st71 st72">CLOSED</text>
 			</g>
 		</g>
-		<g id="idResolvedAutomated_00000016790012049696487240000014922781968123468199_" class="st69">
-			<g id="idClosedLabel_00000004533102024334026280000014833999992453305755_">
-				<text id="idResolvedAutomated" transform="matrix(1 0 0 1 1001.4722 350.4981)" class="st106 st71 st107">(5 Automatic)</text>
+		<g id="idResolvedAutomated" class="st69">
+			<g id="idResolvedAutomated_00000004533102024334026280000014833999992453305755_">
+				<text id="idResolvedAutomated_00000016790012049696487240000014922781968123468199_" transform="matrix(1 0 0 1 1001.4722 350.4981)" class="st106 st71 st107">(5 Automatic)</text>
 			</g>
 		</g>
 	</g>
