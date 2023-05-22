@@ -782,7 +782,12 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.automatedClosed = result['hydra:member'][0].status;
           }
-          var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
+          if($scope.socResult.closedAlerts === 0){
+            var closedAutomatedAlerts = 0;
+          }
+          else{
+            var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
+          }
           addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title + ' )' });
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {

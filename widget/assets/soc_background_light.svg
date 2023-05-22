@@ -2036,7 +2036,7 @@
 		<path class="st118" d="M940.3,174.8l31.4,13.6c3.1,1.3,5.3,4,6,7.3l21.6,96.9"/>
 	</g>
 	<g>
-		<g id="idClosedLabel_00000114776418778890407330000016981094161036259973_" class="st86">
+		<g id="idClosedLabel" class="st86">
 			<path id="idClosedLabel_00000129173926198823422300000004506937161904849038_" class="st119" d="M1016.2,332.4h-17.8
 				c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C1017.4,331.9,1016.9,332.4,1016.2,332.4z"
 				/>
@@ -2044,9 +2044,9 @@
 				<text transform="matrix(1 0 0 1 1024.7297 331.0329)" class="st119 st120 st89">CLOSED</text>
 			</g>
 		</g>
-		<g id="idClosedLabel_00000054959501146278740670000005087395404942428318_" class="st86">
-			<g id="idClosedLabel_00000004533102024334026280000014833999992453305755_">
-				<text id="idResolvedAutomated" transform="matrix(1 0 0 1 1011.3348 350.6044)" class="st121 st120 st122">(5 Automatic)</text>
+		<g id="idResolvedAutomated" class="st86">
+			<g id="idResolvedAutomated_12123123">
+				<text id="idResolvedAutomated_123123" transform="matrix(1 0 0 1 1011.3348 350.6044)" class="st121 st120 st122">(5 Automatic)</text>
 			</g>
 		</g>
 	</g>
@@ -2066,7 +2066,7 @@
 	<path id="idClosedLabel_00000029027801994606879460000000384095731353503645_" class="st119" d="M4053.1,2291.4h-17.8
 		c-0.6,0-1.2-0.5-1.2-1.2v-17.8c0-0.6,0.5-1.2,1.2-1.2h17.8c0.6,0,1.2,0.5,1.2,1.2v17.8C4054.2,2290.8,4053.7,2291.4,4053.1,2291.4z
 		"/>
-	<g id="idResolvedAutomated_00000088829732923892235270000013163561292539604905_">
+	<g id="idClosedLabel_00000088829732923892235270000013163561292539604905_">
 		<text transform="matrix(1 0 0 1 4061.5068 2290.0337)" class="st88 st89">Closed</text>
 	</g>
 </g>
