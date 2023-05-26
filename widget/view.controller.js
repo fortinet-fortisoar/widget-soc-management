@@ -64,7 +64,7 @@
       var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
       pagedTotalData.loadByPost(filters).then(function () {
         if (pagedTotalData.fieldRows.length === 0) {
-          $scope.filterValidation = true;
+          populateByJson({});
           return;
         }
         var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
@@ -73,30 +73,80 @@
     }
 
     function populateByJson(customData) {
+      var keyDataBoxes = customData.hasOwnProperty('dataBoxes');
+      var keyAlertsFlow = customData.hasOwnProperty('alertsFlow');
+      var keyImpactAnalysis = customData.hasOwnProperty('impactAnalysis');
+      var keyKpi = customData.hasOwnProperty('kpi');
+
+      if(Object.keys(customData).length === 0){
+        customData = {
+          'dataBoxes':"",
+          'alertsFlow':"",
+          'kpi':"",
+          'impactAnalysis':""          
+        } 
+      }
       for (let key in customData) {
-        if (key === "dataBoxes") {
-          for (var i = 0; i < customData[key].length; i++) {
-            var element = customData[key][i];
-            addForeignObject(element);
+        if (key === "dataBoxes" || !keyDataBoxes ) {
+          if(!keyDataBoxes){
+            for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
+              var element = $scope.config['dataBoxes'][i];
+              addForeignObject(element);
+            }
+            keyDataBoxes = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              addForeignObject(element);
+            }
           }
         }
-        else if (key === "alertsFlow") {
-          for (var i = 0; i < customData[key].length; i++) {
-            var element = customData[key][i];
-            element.count = element.value;
-            addLabelCounts(element);
+        else if (key === "alertsFlow" || !keyAlertsFlow) {
+          if(!keyAlertsFlow){
+            for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
+              var element = $scope.config['alertsFlow'][i];
+              element.count = element.value;
+              addLabelCounts(element);
+            }
+            keyAlertsFlow = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              element.count = element.value;
+              addLabelCounts(element);
+            }
           }
         }
-        else if (key === "impactAnalysis") {
-          for (var i = 0; i < customData[key].length; i++) {
-            var element = customData[key][i];
-            element.count = element.value;
-            addBlockData(element);
+        else if (key === "kpi" || !keyKpi){
+          if(!keyKpi){
+            for (var i = 0; i < $scope.config['kpi'].length; i++) {
+              $scope.percentageData.push($scope.config['kpi'][i]);
+            }
+            keyKpi = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              $scope.percentageData.push(customData[key][i]);
+            }
           }
         }
-        else if (key === "kpi"){
-          for (var i = 0; i < customData[key].length; i++) {
-            $scope.percentageData.push(customData[key][i]);
+        else if (key === "impactAnalysis" || !keyImpactAnalysis) {
+          if(!keyImpactAnalysis){
+            for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
+              var element = $scope.config['impactAnalysis'][i];
+              element.count = element.value;
+              addBlockData(element);
+            }
+            keyImpactAnalysis = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              element.count = element.value;
+              addBlockData(element);
+            }
           }
         }
       }
