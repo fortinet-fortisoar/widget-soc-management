@@ -3,19 +3,104 @@
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end -->
-  <form data-ng-submit="save()" class="noMargin" name="socManagementForm" novalidate>
-    <div class="modal-header">
-      <h3 class="modal-title col-md-10">Edit SOC Management</h3>
-      <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close" id="close-edit-soc-management-btn">
-        <div aria-hidden="true" class="version-button">+</div>
-      </button>
+<form data-ng-submit="save()" class="noMargin" name="socManagementForm" novalidate>
+  <div class="modal-header">
+    <h3 class="modal-title col-md-10">Edit SOC Management</h3>
+    <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
+      id="close-edit-soc-management-btn">
+      <div aria-hidden="true" class="version-button">+</div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group"
+      data-ng-class="{ 'has-error': socManagementForm.title.$invalid && socManagementForm.title.$touched }">
+      <label for="title" class="control-label">Title</label>
+      <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title">
+      <div data-cs-messages="socManagementForm.title"></div>
     </div>
-    <div class="modal-body">
-      <div class="form-group" data-ng-class="{ 'has-error': socManagementForm.title.$invalid && socManagementForm.title.$touched }">
-        <label for="title" class="control-label">Title</label>
-        <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title">
-        <div data-cs-messages="socManagementForm.title"></div>
+
+    <label for="socManagementWidget" class="control-label">Data Source</label>
+    <span class="text-danger">*
+        <span
+            data-uib-tooltip="Select the 'Record Containing JSON Data' option if all the records to be rendered are in a single record of a certain field of the module.
+        'Count of Records Across Module' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
+            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+    </span>
+    <!-- Radio Button -->
+
+    <div class="row margin-bottom-sm">
+      <div class="col-md-6 padding-right-0">
+        <div class="radio">
+          <label><input id="JsonField" name="JsonField" type="radio" data-ng-model="config.moduleType"
+              data-ng-change="onChangeModuleType()" value="Single Module">&nbsp;&nbsp;Record Containing JSON Data</label>
+          <span data-uib-tooltip="It allows you to select single record that contains a JSON object."
+            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+        </div>
+        <div class="radio">
+          <label><input id="accrossModules" name="accrossModules" type="radio" data-ng-model="config.moduleType"
+              data-ng-change="onChangeModuleType()" value="Across Modules">&nbsp;&nbsp;Get Live Data</label>
+          <span data-uib-tooltip="It allows you to get live count from "
+            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+        </div>
       </div>
+    </div>
+    <!-- Radio Button End -->
+
+    <!-- To fetch from single JSON Record -->
+    <div data-ng-if="config.moduleType == 'Single Module'">
+      <div class="form-group" data-ng-if="jsonObjModuleList"
+          data-ng-class="{ 'has-error': socManagementForm.customModule.$invalid && socManagementForm.customModule.$touched }">
+          <label for="customModule" class="control-label">Data Source
+              <span class="text-danger">*</span>
+          </label>
+          <span data-uib-tooltip="Select the Module which has JSON data" data-tooltip-append-to-body="true"><i
+                  class="icon icon-information font-Size-13"></i></span>
+          <select name="customModule" id="customModule" class="form-control"
+              data-ng-options="module.type as module.name for module in jsonObjModuleList"
+              data-ng-model="config.customModule"
+              data-ng-change="loadAttributesForCustomModule(config.customModule)" required>
+              <option value="">Select an Option</option>
+          </select>
+      </div>
+      <div class="form-group" data-ng-if="config.customModule !== undefined">
+          <div class="form-group" data-ng-if="objectFields.length > 0">
+              <div id="customModuleField"
+                  data-ng-class="{ 'has-error': socManagementForm.customModuleField.$invalid && socManagementForm.customModuleField.$touched }">
+                  <label class="control-label">Select Field
+                      <span class="text-danger">*</span>
+                  </label>
+                  <span
+                      data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
+                      data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                  <select class="form-control" name="customModuleField" id="customModuleField"
+                      data-ng-options="field.name as field.title for field in objectFields"
+                      data-ng-model="config.customModuleField" required>
+                      <option value="">Select an Option</option>
+                  </select>
+              </div>
+              <div id="filterJsonRecord" class="margin-top-md margin-bottom-md">
+                <label class="control-label">Filter Record Which Contains The JSON Data
+                    <span class="text-danger">*</span>
+                </label>
+                <span
+                    data-uib-tooltip="It is recommended to apply filter, that filters out 1 record. If multiple records are filtered with the condition given, first record will be assumed"
+                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
+                    data-reset-field="$parent.fields" data-mode="'queryFilters'"
+                    data-ng-model="$parent.config.query" data-parent-form="socManagementForm"
+                    data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
+                    data-form-name="'socManagementForm'">
+                </div>
+            </div>
+          </div>
+          <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="objectFields.length == 0">
+              <span>Select a module wich contains JSON field</span>
+          </div>
+      </div>
+  </div>
+
+    <!-- To fetch from live data  -->
+    <div data-ng-if="config.moduleType === 'Across Modules'">
       <div data-ng-show="params.fields">
         <div class="form-group">
           <label for="filters" class="control-label">Time Range</label>
@@ -27,9 +112,12 @@
             </div>
           </div>
           <div class="col-md-4 padding-right-0">
-            <div class="form-group margin-bottom-0" data-ng-class="{ 'has-error': socManagementForm.timeRange.$invalid && socManagementForm.timeRange.$touched }">
+            <div class="form-group margin-bottom-0"
+              data-ng-class="{ 'has-error': socManagementForm.timeRange.$invalid && socManagementForm.timeRange.$touched }">
               <div class="cs-select">
-                <select name="timeRange" id="timeRange" class="form-control input-sm" data-ng-options="fields.name as fields.title for fields in params.dateField" data-ng-model="config.timeRange" required>
+                <select name="timeRange" id="timeRange" class="form-control input-sm"
+                  data-ng-options="fields.name as fields.title for fields in params.dateField"
+                  data-ng-model="config.timeRange" required>
                   <option value="">Select a field</option>
                 </select>
                 <span class="fa fa-sort-desc"></span>
@@ -42,18 +130,32 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="form-group margin-bottom-0 display-inline-flex" data-ng-class="{ 'has-error': socManagementForm.dayRange.$invalid && socManagementForm.dayRange.$touched }">
+            <div class="form-group margin-bottom-0 display-inline-flex"
+              data-ng-class="{ 'has-error': socManagementForm.dayRange.$invalid && socManagementForm.dayRange.$touched }">
               <label class="control-label margin-top-sm"> Last </label>
-              <input name="dayRange" id="dayRange" type="number" step="1" data-ng-min="1" min="1" class="form-control input-sm margin-left-md margin-right-md" data-ng-model="config.days" required>
+              <input name="dayRange" id="dayRange" type="number" step="1" data-ng-min="1" min="1"
+                class="form-control input-sm margin-left-md margin-right-md" data-ng-model="config.days" required>
               <label class="control-label margin-top-sm"> Days</label>
             </div>
           </div>
+          <!-- Add Tags -->
+          <div class="form-group padding-bottom-md padding-top-lg padding-left-lg">
+            <label class="control-label">Exclude Playbooks with Tags</label>
+            <div class="cs-tags-container">
+              <div class="tags-custom">
+                <div data-cs-tags="tagsField" cs-allow-add-tag="true" data-ng-model="config.recordTags"
+                  data-placeholder="'+ Add Tags'" class="position-relative width-100pt"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="widget-edit-save" type="submit" data-ng-disabled="socManagementForm.$invalid" class="btn btn-sm btn-primary"><i class="icon icon-check margin-right-sm"></i>Save</button>
-      <button id="widget-edit-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i class="icon icon-close margin-right-sm"></i>Close</button>
-    </div>
-  </form>
-  
+      </div> </div>
+
+  </div>
+  <div class="modal-footer">
+    <button id="widget-edit-save" type="submit" data-ng-disabled="socManagementForm.$invalid"
+      class="btn btn-sm btn-primary"><i class="icon icon-check margin-right-sm"></i>Save</button>
+    <button id="widget-edit-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
+        class="icon icon-close margin-right-sm"></i>Close</button>
+  </div>
+</form>

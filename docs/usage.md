@@ -6,14 +6,14 @@
 
 **SOC Management Widget Edit View**:
 
-<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.0.1/docs/media/soc_mngt_edit.png" alt="Editing the SOC Management widget" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
+<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.1.0/docs/media/soc_mngt_edit.png" alt="Editing the SOC Management widget" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
 
 **SOC Management Widget - Dashboard View**:
 **Dark Theme**
-<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.0.1/docs/media/soc_management_dark.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
+<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.1.0/docs/media/soc_management_dark.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
 
 **Light Theme**
-<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.0.1/docs/media/soc_management_light.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
+<img src="https://raw.githubusercontent.com/fortinet-fortisoar/widget-soc-management/release/2.1.0/docs/media/soc_management_light.png" alt="Viewing the SOC Managment widget on the Dashboard page" style="border: 1px solid #A9A9A9; border-radius: 4px; padding: 10px; display: block; margin-left: auto; margin-right: auto;">
 
 The following matrices are displayed by the SOC Management Widget:
 

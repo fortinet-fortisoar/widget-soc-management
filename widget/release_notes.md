@@ -1,4 +1,5 @@
 # What's New
 
-Minor bug fixes
-
+- Filter criteria to Exclude playbooks with tags mentioned
+- Visual changes
+- Now the widget can be populated by JSON(To do so, select 'Record Containing JSON Data' in the Edit Widget form)  

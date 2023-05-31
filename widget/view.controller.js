@@ -9,13 +9,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement201Ctrl', socManagement201Ctrl);
+    .controller('socManagement210Ctrl', socManagement210Ctrl);
 
-  socManagement201Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window'];
+  socManagement210Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection'];
 
-  function socManagement201Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window) {
-
+  function socManagement210Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection) {
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -23,6 +22,7 @@
     var overflowStyle = 'display: inline-block;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;opacity: 0.8;';
     var fontFamily = '\'Lato\', sans-serif';
     var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
+    $scope.config.moduleType = $scope.config.moduleType ? $scope.config.moduleType : 'Across Modules';
 
     function _init() {
       $scope.currentTheme = $rootScope.theme.id;
@@ -39,8 +39,13 @@
 
     function initializeData() {
       if (configLoaded && svgLoaded) {
-        $scope.dateFilterField = $scope.config.timeRange || 'createDate';
-        getResult();
+        if ($scope.config.moduleType === 'Across Modules') {
+          $scope.dateFilterField = $scope.config.timeRange || 'createDate';
+          getResult();
+        }
+        else {
+          populateCustomData();
+        }
       }
     }
 
@@ -50,6 +55,101 @@
         svgLoaded = true;
         initializeData();
       });
+    }
+    //to populate funnel for custom module
+    function populateCustomData() {
+      var filters = {
+        query: $scope.config.query
+      };
+      var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
+      pagedTotalData.loadByPost(filters).then(function () {
+        if (pagedTotalData.fieldRows.length === 0) {
+          populateByJson({});
+          return;
+        }
+        var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
+        populateByJson(data);
+      })
+    }
+
+    function populateByJson(customData) {
+      var keyDataBoxes = customData.hasOwnProperty('dataBoxes');
+      var keyAlertsFlow = customData.hasOwnProperty('alertsFlow');
+      var keyImpactAnalysis = customData.hasOwnProperty('impactAnalysis');
+      var keyKpi = customData.hasOwnProperty('kpi');
+
+      if(Object.keys(customData).length === 0){
+        customData = {
+          'dataBoxes':"",
+          'alertsFlow':"",
+          'kpi':"",
+          'impactAnalysis':""          
+        } 
+      }
+      for (let key in customData) {
+        if (key === "dataBoxes" || !keyDataBoxes ) {
+          if(!keyDataBoxes){
+            for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
+              var element = $scope.config['dataBoxes'][i];
+              addForeignObject(element);
+            }
+            keyDataBoxes = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              addForeignObject(element);
+            }
+          }
+        }
+        else if (key === "alertsFlow" || !keyAlertsFlow) {
+          if(!keyAlertsFlow){
+            for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
+              var element = $scope.config['alertsFlow'][i];
+              element.count = element.value;
+              addLabelCounts(element);
+            }
+            keyAlertsFlow = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              element.count = element.value;
+              addLabelCounts(element);
+            }
+          }
+        }
+        else if (key === "kpi" || !keyKpi){
+          if(!keyKpi){
+            for (var i = 0; i < $scope.config['kpi'].length; i++) {
+              $scope.percentageData.push($scope.config['kpi'][i]);
+            }
+            keyKpi = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              $scope.percentageData.push(customData[key][i]);
+            }
+          }
+        }
+        else if (key === "impactAnalysis" || !keyImpactAnalysis) {
+          if(!keyImpactAnalysis){
+            for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
+              var element = $scope.config['impactAnalysis'][i];
+              element.count = element.value;
+              addBlockData(element);
+            }
+            keyImpactAnalysis = true;
+          }
+          else{
+            for (var i = 0; i < customData[key].length; i++) {
+              var element = customData[key][i];
+              element.count = element.value;
+              addBlockData(element);
+            }
+          }
+        }
+      }
     }
 
     function addForeignObject(element) {
@@ -83,7 +183,7 @@
           var _col2 = document.createElement('td');
           _col2.innerHTML = value;
           if (element.id === 'idAutomationCalculation') {
-            _col1.setAttribute('style', overflowStyle + 'width: 175px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
+            _col1.setAttribute('style', overflowStyle + 'width: 265px;' + 'cursor:pointer;color:' + $scope.hoverColor + ';text-decoration:underline');
             var state = 'main.playbookDetail';
             var params = {
               id: $filter('getEndPathName')(element.template_iri[iriCount])
@@ -97,7 +197,12 @@
             });
           }
           else {
-            _col1.setAttribute('style', overflowStyle + 'width: 165px;');
+            if (element.id === 'idTopThreeAlerts') {
+              _col1.setAttribute('style', overflowStyle + 'width: 165px;');
+            }
+            else {
+              _col1.setAttribute('style', overflowStyle + 'width: 120px;');
+            }
             _row.appendChild(_col1);
           }
           _row.appendChild(_col2);
@@ -141,7 +246,12 @@
       else {
         countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 40px;font-family:' + fontFamily + ';');
       }
+
       countDiv.innerHTML = element.count + '<span style="font-size:25px;margin-left: 5px;">' + element.title + '</span>';
+      if (element.id === 'idResolvedAutomated') {
+        countDiv.setAttribute('style', 'color: ' + $scope.textColor + ';font-size: 16px;font-style: italic;margin-top: 16px;font-family:' + fontFamily + ';')
+        countDiv.innerHTML = element.count + '<span style="font-size:16px;margin-left: 5px;">' + element.title + '</span>';
+      }
       labelElem.appendChild(countDiv);
       source.after(labelElem);
     }
@@ -190,11 +300,11 @@
         }
         element.percentChange = Math.abs(_percent);
       }
-      else if( element.currentValue === 0){
+      else if (element.currentValue === 0) {
         element.percentChange = 0;
         element.increase = true;
       }
-      else{
+      else {
         element.percentChange = 100;
         element.increase = true;
       }
@@ -323,6 +433,7 @@
             'operator': 'count'
           }]
       };
+
       var queryToGetName = {
         sort: [{
           'field': 'total',
@@ -333,7 +444,8 @@
           'field': 'tags',
           'operator': 'ncontains',
           'value': 'system'
-        }, {
+        },
+        {
           'field': 'modified',
           'operator': 'gte',
           'value': $filter('date')(_fromDate, 'yyyy-MM-dd HH:mm', 'UTC')
@@ -345,6 +457,21 @@
             'operator': 'count'
           }]
       };
+      if ($scope.config.recordTags) {
+        var playbookExcludeTag = []
+        for (var i = 0; i < $scope.config.recordTags.length; i++) {
+          var tagArr = $scope.config.recordTags[i].split('/');
+          var tag = tagArr.pop();
+          playbookExcludeTag.push({
+            'field': 'tags',
+            'operator': 'ncontains',
+            'value': tag
+          })
+        }
+        queryObject.filters = queryObject.filters.concat(playbookExcludeTag);
+        queryToGetName.filters = queryToGetName.filters.concat(playbookExcludeTag);
+      }
+
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
         var names = {};
         socManagementService.getPlaybookRun(queryToGetName).then(function (resultName) {
@@ -641,14 +768,77 @@
         var _queryObj = new Query(queryObject);
         var _queryObjPreviousData = new Query(queryObjectPrevious);
 
+        var queryAutomatedClosedAlerts = {
+          sort: [],
+          'limit': ALL_RECORDS_SIZE,
+          'logic': 'AND',
+          'filters': [
+            {
+              'logic': 'AND',
+              filters: [
+                {
+                  'field': $scope.dateFilterField,
+                  'operator': 'gte',
+                  'value': 'currentDateMinus(' + $scope.config.days + ')',
+                  'type': 'datetime'
+                },
+                {
+                  'field': $scope.dateFilterField,
+                  'operator': 'lte',
+                  'value': 'currentDateMinus(0)',
+                  'type': 'datetime'
+                }
+              ],
+            },
+            {
+              'field': 'status',
+              'value': [
+                picklistId
+              ],
+              'display': '',
+              'operator': 'in',
+              'type': 'array',
+              'OPERATOR_KEY': '$'
+            },
+            {
+              'field': 'resolvedAutomatedly',
+              'value': true,
+              'display': '',
+              'operator': 'eq',
+              'type': 'array',
+              'OPERATOR_KEY': '$'
+            }
+          ],
+          'aggregates': [{
+            'field': 'status',
+            'alias': 'status',
+            'operator': 'count'
+          }],
+          '__selectFields': ['source']
+        };
+        var _queryAutomatedClosedObj = new Query(queryAutomatedClosedAlerts);
 
         var promises = [];
         $scope.socResult.closedAlerts = 0;
+        $scope.socResult.automatedClosed = 0;
+
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObj).then(function (result) {
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.closedAlerts = result['hydra:member'][0].status;
           }
           addLabelCounts({ 'id': 'idClosedLabel', 'count': $filter('numberToDisplay')($scope.socResult.closedAlerts), 'title': $scope.config.closed.title });
+        }));
+        promises.push(socManagementService.getResourceData($scope.config.resource, _queryAutomatedClosedObj).then(function (result) {
+          if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
+            $scope.socResult.automatedClosed = result['hydra:member'][0].status;
+          }
+          if($scope.socResult.closedAlerts === 0){
+            var closedAutomatedAlerts = '(0%';
+          }
+          else{
+            var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
+          }
+          addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title + ' )' });
         }));
         promises.push(socManagementService.getResourceData($scope.config.resource, _queryObjPreviousData).then(function (result) {
           $scope.socResult.previousClosedAlerts = result['hydra:member'][0].status;
