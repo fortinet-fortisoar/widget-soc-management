@@ -30,6 +30,7 @@
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
       checkForSVGLoad();
+
       socManagementService.getConfig().then(function (response) {
         $scope.config = angular.extend(response.data, config);
         configLoaded = true;
@@ -73,83 +74,24 @@
     }
 
     function populateByJson(customData) {
-      var keyDataBoxes = customData.hasOwnProperty('dataBoxes');
-      var keyAlertsFlow = customData.hasOwnProperty('alertsFlow');
-      var keyImpactAnalysis = customData.hasOwnProperty('impactAnalysis');
-      var keyKpi = customData.hasOwnProperty('kpi');
+      //set keys to empty if not present
+      if (!customData.hasOwnProperty('dataBoxes')) {
+        customData.dataBoxes = '';
+      }
+      if (!customData.hasOwnProperty('alertsFlow')) {
+        customData.alertsFlow = '';
+      }
+      if (!customData.hasOwnProperty('impactAnalysis')) {
+        customData.impactAnalysis = '';
+      }
+      if (!customData.hasOwnProperty('kpi')) {
+        customData.kpi = '';
+      }
 
-      if(Object.keys(customData).length === 0){
-        customData = {
-          'dataBoxes':"",
-          'alertsFlow':"",
-          'kpi':"",
-          'impactAnalysis':""          
-        } 
-      }
-      for (let key in customData) {
-        if (key === "dataBoxes" || !keyDataBoxes ) {
-          if(!keyDataBoxes){
-            for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
-              var element = $scope.config['dataBoxes'][i];
-              addForeignObject(element);
-            }
-            keyDataBoxes = true;
-          }
-          else{
-            for (var i = 0; i < customData[key].length; i++) {
-              var element = customData[key][i];
-              addForeignObject(element);
-            }
-          }
-        }
-        else if (key === "alertsFlow" || !keyAlertsFlow) {
-          if(!keyAlertsFlow){
-            for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
-              var element = $scope.config['alertsFlow'][i];
-              element.count = element.value;
-              addLabelCounts(element);
-            }
-            keyAlertsFlow = true;
-          }
-          else{
-            for (var i = 0; i < customData[key].length; i++) {
-              var element = customData[key][i];
-              element.count = element.value;
-              addLabelCounts(element);
-            }
-          }
-        }
-        else if (key === "kpi" || !keyKpi){
-          if(!keyKpi){
-            for (var i = 0; i < $scope.config['kpi'].length; i++) {
-              $scope.percentageData.push($scope.config['kpi'][i]);
-            }
-            keyKpi = true;
-          }
-          else{
-            for (var i = 0; i < customData[key].length; i++) {
-              $scope.percentageData.push(customData[key][i]);
-            }
-          }
-        }
-        else if (key === "impactAnalysis" || !keyImpactAnalysis) {
-          if(!keyImpactAnalysis){
-            for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
-              var element = $scope.config['impactAnalysis'][i];
-              element.count = element.value;
-              addBlockData(element);
-            }
-            keyImpactAnalysis = true;
-          }
-          else{
-            for (var i = 0; i < customData[key].length; i++) {
-              var element = customData[key][i];
-              element.count = element.value;
-              addBlockData(element);
-            }
-          }
-        }
-      }
+      jsonDataBoxes(customData.dataBoxes);
+      jsonAlertsFlow(customData.alertsFlow);
+      jsonImpactAnalysis(customData.impactAnalysis);
+      jsonKpi(customData.kpi);
     }
 
     function addForeignObject(element) {
@@ -416,7 +358,7 @@
           'field': 'total',
           'direction': 'DESC'
         }],
-        'limit': 3,
+        'limit': 15,
         'filters': [{
           'field': 'tags',
           'operator': 'ncontains',
@@ -439,7 +381,7 @@
           'field': 'total',
           'direction': 'DESC'
         }],
-        'limit': 3,
+        'limit': 15,
         'filters': [{
           'field': 'tags',
           'operator': 'ncontains',
@@ -457,17 +399,48 @@
             'operator': 'count'
           }]
       };
+      var queryObjectTags = {
+        "sort": [
+            {
+                "field": "createDate",
+                "direction": "DESC",
+                "_fieldName": "createDate"
+            }
+        ],
+        "limit": 90,
+        "logic": "AND",
+        "filters": [
+            {
+                "field": "recordTags",
+                "value": [],
+                "display": "",
+                "operator": "in",            
+                "type": "array"
+            },
+            {
+                "field": "isActive",
+                "value": true,
+                "operator": "eq"
+            }
+        ],
+        "__selectFields": [
+            "id", "name"
+        ]
+    }
       if ($scope.config.recordTags) {
         var playbookExcludeTag = []
+        var playbookWithTags = []
         for (var i = 0; i < $scope.config.recordTags.length; i++) {
           var tagArr = $scope.config.recordTags[i].split('/');
           var tag = tagArr.pop();
+          playbookWithTags.push(tag)
           playbookExcludeTag.push({
             'field': 'tags',
             'operator': 'ncontains',
             'value': tag
           })
         }
+        queryObjectTags.filters[0].value = playbookWithTags;
         queryObject.filters = queryObject.filters.concat(playbookExcludeTag);
         queryToGetName.filters = queryToGetName.filters.concat(playbookExcludeTag);
       }
@@ -475,29 +448,39 @@
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
         var names = {};
         socManagementService.getPlaybookRun(queryToGetName).then(function (resultName) {
-          names = resultName.data;
-          $scope.socResult.playbookSource = result.data;
-          var _dataSource = null;
-          var _iri = [];
-          var promises = [];
-          if ($scope.socResult.playbookSource.length > 0) {
-            _dataSource = {};
-            $scope.socResult.playbookSource.forEach((element, index) => {
-              if (element.template_iri !== null) {
-                _dataSource[names[index].name] = $filter('numberToDisplay')(element.total);
-                _iri.push(element.template_iri);
-              }
-            });
-            $q.all(promises).then(function () {
-              var sortedDataSource = sortObjectByKeys(_dataSource);
-              addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
-            });
-          }
-          else {
-            _dataSource = null;
-            addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri });
-          }
+          socManagementService.getAllPlaybooks(queryObjectTags).then(function(excludePlaybooks){
+            var playboooksToExclude = excludePlaybooks['hydra:member'].map(obj => obj.name).filter(name => name !== undefined);
 
+            names = resultName.data;
+            $scope.socResult.playbookSource = result.data;
+            var _dataSource = null;
+            var _iri = [];
+            var promises = [];
+            if ($scope.socResult.playbookSource.length > 0) {
+              _dataSource = {};
+              $scope.socResult.playbookSource.forEach((element, index) => {
+                if (element.template_iri !== null) {
+                  _dataSource[names[index].name] = $filter('numberToDisplay')(element.total);
+                  _iri.push(element.template_iri);
+                }
+              });
+              var updatedObject = {};
+              for (let key in _dataSource) {
+                if (!playboooksToExclude.includes(key)) {
+                  updatedObject[key] = _dataSource[key];
+                }
+              }
+              $q.all(promises).then(function () {
+                var sortedDataSource = sortObjectByKeys(updatedObject);
+                sortedDataSource = Object.fromEntries(Object.entries(sortedDataSource).slice(0,3));
+                addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
+              });
+            }
+            else {
+              _dataSource = null;
+              addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': _dataSource, 'template_iri': _iri });
+            }
+          })
         });
       })
     }
@@ -1420,8 +1403,88 @@
       return result.toString().replace(',', ' ');
     }
 
-    function fixDecimal(number) {
-      return (Number.parseFloat(number).toFixed(2)) * 1;
+    function jsonKpi(kpi){
+      var allIds = $scope.config.allIds.kpi;
+      for(var i =0; i < kpi.length; i++){
+        if (allIds.includes(kpi[i].id)){
+          $scope.percentageData.push(kpi[i]);
+        }
+        allIds = allIds.filter(str => str !== kpi[i].id);
+      }
+      if(allIds.length > 0){
+        for (var i = 0; i < $scope.config['kpi'].length; i++) {
+          if (allIds.includes($scope.config['kpi'][i].id)) {
+            $scope.percentageData.push($scope.config['kpi'][i]);
+          }
+        }
+      }
+    }
+
+    function jsonImpactAnalysis(impactAnalysis){
+      var allIds = $scope.config.allIds.impactAnalysis;
+      for (var i = 0; i < impactAnalysis.length; i++){
+        if (allIds.includes(impactAnalysis[i].id)){
+          var element = impactAnalysis[i];
+          element.count = element.value;
+          addBlockData(element);
+          allIds = allIds.filter(str => str !== impactAnalysis[i].id);
+        }
+      } 
+      if (allIds.length > 0){
+        for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
+          if (allIds.includes($scope.config['impactAnalysis'][i].id)) {
+            var element = $scope.config['impactAnalysis'][i];
+            element.count = element.value;
+            addBlockData(element);
+          }
+        }
+      }
+    }
+
+    function jsonAlertsFlow(alertsFlow){
+      var allIds = $scope.config.allIds.alertsFlow;
+      for (var i = 0; i < alertsFlow.length; i++){
+        if (allIds.includes(alertsFlow[i].id)){
+          var element = alertsFlow[i];
+          element.count = element.value;
+          addLabelCounts(element);
+          allIds = allIds.filter(str => str !== alertsFlow[i].id);
+        }
+      } 
+      if (allIds.length > 0){
+        for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
+          if (allIds.includes($scope.config['alertsFlow'][i].id)) {
+            var element = $scope.config['alertsFlow'][i];
+            element.count = element.value;
+            addLabelCounts(element);
+          }
+        }
+      }
+    }
+
+    function jsonDataBoxes(dataBoxes) {
+      var allIds = $scope.config.allIds.dataBoxes;
+      for (var i = 0; i < dataBoxes.length; i++) {
+        if (allIds.includes(dataBoxes[i].id)) {
+          var element = dataBoxes[i];
+          var dataArray = Object.entries(element.data);
+          dataArray.sort((a, b) => b[1] - a[1]);
+          element.data = {};
+          for (var index = 1; index <= Math.min(3, dataArray.length); index++) {
+            element.data[dataArray[index - 1][0]] = $filter('numberToDisplay')(dataArray[index - 1][1]);
+          }
+          addForeignObject(element);
+          allIds = allIds.filter(str => str !== dataBoxes[i].id);
+        }
+      }
+      if (allIds.length > 0) {
+        for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
+          if (allIds.includes($scope.config['dataBoxes'][i].id)) {
+            var element = $scope.config['dataBoxes'][i];
+            addForeignObject(element);
+          }
+        }
+      }
     }
 
     // --      queries

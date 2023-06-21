@@ -13,7 +13,8 @@
             getPlaybookRun: getPlaybookRun,
             getPlaybookActionExecuted: getPlaybookActionExecuted,
             getStatusByPicklistName: getStatusByPicklistName,
-            getConfig: getConfig
+            getConfig: getConfig,
+            getAllPlaybooks:getAllPlaybooks
         };
         return service;
 
@@ -31,6 +32,17 @@
             var defer = $q.defer();
             var url = API.WORKFLOW + 'api/query/workflow_logs/';
             $resource(url,{}, {}, {stripTrailingSlashes: false}).save(queryObject).$promise.then(function (response) {
+                defer.resolve(response);
+            }, function (error) {
+                defer.reject(error);
+            });
+            return defer.promise;
+        }
+
+        function getAllPlaybooks(queryObject){
+            var defer = $q.defer();
+            var url = 'api/query/workflows';
+            $resource(url).save(queryObject, function (response) {
                 defer.resolve(response);
             }, function (error) {
                 defer.reject(error);
