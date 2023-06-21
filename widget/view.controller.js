@@ -24,7 +24,6 @@
     var noRecordStyle = 'margin-top: 10px;margin-left: 15px;color: red;';
     $scope.config.moduleType = $scope.config.moduleType ? $scope.config.moduleType : 'Across Modules';
 
-
     function _init() {
       $scope.currentTheme = $rootScope.theme.id;
       $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
@@ -75,7 +74,6 @@
     }
 
     function populateByJson(customData) {
-
       //set keys to empty if not present
       if (!customData.hasOwnProperty('dataBoxes')) {
         customData.dataBoxes = '';
