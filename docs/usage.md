@@ -60,12 +60,12 @@ The following matrices are displayed by the SOC Management Widget:
 
   # Data Source :  'Record Containing JSON Data' Option
 
-  Use this option to populate the widget using a json.
-  The Json object must be present as a record in any of the modules.
+  Use this option to populate the widget using JSON data.
+  The JSON data must be present as a record in the modules, selected as a data source.
   
   JSON data:
 
-  Format to follow in the json to populate the data seamlessly
+  Please see below for expected JSON format to populate the widget data seamlessly
 
 
     
@@ -232,7 +232,7 @@ The following matrices are displayed by the SOC Management Widget:
   ```
 
 
-  Keys, "kpi, dataBoxes, impactAnalysis, alertsFlow" represents following respectively :-
+  The JSON keys, "kpi, dataBoxes, impactAnalysis, alertsFlow", are explained as below;:-
   - Key Performance Indices(kpi) ![](./media/kpi_image.png)
   
   - Data boxes(dataBoxes), Top 3 playbooks, Top 3 Alert types etc ![](./media/data_boxes.png)
@@ -245,7 +245,7 @@ The following matrices are displayed by the SOC Management Widget:
 
 
 
-  eg.
+  e.g.
   - Select the module, (Daily report in this case)
   - Select the field
   - Use the filter condition to filter out the record which contains the data

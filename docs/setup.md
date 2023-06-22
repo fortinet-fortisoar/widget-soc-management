@@ -21,6 +21,6 @@ Provide the following details to customize the SOC Management widget to suit you
 
 | Fields                                     | Description                                                                                                                                                                     |
 |--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Data Source                                | Select the custom module from which to fetch the data                                                                                                                           |
+| Data Source                                | Select the module from which to fetch the data                                                                                                                           |
 | Select Field                               | Select the field(Column) of the module which contains the `JSON` data                                                                                                           |
 | Filter Record Which Contains The JSON Data | Add conditions to retrieve only the record meeting the filter conditions. If multiple records match the conditions given, the first record is considered.                       |
