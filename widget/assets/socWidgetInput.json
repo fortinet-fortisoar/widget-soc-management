@@ -1,218 +1,250 @@
 {
-    "title": "",
-    "timeRange": "createDate",
-    "days": 30,
-    "resource": "alerts",
-    "relatedResource": "incidents",
-    "relatedResource2": "assets",
-    "relatedResource3": "indicators",
-    "alertSource": {
-        "title": "Top 3 Detections"
+  "title": "",
+  "timeRange": "createDate",
+  "days": 30,
+  "resource": "alerts",
+  "relatedResource": "incidents",
+  "relatedResource2": "assets",
+  "relatedResource3": "indicators",
+  "maxCountForBoxes": 3,
+  "alertSource": {
+    "title": "Top 3 Detections"
+  },
+  "top3PlaybookRun": {
+    "title": "Top 3 Playbooks"
+  },
+  "topAlerts": {
+    "title": "Top 3 Alert Types"
+  },
+  "alerts": {
+    "title": "Alerts"
+  },
+  "truePositive": {
+    "title": "True positive"
+  },
+  "falsePositive": {
+    "title": "False positive"
+  },
+  "closed": {
+    "title": "Closed"
+  },
+  "automatedResolved": {
+    "title": " Automatedly"
+  },
+  "topIncidents": {
+    "title": "Top 3 Incident Types"
+  },
+  "incident": {
+    "title": "Incidents"
+  },
+  "impact": {
+    "title": "Impact",
+    "averageTime": 5,
+    "dollarValue": 60
+  },
+  "assets": {
+    "title": "Assets"
+  },
+  "artifacts": {
+    "title": "Artifacts analysed",
+    "averageTime": 5,
+    "dollarValue": 60
+  },
+  "ratio": {
+    "title": "Ratio Alert to Incident"
+  },
+  "playbookRun": {
+    "title": "Playbook Run"
+  },
+  "actionsExecuted": {
+    "title": "Actions Executed",
+    "includeConfigActions": false,
+    "includeFailedActions": true
+  },
+  "roi": {
+    "title": "ROI",
+    "dollarValue": 60,
+    "averageTime": 5
+  },
+  "alertResolved": {
+    "title": "Alert Resolved"
+  },
+  "timeSaved": {
+    "title": "Overall Time Saved",
+    "averageTime": 5
+  },
+  "alertMttr": {
+    "title": "Alert MTTR",
+    "criteria": "createDate",
+    "resolveCriteria": "resolveddate"
+  },
+  "incidentMttr": {
+    "title": "Incident MTTR",
+    "criteria": "createDate",
+    "resolveCriteria": "resolveddate"
+  },
+  "impactAnalysis": [
+    {
+      "id": "idArtifactsDivision",
+      "title": "Artifacts analysed",
+      "value": "?"
     },
-    "top3PlaybookRun": {
-        "title": "Top 3 Playbooks"
+    {
+      "id": "idAssetsDivision",
+      "title": "Assets",
+      "value": "?"
     },
-    "topAlerts": {
-        "title": "Top 3 Alert Types"
+    {
+      "id": "idImpactDivision",
+      "title": "Impact",
+      "value": "?"
+    }
+  ],
+  "alertsFlow": [
+    {
+      "id": "idIncidentsLabel",
+      "title": "Incidents",
+      "value": "?"
     },
-    "alerts": {
-        "title": "Alerts"
+    {
+      "id": "idTruePositiveLabel",
+      "title": "True positive",
+      "value": "?"
     },
-    "truePositive": {
-        "title": "True positive"
+    {
+      "id": "idFlasePositiveLabel",
+      "title": "False positive",
+      "value": "?"
     },
-    "falsePositive": {
-        "title": "False positive"
+    {
+      "id": "idResolvedAutomated",
+      "title": "Automatedly )",
+      "value": "( ? "
     },
-    "closed": {
-        "title": "Closed"
+    {
+      "id": "idClosedLabel",
+      "title": "Closed",
+      "value": "?"
     },
-    "automatedResolved": {
-        "title": "by Automation"
+    {
+      "id": "idAlertLabel",
+      "title": "Alerts",
+      "value": "?"
+    }
+  ],
+  "dataBoxes": [
+    {
+      "id": "idTopThreeIncidents",
+      "title": "Top 3 Indicators"
     },
-    "topIncidents": {
-        "title": "Top 3 Incident Types"
+    {
+      "id": "idTopThreeAlerts",
+      "title": "Top 3 Alert Types"
     },
-    "incident": {
-        "title": "Incidents"
+    {
+      "id": "idAutomationCalculation",
+      "title": "Top 3 Playbooks"
     },
-    "impact": {
-        "title": "Impact",
-        "averageTime": 5,
-        "dollarValue": 60
+    {
+      "id": "idIncomingAlertSources",
+      "title": "Top 3 Detections"
+    }
+  ],
+  "kpi": [
+    {
+      "id": "ratio",
+      "title": "Ratio Alert to Incident",
+      "value": "?",
+      "increase": true,
+      "sequence": 1,
+      "percentChange": 0
     },
-    "assets": {
-        "title": "Assets"
+    {
+      "id": "playbookRun",
+      "title": "Playbook Run",
+      "value": "?",
+      "increase": true,
+      "sequence": 2,
+      "percentChange": 0
     },
-    "artifacts": {
-        "title": "Artifacts analysed",
-        "averageTime": 5,
-        "dollarValue": 60
+    {
+      "id": "actionExecuted",
+      "title": "Actions Executed",
+      "value": "?",
+      "increase": true,
+      "sequence": 3,
+      "percentChange": 0
     },
-    "ratio": {
-        "title": "Ratio Alert to Incident"
+    {
+      "id": "roi",
+      "title": "ROI",
+      "value": "?",
+      "increase": true,
+      "sequence": 4,
+      "percentChange": 0
     },
-    "playbookRun": {
-        "title": "Playbook Run"
+    {
+      "id": "alertResolved",
+      "title": "Alert Resolved",
+      "value": "?",
+      "increase": true,
+      "sequence": 5,
+      "percentChange": 0
     },
-    "actionsExecuted": {
-        "title": "Actions Executed",
-        "includeConfigActions": false,
-        "includeFailedActions": true
+    {
+      "id": "overallTimeSaved",
+      "title": "Overall Time Saved",
+      "value": "?",
+      "increase": true,
+      "sequence": 6,
+      "percentChange": 0
     },
-    "roi": {
-        "title": "ROI",
-        "dollarValue": 60,
-        "averageTime": 5
+    {
+      "id": "alertMttr",
+      "title": "Alert MTTR",
+      "value": "?",
+      "increase": true,
+      "sequence": 7,
+      "percentChange": 0
     },
-    "alertResolved": {
-        "title": "Alert Resolved"
-    },
-    "timeSaved": {
-        "title": "Overall Time Saved",
-        "averageTime": 5
-    },
-    "alertMttr": {
-        "title": "Alert MTTR",
-        "criteria": "createDate",
-        "resolveCriteria": "resolveddate"
-    },
-    "incidentMttr": {
-        "title": "Incident MTTR",
-        "criteria": "createDate",
-        "resolveCriteria": "resolveddate"
-    },
+    {
+      "id": "incidentMttr",
+      "title": "Incident MTTR",
+      "value": "?",
+      "increase": true,
+      "sequence": 8,
+      "percentChange": 0
+    }
+  ],
+  "allCustomDataIds": {
     "impactAnalysis": [
-        {
-            "id": "idArtifactsDivision",
-            "title": "Artifacts analysed",
-            "value": 0
-        },
-        {
-            "id": "idAssetsDivision",
-            "title": "Assets",
-            "value": 0
-        },
-        {
-            "id": "idImpactDivision",
-            "title": "Impact",
-            "value": "0"
-        }
+      "idArtifactsDivision",
+      "idAssetsDivision",
+      "idImpactDivision"
     ],
     "alertsFlow": [
-        {
-          "id": "idIncidentsLabel",
-          "title": "Incidents",
-          "value": 0
-        },
-        {
-          "id": "idTruePositiveLabel",
-          "title": "True positive",
-          "value": "0"
-        },
-        {
-          "id": "idFlasePositiveLabel",
-          "title": "False positive",
-          "value": "0"
-        },
-        {
-          "id": "idResolvedAutomated",
-          "title": "by Automation )",
-          "value": "( 0% "
-        },
-        {
-          "id": "idClosedLabel",
-          "title": "Closed",
-          "value": "0"
-        },
-        {
-          "id": "idAlertLabel",
-          "title": "Alerts",
-          "value": "0"
-        }
-      ],
-      "dataBoxes": [
-        {
-          "id": "idTopThreeIncidents",
-          "title": "Top 3 Indicators"
-        },
-        {
-          "id": "idTopThreeAlerts",
-          "title": "Top 3 Alert Types"
-        },
-        {
-          "id": "idAutomationCalculation",
-          "title": "Top 3 Playbooks"
-        },
-        {
-          "id": "idIncomingAlertSources",
-          "title": "Top 3 Detections"
-        }
-      ],
-      "kpi": [
-        {
-          "id": "ratio",
-          "title": "Ratio Alert to Incident",
-          "value": "0",
-          "increase": true,
-          "sequence": 1,
-          "percentChange": 0
-        },
-        {
-          "id": "playbookRun",
-          "title": "Playbook Run",
-          "value": "0",
-          "increase": true,
-          "sequence": 2,
-          "percentChange": 0
-        },
-        {
-          "id": "actionExecuted",
-          "title": "Actions Executed",
-          "value": "0",
-          "increase": true,
-          "sequence": 3,
-          "percentChange": 0
-        },
-        {
-          "id": "roi",
-          "title": "ROI",
-          "value": "0",
-          "increase": true,
-          "sequence": 4,
-          "percentChange": 0
-        },
-        {
-          "id": "alertResolved",
-          "title": "Alert Resolved",
-          "value": "0",
-          "increase": true,
-          "sequence": 5,
-          "percentChange": 0
-        },
-        {
-          "id": "overallTimeSaved",
-          "title": "Overall Time Saved",
-          "value": "0",
-          "increase": true,
-          "sequence": 6,
-          "percentChange": 0
-        },
-        {
-          "id": "alertMttr",
-          "title": "Alert MTTR",
-          "value": "0",
-          "increase": true,
-          "sequence": 7,
-          "percentChange": 0
-        },
-        {
-          "id": "incidentMttr",
-          "title": "Incident MTTR",
-          "value": "0",
-          "increase": true,
-          "sequence": 8,
-          "percentChange": 0
-        }
-      ]
+      "idIncidentsLabel",
+      "idTruePositiveLabel",
+      "idFlasePositiveLabel",
+      "idResolvedAutomated",
+      "idClosedLabel",
+      "idAlertLabel"
+    ],
+    "dataBoxes": [
+      "idTopThreeIncidents",
+      "idTopThreeAlerts",
+      "idAutomationCalculation",
+      "idIncomingAlertSources"
+    ],
+    "kpi": [
+      "ratio",
+      "playbookRun",
+      "actionExecuted",
+      "roi",
+      "alertResolved",
+      "overallTimeSaved",
+      "alertMttr",
+      "incidentMttr"
+    ]
+  }
 }

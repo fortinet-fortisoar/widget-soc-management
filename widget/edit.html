@@ -39,7 +39,7 @@
         <div class="radio">
           <label><input id="accrossModules" name="accrossModules" type="radio" data-ng-model="config.moduleType"
               data-ng-change="onChangeModuleType()" value="Across Modules">&nbsp;&nbsp;Get Live Data</label>
-          <span data-uib-tooltip="It allows you to get live count from "
+          <span data-uib-tooltip="It allows you to get live count."
             data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
         </div>
       </div>
@@ -83,7 +83,7 @@
                     <span class="text-danger">*</span>
                 </label>
                 <span
-                    data-uib-tooltip="It is recommended to apply filter, that filters out 1 record. If multiple records are filtered with the condition given, first record will be assumed"
+                    data-uib-tooltip="This widget requires only one JSON record to work hence It is recommended to apply a filter, in case of multiple records first record will be assumed"
                     data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                 <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
                     data-reset-field="$parent.fields" data-mode="'queryFilters'"
