@@ -6,6 +6,7 @@
   "relatedResource": "incidents",
   "relatedResource2": "assets",
   "relatedResource3": "indicators",
+  "maxCountForBoxes": 3,
   "alertSource": {
     "title": "Top 3 Detections"
   },
@@ -215,7 +216,7 @@
       "percentChange": 0
     }
   ],
-  "allIds": {
+  "allCustomDataIds": {
     "impactAnalysis": [
       "idArtifactsDivision",
       "idAssetsDivision",

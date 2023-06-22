@@ -74,7 +74,7 @@
     }
 
     function populateByJson(customData) {
-      //set keys to empty if not present
+      //set keys to empty if keys are not present
       if (!customData.hasOwnProperty('dataBoxes')) {
         customData.dataBoxes = '';
       }
@@ -88,10 +88,10 @@
         customData.kpi = '';
       }
 
-      jsonDataBoxes(customData.dataBoxes);
-      jsonAlertsFlow(customData.alertsFlow);
-      jsonImpactAnalysis(customData.impactAnalysis);
-      jsonKpi(customData.kpi);
+      populateDataBoxes(customData.dataBoxes);
+      populateAlertsFlow(customData.alertsFlow);
+      populateImpactAnalysis(customData.impactAnalysis);
+      populateKpi(customData.kpi);
     }
 
     function addForeignObject(element) {
@@ -1403,36 +1403,36 @@
       return result.toString().replace(',', ' ');
     }
 
-    function jsonKpi(kpi){
-      var allIds = $scope.config.allIds.kpi;
+    function populateKpi(kpi){
+      var allCustomDataIds = $scope.config.allCustomDataIds.kpi;
       for(var i =0; i < kpi.length; i++){
-        if (allIds.includes(kpi[i].id)){
+        if (allCustomDataIds.includes(kpi[i].id)){
           $scope.percentageData.push(kpi[i]);
         }
-        allIds = allIds.filter(str => str !== kpi[i].id);
+        allCustomDataIds = allCustomDataIds.filter(str => str !== kpi[i].id);
       }
-      if(allIds.length > 0){
+      if(allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['kpi'].length; i++) {
-          if (allIds.includes($scope.config['kpi'][i].id)) {
+          if (allCustomDataIds.includes($scope.config['kpi'][i].id)) {
             $scope.percentageData.push($scope.config['kpi'][i]);
           }
         }
       }
     }
 
-    function jsonImpactAnalysis(impactAnalysis){
-      var allIds = $scope.config.allIds.impactAnalysis;
+    function populateImpactAnalysis(impactAnalysis){
+      var allCustomDataIds = $scope.config.allCustomDataIds.impactAnalysis;
       for (var i = 0; i < impactAnalysis.length; i++){
-        if (allIds.includes(impactAnalysis[i].id)){
+        if (allCustomDataIds.includes(impactAnalysis[i].id)){
           var element = impactAnalysis[i];
           element.count = element.value;
           addBlockData(element);
-          allIds = allIds.filter(str => str !== impactAnalysis[i].id);
+          allCustomDataIds = allCustomDataIds.filter(str => str !== impactAnalysis[i].id);
         }
       } 
-      if (allIds.length > 0){
+      if (allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
-          if (allIds.includes($scope.config['impactAnalysis'][i].id)) {
+          if (allCustomDataIds.includes($scope.config['impactAnalysis'][i].id)) {
             var element = $scope.config['impactAnalysis'][i];
             element.count = element.value;
             addBlockData(element);
@@ -1441,19 +1441,19 @@
       }
     }
 
-    function jsonAlertsFlow(alertsFlow){
-      var allIds = $scope.config.allIds.alertsFlow;
+    function populateAlertsFlow(alertsFlow){
+      var allCustomDataIds = $scope.config.allCustomDataIds.alertsFlow;
       for (var i = 0; i < alertsFlow.length; i++){
-        if (allIds.includes(alertsFlow[i].id)){
+        if (allCustomDataIds.includes(alertsFlow[i].id)){
           var element = alertsFlow[i];
           element.count = element.value;
           addLabelCounts(element);
-          allIds = allIds.filter(str => str !== alertsFlow[i].id);
+          allCustomDataIds = allCustomDataIds.filter(str => str !== alertsFlow[i].id);
         }
       } 
-      if (allIds.length > 0){
+      if (allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
-          if (allIds.includes($scope.config['alertsFlow'][i].id)) {
+          if (allCustomDataIds.includes($scope.config['alertsFlow'][i].id)) {
             var element = $scope.config['alertsFlow'][i];
             element.count = element.value;
             addLabelCounts(element);
@@ -1462,24 +1462,28 @@
       }
     }
 
-    function jsonDataBoxes(dataBoxes) {
-      var allIds = $scope.config.allIds.dataBoxes;
+    function populateDataBoxes(dataBoxes) {
+      //Expected keys
+      var allCustomDataIds = $scope.config.allCustomDataIds.dataBoxes;
       for (var i = 0; i < dataBoxes.length; i++) {
-        if (allIds.includes(dataBoxes[i].id)) {
+        if (allCustomDataIds.includes(dataBoxes[i].id)) {
           var element = dataBoxes[i];
           var dataArray = Object.entries(element.data);
+          //sorting the boxes data according to count
           dataArray.sort((a, b) => b[1] - a[1]);
           element.data = {};
-          for (var index = 1; index <= Math.min(3, dataArray.length); index++) {
+          for (var index = 1; index <= Math.min( $scope.config.maxCountForBoxes, dataArray.length); index++) {
             element.data[dataArray[index - 1][0]] = $filter('numberToDisplay')(dataArray[index - 1][1]);
           }
           addForeignObject(element);
-          allIds = allIds.filter(str => str !== dataBoxes[i].id);
+          //removing present IDs
+          allCustomDataIds = allCustomDataIds.filter(str => str !== dataBoxes[i].id);
         }
       }
-      if (allIds.length > 0) {
+      // setting element null for the ids not found
+      if (allCustomDataIds.length > 0) {
         for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
-          if (allIds.includes($scope.config['dataBoxes'][i].id)) {
+          if (allCustomDataIds.includes($scope.config['dataBoxes'][i].id)) {
             var element = $scope.config['dataBoxes'][i];
             addForeignObject(element);
           }
