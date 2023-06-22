@@ -87,7 +87,7 @@
       if (!customData.hasOwnProperty('kpi')) {
         customData.kpi = '';
       }
-
+      //populate the data from json into individual elements
       populateDataBoxes(customData.dataBoxes);
       populateAlertsFlow(customData.alertsFlow);
       populateImpactAnalysis(customData.impactAnalysis);
@@ -1409,8 +1409,10 @@
         if (allCustomDataIds.includes(kpi[i].id)){
           $scope.percentageData.push(kpi[i]);
         }
+        //removing present IDs
         allCustomDataIds = allCustomDataIds.filter(str => str !== kpi[i].id);
       }
+      // setting element null for the ids not found
       if(allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['kpi'].length; i++) {
           if (allCustomDataIds.includes($scope.config['kpi'][i].id)) {
@@ -1427,9 +1429,11 @@
           var element = impactAnalysis[i];
           element.count = element.value;
           addBlockData(element);
+          //removing present IDs
           allCustomDataIds = allCustomDataIds.filter(str => str !== impactAnalysis[i].id);
         }
       } 
+      // setting element null for the ids not found
       if (allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
           if (allCustomDataIds.includes($scope.config['impactAnalysis'][i].id)) {
@@ -1448,9 +1452,11 @@
           var element = alertsFlow[i];
           element.count = element.value;
           addLabelCounts(element);
+          //removing present IDs
           allCustomDataIds = allCustomDataIds.filter(str => str !== alertsFlow[i].id);
         }
       } 
+      // setting element null for the ids not found
       if (allCustomDataIds.length > 0){
         for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
           if (allCustomDataIds.includes($scope.config['alertsFlow'][i].id)) {
