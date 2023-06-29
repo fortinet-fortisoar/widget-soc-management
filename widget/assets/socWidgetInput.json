@@ -86,165 +86,186 @@
   "impactAnalysis": [
     {
       "id": "idArtifactsDivision",
-      "title": "Artifacts analysed",
-      "value": "?"
+      "idFromUser": "artifactsAnalysed",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idAssetsDivision",
-      "title": "Assets",
-      "value": "?"
+      "idFromUser": "totalAssets",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idImpactDivision",
-      "title": "Impact",
-      "value": "?"
+      "idFromUser": "impact",
+      "title": "Key not found",
+      "value": ""
     }
   ],
   "alertsFlow": [
     {
       "id": "idIncidentsLabel",
-      "title": "Incidents",
-      "value": "?"
+      "idFromUser": "totalIncidents",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idTruePositiveLabel",
-      "title": "True positive",
-      "value": "?"
+      "idFromUser": "truePositives",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idFlasePositiveLabel",
-      "title": "False positive",
-      "value": "?"
+      "idFromUser": "falsePositives",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idResolvedAutomated",
-      "title": "Automatedly )",
-      "value": "( ? "
+      "idFromUser": "resolvedAutomatedly",
+      "title": ")",
+      "value": "( Key not found "
     },
     {
       "id": "idClosedLabel",
-      "title": "Closed",
-      "value": "?"
+      "idFromUser": "closed",
+      "title": "Key not found",
+      "value": ""
     },
     {
       "id": "idAlertLabel",
-      "title": "Alerts",
-      "value": "?"
+      "idFromUser": "totalAlerts",
+      "title": "Key not found",
+      "value": ""
     }
   ],
   "dataBoxes": [
     {
       "id": "idTopThreeIncidents",
+      "idFromUser": "topThreeIndicators",
       "title": "Top 3 Indicators"
     },
     {
       "id": "idTopThreeAlerts",
+      "idFromUser": "topThreeAlertTypes",
       "title": "Top 3 Alert Types"
     },
     {
       "id": "idAutomationCalculation",
+      "idFromUser":"topThreePlaybooks",
       "title": "Top 3 Playbooks"
     },
     {
       "id": "idIncomingAlertSources",
+      "idFromUser":"topThreeDetections",
       "title": "Top 3 Detections"
     }
   ],
   "kpi": [
     {
       "id": "ratio",
-      "title": "Ratio Alert to Incident",
-      "value": "?",
+      "idFromUser": "ratio",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 1,
       "percentChange": 0
     },
     {
       "id": "playbookRun",
-      "title": "Playbook Run",
-      "value": "?",
+      "idFromUser": "playbookRun",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 2,
       "percentChange": 0
     },
     {
       "id": "actionExecuted",
-      "title": "Actions Executed",
-      "value": "?",
+      "idFromUser": "actionExecuted",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 3,
       "percentChange": 0
     },
     {
+      "title": "Key not found",
       "id": "roi",
-      "title": "ROI",
-      "value": "?",
+      "idFromUser": "roi",
+      "value": "",
       "increase": true,
       "sequence": 4,
       "percentChange": 0
     },
     {
       "id": "alertResolved",
-      "title": "Alert Resolved",
-      "value": "?",
+      "idFromUser": "alertResolved",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 5,
       "percentChange": 0
     },
     {
       "id": "overallTimeSaved",
-      "title": "Overall Time Saved",
-      "value": "?",
+      "idFromUser": "overallTimeSaved",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 6,
       "percentChange": 0
     },
     {
       "id": "alertMttr",
-      "title": "Alert MTTR",
-      "value": "?",
+      "idFromUser": "alertMttr",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 7,
       "percentChange": 0
     },
     {
       "id": "incidentMttr",
-      "title": "Incident MTTR",
-      "value": "?",
+      "idFromUser": "incidentMttr",
+      "title": "Key not found",
+      "value": "",
       "increase": true,
       "sequence": 8,
       "percentChange": 0
     }
   ],
   "allCustomDataIds": {
-    "impactAnalysis": [
-      "idArtifactsDivision",
-      "idAssetsDivision",
-      "idImpactDivision"
-    ],
-    "alertsFlow": [
-      "idIncidentsLabel",
-      "idTruePositiveLabel",
-      "idFlasePositiveLabel",
-      "idResolvedAutomated",
-      "idClosedLabel",
-      "idAlertLabel"
-    ],
-    "dataBoxes": [
-      "idTopThreeIncidents",
-      "idTopThreeAlerts",
-      "idAutomationCalculation",
-      "idIncomingAlertSources"
-    ],
-    "kpi": [
-      "ratio",
-      "playbookRun",
-      "actionExecuted",
-      "roi",
-      "alertResolved",
-      "overallTimeSaved",
-      "alertMttr",
-      "incidentMttr"
-    ]
+    "impactAnalysis": {
+      "artifactsAnalysed": "idArtifactsDivision",
+      "totalAssets": "idAssetsDivision",
+      "impact": "idImpactDivision"
+    },
+    "alertsFlow": {
+      "totalIncidents": "idIncidentsLabel",
+      "truePositives": "idTruePositiveLabel",
+      "falsePositives": "idFlasePositiveLabel",
+      "resolvedAutomatedly": "idResolvedAutomated",
+      "closed": "idClosedLabel",
+      "totalAlerts": "idAlertLabel"
+    },
+    "dataBoxes": {
+      "topThreeIndicators": "idTopThreeIncidents",
+      "topThreeAlertTypes": "idTopThreeAlerts",
+      "topThreePlaybooks": "idAutomationCalculation",
+      "topThreeDetections": "idIncomingAlertSources"
+    },
+    "kpi": {
+      "ratio": "ratio",
+      "playbookRun": "playbookRun",
+      "actionExecuted": "actionExecuted",
+      "roi": "roi",
+      "alertResolved": "alertResolved",
+      "overallTimeSaved": "overallTimeSaved",
+      "alertMttr": "alertMttr",
+      "incidentMttr": "incidentMttr"
+    }
   }
 }

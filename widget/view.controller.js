@@ -69,6 +69,9 @@
           return;
         }
         var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
+        if (!data) {
+          data = {};
+        }
         populateByJson(data);
       })
     }
@@ -401,32 +404,32 @@
       };
       var queryObjectTags = {
         "sort": [
-            {
-                "field": "createDate",
-                "direction": "DESC",
-                "_fieldName": "createDate"
-            }
+          {
+            "field": "createDate",
+            "direction": "DESC",
+            "_fieldName": "createDate"
+          }
         ],
         "limit": 90,
         "logic": "AND",
         "filters": [
-            {
-                "field": "recordTags",
-                "value": [],
-                "display": "",
-                "operator": "in",            
-                "type": "array"
-            },
-            {
-                "field": "isActive",
-                "value": true,
-                "operator": "eq"
-            }
+          {
+            "field": "recordTags",
+            "value": [],
+            "display": "",
+            "operator": "in",
+            "type": "array"
+          },
+          {
+            "field": "isActive",
+            "value": true,
+            "operator": "eq"
+          }
         ],
         "__selectFields": [
-            "id", "name"
+          "id", "name"
         ]
-    }
+      }
       if ($scope.config.recordTags) {
         var playbookExcludeTag = []
         var playbookWithTags = []
@@ -448,7 +451,7 @@
       socManagementService.getPlaybookRun(queryObject).then(function (result) {
         var names = {};
         socManagementService.getPlaybookRun(queryToGetName).then(function (resultName) {
-          socManagementService.getAllPlaybooks(queryObjectTags).then(function(excludePlaybooks){
+          socManagementService.getAllPlaybooks(queryObjectTags).then(function (excludePlaybooks) {
             var playboooksToExclude = excludePlaybooks['hydra:member'].map(obj => obj.name).filter(name => name !== undefined);
 
             names = resultName.data;
@@ -472,7 +475,7 @@
               }
               $q.all(promises).then(function () {
                 var sortedDataSource = sortObjectByKeys(updatedObject);
-                sortedDataSource = Object.fromEntries(Object.entries(sortedDataSource).slice(0,3));
+                sortedDataSource = Object.fromEntries(Object.entries(sortedDataSource).slice(0, 3));
                 addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
               });
             }
@@ -815,10 +818,10 @@
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
             $scope.socResult.automatedClosed = result['hydra:member'][0].status;
           }
-          if($scope.socResult.closedAlerts === 0){
+          if ($scope.socResult.closedAlerts === 0) {
             var closedAutomatedAlerts = '(0%';
           }
-          else{
+          else {
             var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
           }
           addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title + ' )' });
@@ -1403,40 +1406,56 @@
       return result.toString().replace(',', ' ');
     }
 
-    function populateKpi(kpi){
+    function populateKpi(kpi) {
       var allCustomDataIds = $scope.config.allCustomDataIds.kpi;
-      for(var i =0; i < kpi.length; i++){
-        if (allCustomDataIds.includes(kpi[i].id)){
+      for (var i = 0; i < kpi.length; i++) {
+        if (allCustomDataIds.hasOwnProperty(kpi[i].id)) {
+          var keyToDelete =  kpi[i].id;
+
+          //mapping json ID's with the required ids for SVG
+          kpi[i].id = allCustomDataIds[kpi[i].id];
+          if (!isNaN(kpi[i]['value'])) { 
+            kpi[i]['value'] = $filter('numberToDisplay')(kpi[i]['value']); 
+          }
           $scope.percentageData.push(kpi[i]);
         }
         //removing present IDs
-        allCustomDataIds = allCustomDataIds.filter(str => str !== kpi[i].id);
+        delete allCustomDataIds[keyToDelete];
       }
       // setting element null for the ids not found
-      if(allCustomDataIds.length > 0){
+      if (Object.keys(allCustomDataIds).length  > 0) {
         for (var i = 0; i < $scope.config['kpi'].length; i++) {
-          if (allCustomDataIds.includes($scope.config['kpi'][i].id)) {
+          if (allCustomDataIds.hasOwnProperty($scope.config['kpi'][i].idFromUser)) {
+            console.log("Key '"+ $scope.config['kpi'][i].idFromUser + "' not present in kpi" )
             $scope.percentageData.push($scope.config['kpi'][i]);
           }
         }
       }
     }
 
-    function populateImpactAnalysis(impactAnalysis){
+    function populateImpactAnalysis(impactAnalysis) {
       var allCustomDataIds = $scope.config.allCustomDataIds.impactAnalysis;
-      for (var i = 0; i < impactAnalysis.length; i++){
-        if (allCustomDataIds.includes(impactAnalysis[i].id)){
+      for (var i = 0; i < impactAnalysis.length; i++) {
+        if (allCustomDataIds.hasOwnProperty(impactAnalysis[i].id)) {
+          var keyToDelete =  impactAnalysis[i].id;
+          impactAnalysis[i].id = allCustomDataIds[impactAnalysis[i].id];
           var element = impactAnalysis[i];
-          element.count = element.value;
+          if (!isNaN(element.value)) { 
+            element.count = $filter('numberToDisplay')(element.value); 
+          }
+          else{
+            element.count = element.value;
+          }
           addBlockData(element);
           //removing present IDs
-          allCustomDataIds = allCustomDataIds.filter(str => str !== impactAnalysis[i].id);
+          delete allCustomDataIds[keyToDelete];
         }
-      } 
+      }
       // setting element null for the ids not found
-      if (allCustomDataIds.length > 0){
+      if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
-          if (allCustomDataIds.includes($scope.config['impactAnalysis'][i].id)) {
+          if (allCustomDataIds.hasOwnProperty($scope.config['impactAnalysis'][i].idFromUser)) {
+            console.log("Key '"+ $scope.config['impactAnalysis'][i].idFromUser + "' not present in impactAnalysis" )
             var element = $scope.config['impactAnalysis'][i];
             element.count = element.value;
             addBlockData(element);
@@ -1445,21 +1464,30 @@
       }
     }
 
-    function populateAlertsFlow(alertsFlow){
+    function populateAlertsFlow(alertsFlow) {
       var allCustomDataIds = $scope.config.allCustomDataIds.alertsFlow;
-      for (var i = 0; i < alertsFlow.length; i++){
-        if (allCustomDataIds.includes(alertsFlow[i].id)){
+      for (var i = 0; i < alertsFlow.length; i++) {
+        if (allCustomDataIds.hasOwnProperty(alertsFlow[i].id)) {
+          var keyToDelete =  alertsFlow[i].id;
+          alertsFlow[i].id = allCustomDataIds[alertsFlow[i].id];
           var element = alertsFlow[i];
-          element.count = element.value;
+          if (!isNaN(element.value)) { 
+            element.count = $filter('numberToDisplay')(element.value); 
+          }
+          else{
+            element.count = element.value;
+          }
           addLabelCounts(element);
           //removing present IDs
-          allCustomDataIds = allCustomDataIds.filter(str => str !== alertsFlow[i].id);
+          delete allCustomDataIds[keyToDelete];
+
         }
-      } 
+      }
       // setting element null for the ids not found
-      if (allCustomDataIds.length > 0){
+      if ( Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
-          if (allCustomDataIds.includes($scope.config['alertsFlow'][i].id)) {
+          if (allCustomDataIds.hasOwnProperty($scope.config['alertsFlow'][i].idFromUser)) {
+            console.log("Key '"+ $scope.config['alertsFlow'][i].idFromUser + "' not present in alertsFlow" )
             var element = $scope.config['alertsFlow'][i];
             element.count = element.value;
             addLabelCounts(element);
@@ -1472,24 +1500,31 @@
       //Expected keys
       var allCustomDataIds = $scope.config.allCustomDataIds.dataBoxes;
       for (var i = 0; i < dataBoxes.length; i++) {
-        if (allCustomDataIds.includes(dataBoxes[i].id)) {
+        if (allCustomDataIds.hasOwnProperty(dataBoxes[i].id)) {
+          var keyToDelete =  dataBoxes[i].id;
+          dataBoxes[i].id = allCustomDataIds[dataBoxes[i].id];
+
           var element = dataBoxes[i];
           var dataArray = Object.entries(element.data);
           //sorting the boxes data according to count
           dataArray.sort((a, b) => b[1] - a[1]);
           element.data = {};
-          for (var index = 1; index <= Math.min( $scope.config.maxCountForBoxes, dataArray.length); index++) {
-            element.data[dataArray[index - 1][0]] = $filter('numberToDisplay')(dataArray[index - 1][1]);
+          for (var index = 1; index <= Math.min($scope.config.maxCountForBoxes, dataArray.length); index++) {
+            if (!isNaN(dataArray[index - 1][1]))
+            {
+              element.data[dataArray[index - 1][0]] = $filter('numberToDisplay')(dataArray[index - 1][1]);
+            }
           }
           addForeignObject(element);
           //removing present IDs
-          allCustomDataIds = allCustomDataIds.filter(str => str !== dataBoxes[i].id);
+          delete allCustomDataIds[keyToDelete];
         }
       }
       // setting element null for the ids not found
-      if (allCustomDataIds.length > 0) {
+      if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
-          if (allCustomDataIds.includes($scope.config['dataBoxes'][i].id)) {
+          if (allCustomDataIds.hasOwnProperty($scope.config['dataBoxes'][i].idFromUser)) {
+            console.log("Key '"+ $scope.config['dataBoxes'][i].idFromUser + "' not present in dataBoxes" )
             var element = $scope.config['dataBoxes'][i];
             addForeignObject(element);
           }
