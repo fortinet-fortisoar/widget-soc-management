@@ -88,79 +88,79 @@
   "impactAnalysis": [
     {
       "id": "idArtifactsDivision",
-      "idFromUser": "artifactsAnalysed",
+      "inputJsonId": "artifactsAnalysed",
       "value": ""
     },
     {
       "id": "idAssetsDivision",
-      "idFromUser": "totalAssets",
+      "inputJsonId": "totalAssets",
       "value": ""
     },
     {
       "id": "idImpactDivision",
-      "idFromUser": "impact",
+      "inputJsonId": "impact",
       "value": ""
     }
   ],
   "alertsFlow": [
     {
       "id": "idIncidentsLabel",
-      "idFromUser": "totalIncidents",
+      "inputJsonId": "totalIncidents",
       "value": ""
     },
     {
       "id": "idTruePositiveLabel",
-      "idFromUser": "truePositives",
+      "inputJsonId": "truePositives",
       "value": ""
     },
     {
       "id": "idFlasePositiveLabel",
-      "idFromUser": "falsePositives",
+      "inputJsonId": "falsePositives",
       "value": ""
     },
     {
       "id": "idResolvedAutomated",
-      "idFromUser": "resolvedAutomatedly",
+      "inputJsonId": "resolvedAutomatedly",
       "title": ")",
       "value": "( Key not found "
     },
     {
       "id": "idClosedLabel",
-      "idFromUser": "closed",
+      "inputJsonId": "closed",
       "value": ""
     },
     {
       "id": "idAlertLabel",
-      "idFromUser": "totalAlerts",
+      "inputJsonId": "totalAlerts",
       "value": ""
     }
   ],
   "dataBoxes": [
     {
       "id": "idTopThreeIncidents",
-      "idFromUser": "topThreeIndicators",
+      "inputJsonId": "topThreeIndicators",
       "title": "Top 3 Indicators"
     },
     {
       "id": "idTopThreeAlerts",
-      "idFromUser": "topThreeAlertTypes",
+      "inputJsonId": "topThreeAlertTypes",
       "title": "Top 3 Alert Types"
     },
     {
       "id": "idAutomationCalculation",
-      "idFromUser": "topThreePlaybooks",
+      "inputJsonId": "topThreePlaybooks",
       "title": "Top 3 Playbooks"
     },
     {
       "id": "idIncomingAlertSources",
-      "idFromUser": "topThreeDetections",
+      "inputJsonId": "topThreeDetections",
       "title": "Top 3 Detections"
     }
   ],
   "kpi": [
     {
       "id": "ratio",
-      "idFromUser": "ratio",
+      "inputJsonId": "ratio",
       "value": "",
       "increase": true,
       "sequence": 1,
@@ -168,7 +168,7 @@
     },
     {
       "id": "playbookRun",
-      "idFromUser": "playbookRun",
+      "inputJsonId": "playbookRun",
       "value": "",
       "increase": true,
       "sequence": 2,
@@ -176,7 +176,7 @@
     },
     {
       "id": "actionExecuted",
-      "idFromUser": "actionExecuted",
+      "inputJsonId": "actionExecuted",
       "value": "",
       "increase": true,
       "sequence": 3,
@@ -184,7 +184,7 @@
     },
     {
       "id": "roi",
-      "idFromUser": "roi",
+      "inputJsonId": "roi",
       "value": "",
       "increase": true,
       "sequence": 4,
@@ -192,7 +192,7 @@
     },
     {
       "id": "alertResolved",
-      "idFromUser": "alertResolved",
+      "inputJsonId": "alertResolved",
       "value": "",
       "increase": true,
       "sequence": 5,
@@ -200,7 +200,7 @@
     },
     {
       "id": "overallTimeSaved",
-      "idFromUser": "overallTimeSaved",
+      "inputJsonId": "overallTimeSaved",
       "value": "",
       "increase": true,
       "sequence": 6,
@@ -208,7 +208,7 @@
     },
     {
       "id": "alertMttr",
-      "idFromUser": "alertMttr",
+      "inputJsonId": "alertMttr",
       "value": "",
       "increase": true,
       "sequence": 7,
@@ -216,7 +216,7 @@
     },
     {
       "id": "incidentMttr",
-      "idFromUser": "incidentMttr",
+      "inputJsonId": "incidentMttr",
       "value": "",
       "increase": true,
       "sequence": 8,

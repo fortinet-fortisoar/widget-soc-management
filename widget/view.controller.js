@@ -1412,8 +1412,7 @@
       var allCustomDataIds = $scope.config.allCustomDataIds.kpi;
       for (var i = 0; i < kpi.length; i++) {
         if (allCustomDataIds.hasOwnProperty(kpi[i].id)) {
-          var keyToDelete =  kpi[i].id;
-
+          var keyToDelete =  kpi[i].id;          
           //mapping json ID's with the required ids for SVG
           kpi[i].id = allCustomDataIds[kpi[i].id];
           if (!isNaN(kpi[i]['value'])) { 
@@ -1427,8 +1426,8 @@
       // setting element null for the ids not found
       if (Object.keys(allCustomDataIds).length  > 0) {
         for (var i = 0; i < $scope.config['kpi'].length; i++) {
-          if (allCustomDataIds.hasOwnProperty($scope.config['kpi'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['kpi'][i].idFromUser + "' is not present in kpi" )
+          if (allCustomDataIds.hasOwnProperty($scope.config['kpi'][i].inputJsonId)) {
+            console.log("Key '"+ $scope.config['kpi'][i].inputJsonId + "' is not present in kpi" )
             var element = $scope.config['kpi'][i];
             element.title = $scope.config.keyNotFoundError;
             $scope.percentageData.push(element);
@@ -1442,6 +1441,7 @@
       for (var i = 0; i < impactAnalysis.length; i++) {
         if (allCustomDataIds.hasOwnProperty(impactAnalysis[i].id)) {
           var keyToDelete =  impactAnalysis[i].id;
+          // setting id received from user to Id required by svg
           impactAnalysis[i].id = allCustomDataIds[impactAnalysis[i].id];
           var element = impactAnalysis[i];
           if (!isNaN(element.value)) { 
@@ -1458,8 +1458,8 @@
       // setting element null for the ids not found
       if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
-          if (allCustomDataIds.hasOwnProperty($scope.config['impactAnalysis'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['impactAnalysis'][i].idFromUser + "' is not present in impactAnalysis" )
+          if (allCustomDataIds.hasOwnProperty($scope.config['impactAnalysis'][i].inputJsonId)) {
+            console.log("Key '"+ $scope.config['impactAnalysis'][i].inputJsonId + "' is not present in impactAnalysis" )
             var element = $scope.config['impactAnalysis'][i];
             element.count = element.value;
             element.title = $scope.config.keyNotFoundError;
@@ -1474,6 +1474,7 @@
       for (var i = 0; i < alertsFlow.length; i++) {
         if (allCustomDataIds.hasOwnProperty(alertsFlow[i].id)) {
           var keyToDelete =  alertsFlow[i].id;
+          // setting id received from user to Id required by svg
           alertsFlow[i].id = allCustomDataIds[alertsFlow[i].id];
           var element = alertsFlow[i];
           if (!isNaN(element.value)) { 
@@ -1492,8 +1493,8 @@
       // setting element null for the ids not found
       if ( Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
-          if (allCustomDataIds.hasOwnProperty($scope.config['alertsFlow'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['alertsFlow'][i].idFromUser + "' is not present in alertsFlow" )
+          if (allCustomDataIds.hasOwnProperty($scope.config['alertsFlow'][i].inputJsonId)) {
+            console.log("Key '"+ $scope.config['alertsFlow'][i].inputJsonId + "' is not present in alertsFlow" )
             var element = $scope.config['alertsFlow'][i];
             element.count = element.value;
             //since there are brackets surrounding resolved alerts, the error message is different 
@@ -1512,8 +1513,8 @@
       for (var i = 0; i < dataBoxes.length; i++) {
         if (allCustomDataIds.hasOwnProperty(dataBoxes[i].id)) {
           var keyToDelete =  dataBoxes[i].id;
+          // setting id received from user to Id required by svg
           dataBoxes[i].id = allCustomDataIds[dataBoxes[i].id];
-
           var element = dataBoxes[i];
           var dataArray = Object.entries(element.data);
           //sorting the boxes data according to count
@@ -1533,8 +1534,8 @@
       // setting element null for the ids not found
       if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
-          if (allCustomDataIds.hasOwnProperty($scope.config['dataBoxes'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['dataBoxes'][i].idFromUser + "' is not present in dataBoxes" )
+          if (allCustomDataIds.hasOwnProperty($scope.config['dataBoxes'][i].inputJsonId)) {
+            console.log("Key '"+ $scope.config['dataBoxes'][i].inputJsonId + "' is not present in dataBoxes" )
             var element = $scope.config['dataBoxes'][i];
             element.title = $scope.config.keyNotFoundError;
             addForeignObject(element);
