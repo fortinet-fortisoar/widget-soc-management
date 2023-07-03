@@ -7,6 +7,8 @@
   "relatedResource2": "assets",
   "relatedResource3": "indicators",
   "maxCountForBoxes": 3,
+  "keyNotFoundError": "Key not found",
+  "zeroResolvedAutomatically": "(0%",
   "alertSource": {
     "title": "Top 3 Detections"
   },
@@ -87,19 +89,16 @@
     {
       "id": "idArtifactsDivision",
       "idFromUser": "artifactsAnalysed",
-      "title": "Key not found",
       "value": ""
     },
     {
       "id": "idAssetsDivision",
       "idFromUser": "totalAssets",
-      "title": "Key not found",
       "value": ""
     },
     {
       "id": "idImpactDivision",
       "idFromUser": "impact",
-      "title": "Key not found",
       "value": ""
     }
   ],
@@ -107,19 +106,16 @@
     {
       "id": "idIncidentsLabel",
       "idFromUser": "totalIncidents",
-      "title": "Key not found",
       "value": ""
     },
     {
       "id": "idTruePositiveLabel",
       "idFromUser": "truePositives",
-      "title": "Key not found",
       "value": ""
     },
     {
       "id": "idFlasePositiveLabel",
       "idFromUser": "falsePositives",
-      "title": "Key not found",
       "value": ""
     },
     {
@@ -131,13 +127,11 @@
     {
       "id": "idClosedLabel",
       "idFromUser": "closed",
-      "title": "Key not found",
       "value": ""
     },
     {
       "id": "idAlertLabel",
       "idFromUser": "totalAlerts",
-      "title": "Key not found",
       "value": ""
     }
   ],
@@ -154,12 +148,12 @@
     },
     {
       "id": "idAutomationCalculation",
-      "idFromUser":"topThreePlaybooks",
+      "idFromUser": "topThreePlaybooks",
       "title": "Top 3 Playbooks"
     },
     {
       "id": "idIncomingAlertSources",
-      "idFromUser":"topThreeDetections",
+      "idFromUser": "topThreeDetections",
       "title": "Top 3 Detections"
     }
   ],
@@ -167,7 +161,6 @@
     {
       "id": "ratio",
       "idFromUser": "ratio",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 1,
@@ -176,7 +169,6 @@
     {
       "id": "playbookRun",
       "idFromUser": "playbookRun",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 2,
@@ -185,14 +177,12 @@
     {
       "id": "actionExecuted",
       "idFromUser": "actionExecuted",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 3,
       "percentChange": 0
     },
     {
-      "title": "Key not found",
       "id": "roi",
       "idFromUser": "roi",
       "value": "",
@@ -203,7 +193,6 @@
     {
       "id": "alertResolved",
       "idFromUser": "alertResolved",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 5,
@@ -212,7 +201,6 @@
     {
       "id": "overallTimeSaved",
       "idFromUser": "overallTimeSaved",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 6,
@@ -221,7 +209,6 @@
     {
       "id": "alertMttr",
       "idFromUser": "alertMttr",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 7,
@@ -230,7 +217,6 @@
     {
       "id": "incidentMttr",
       "idFromUser": "incidentMttr",
-      "title": "Key not found",
       "value": "",
       "increase": true,
       "sequence": 8,

@@ -475,6 +475,7 @@
               }
               $q.all(promises).then(function () {
                 var sortedDataSource = sortObjectByKeys(updatedObject);
+                //We are fetching top 15 playbooks, some are excluded based on tags now to get top 3 playbooks we need to slice 3
                 sortedDataSource = Object.fromEntries(Object.entries(sortedDataSource).slice(0, 3));
                 addForeignObject({ 'id': 'idAutomationCalculation', 'title': $scope.config.top3PlaybookRun.title, 'data': sortedDataSource, 'template_iri': _iri });
               });
@@ -819,9 +820,10 @@
             $scope.socResult.automatedClosed = result['hydra:member'][0].status;
           }
           if ($scope.socResult.closedAlerts === 0) {
-            var closedAutomatedAlerts = '(0%';
+            var closedAutomatedAlerts = $scope.config.zeroResolvedAutomatically;
           }
           else {
+            //add paranthesis 
             var closedAutomatedAlerts = '( ' + Math.round(($scope.socResult.automatedClosed * 100) / $scope.socResult.closedAlerts) + '%';
           }
           addLabelCounts({ 'id': 'idResolvedAutomated', 'count': closedAutomatedAlerts, 'title': $scope.config.automatedResolved.title + ' )' });
@@ -1426,8 +1428,10 @@
       if (Object.keys(allCustomDataIds).length  > 0) {
         for (var i = 0; i < $scope.config['kpi'].length; i++) {
           if (allCustomDataIds.hasOwnProperty($scope.config['kpi'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['kpi'][i].idFromUser + "' not present in kpi" )
-            $scope.percentageData.push($scope.config['kpi'][i]);
+            console.log("Key '"+ $scope.config['kpi'][i].idFromUser + "' is not present in kpi" )
+            var element = $scope.config['kpi'][i];
+            element.title = $scope.config.keyNotFoundError;
+            $scope.percentageData.push(element);
           }
         }
       }
@@ -1455,9 +1459,10 @@
       if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['impactAnalysis'].length; i++) {
           if (allCustomDataIds.hasOwnProperty($scope.config['impactAnalysis'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['impactAnalysis'][i].idFromUser + "' not present in impactAnalysis" )
+            console.log("Key '"+ $scope.config['impactAnalysis'][i].idFromUser + "' is not present in impactAnalysis" )
             var element = $scope.config['impactAnalysis'][i];
             element.count = element.value;
+            element.title = $scope.config.keyNotFoundError;
             addBlockData(element);
           }
         }
@@ -1474,6 +1479,7 @@
           if (!isNaN(element.value)) { 
             element.count = $filter('numberToDisplay')(element.value); 
           }
+
           else{
             element.count = element.value;
           }
@@ -1487,9 +1493,13 @@
       if ( Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['alertsFlow'].length; i++) {
           if (allCustomDataIds.hasOwnProperty($scope.config['alertsFlow'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['alertsFlow'][i].idFromUser + "' not present in alertsFlow" )
+            console.log("Key '"+ $scope.config['alertsFlow'][i].idFromUser + "' is not present in alertsFlow" )
             var element = $scope.config['alertsFlow'][i];
             element.count = element.value;
+            //since there are brackets surrounding resolved alerts, the error message is different 
+            if(element.id != 'idResolvedAutomated'){
+              element.title = $scope.config.keyNotFoundError;
+            }
             addLabelCounts(element);
           }
         }
@@ -1524,8 +1534,9 @@
       if (Object.keys(allCustomDataIds).length > 0) {
         for (var i = 0; i < $scope.config['dataBoxes'].length; i++) {
           if (allCustomDataIds.hasOwnProperty($scope.config['dataBoxes'][i].idFromUser)) {
-            console.log("Key '"+ $scope.config['dataBoxes'][i].idFromUser + "' not present in dataBoxes" )
+            console.log("Key '"+ $scope.config['dataBoxes'][i].idFromUser + "' is not present in dataBoxes" )
             var element = $scope.config['dataBoxes'][i];
+            element.title = $scope.config.keyNotFoundError;
             addForeignObject(element);
           }
         }
