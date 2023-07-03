@@ -361,7 +361,7 @@
           'field': 'total',
           'direction': 'DESC'
         }],
-        'limit': 15,
+        'limit': $scope.config.playbookExecutionLogLimit,
         'filters': [{
           'field': 'tags',
           'operator': 'ncontains',

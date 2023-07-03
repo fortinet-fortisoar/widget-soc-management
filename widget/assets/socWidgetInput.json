@@ -8,6 +8,7 @@
   "relatedResource3": "indicators",
   "maxCountForBoxes": 3,
   "keyNotFoundError": "Key not found",
+  "playbookExecutionLogLimit": 30,
   "zeroResolvedAutomatically": "(0%",
   "alertSource": {
     "title": "Top 3 Detections"
