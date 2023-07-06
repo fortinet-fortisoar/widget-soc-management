@@ -256,11 +256,11 @@ The following matrices are displayed by the SOC Management Widget:
 
 **Troubleshooting**
 
-**Key Not Found** 
-
-This Exception occures if a key/ multiple keys are not present in JSON
-- To avoid this please use the JSON format as given above in the documentation
-- In case "Key not found" is displayed on the widget check console.log for which key is missing, and update the JSON for widget to run seamlessly. 
+Error: **Key Not Found** 
+Symptom:: This error is shown to an user, if a key or multiple keys are not present in an input JSON
+Remediation:
+- Please verify the JSON format is correct as mentioned in the widget documentation.
+- Please check browser console logs for which key is missing.
 
 
 
