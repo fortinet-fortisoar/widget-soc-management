@@ -70,165 +70,165 @@ The following matrices are displayed by the SOC Management Widget:
 
     
 ```JSON 
-  {
-  "kpi": [
-    {
-      "id": "ratio",
-      "title": "Ratio Alert to Incident",
-      "value": "900:1",
-      "increase": true,
-      "sequence": 1,
-      "percentChange": 100
-    },
-    {
-      "id": "playbookRun",
-      "title": "Playbook Run",
-      "value": "3.2K",
-      "increase": true,
-      "sequence": 2,
-      "percentChange": 50
-    },
-    {
-      "id": "actionExecuted",
-      "title": "Actions Executed",
-      "value": "18K",
-      "increase": true,
-      "sequence": 3,
-      "percentChange": 50
-    },
-    {
-      "id": "roi",
-      "title": "ROI",
-      "value": "$185K",
-      "sequence": 4,
-      "percentChange": 50
-    },
-    {
-      "id": "alertResolved",
-      "title": "Alert Resolved",
-      "value": "1.3K",
-      "increase": true,
-      "sequence": 5,
-      "percentChange": 100
-    },
-    {
-      "id": "overallTimeSaved",
-      "title": "Overall Time Saved",
-      "value": "642 days",
-      "increase": true,
-      "sequence": 6,
-      "percentChange": 50
-    },
-    {
-      "id": "alertMttr",
-      "title": "Alert MTTR",
-      "value": "1h 5m",
-      "increase": true,
-      "sequence": 7,
-      "percentChange": 100
-    },
-    {
-      "id": "incidentMttr",
-      "title": "Incident MTTR",
-      "value": "3h 6m",
-      "increase": true,
-      "sequence": 8,
-      "percentChange": 0
-    }
-  ],
-  "dataBoxes": [
-    {
-      "id": "idTopThreeIncidents",
-      "data": {
-        "Malware": 132,
-        "Data Breach": 11,
-        "Ransomeware": 12
-      },
-      "title": "Top 3 Indicators"
-    },
-    {
-      "id": "idTopThreeAlerts",
-      "data": {
-        "Malware": 150,
-        "Suspicious Email": 1200,
-        "Vulnerable Asset": 50
-      },
-      "title": "Top 3 Alert Types"
-    },
-    {
-      "id": "idAutomationCalculation",
-      "data": {
-        "Track Vulnerable Asset": 5150,
-        "Investigate Suspicious Email": 300,
-        "Triage Based on Severe Indicators": 1850
-      },
-      "title": "Top 3 Playbooks",
-      "template_iri": [
-        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38",
-        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38",
-        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38"
-      ]
-    },
-    {
-      "id": "idIncomingAlertSources",
-      "data": {
-        "User Reported": 1200,
-        "Azure Sentinel": 400,
-        "CrowdStrike EDR": 250
-      },
-      "title": "Top 3 Detections"
-    }
-  ],
-  "alertsFlow": [
-    {
-      "id": "idIncidentsLabel",
-      "title": "Incidents",
-      "value": 3
-    },
-    {
-      "id": "idTruePositiveLabel",
-      "title": "True positive",
-      "value": "320"
-    },
-    {
-      "id": "idFlasePositiveLabel",
-      "title": "False positive",
-      "value": "1K"
-    },
-    {
-      "id": "idResolvedAutomated",
-      "title": "by Automation )",
-      "value": "( 45% "
-    },
-    {
-      "id": "idClosedLabel",
-      "title": "Closed",
-      "value": "1.3K"
-    },
-    {
-      "id": "idAlertLabel",
-      "title": "Alerts",
-      "value": "2.7K"
-    }
-  ],
-  "impactAnalysis": [
-    {
-      "id": "idArtifactsDivision",
-      "title": "Artifacts analysed",
-      "value": 34
-    },
-    {
-      "id": "idAssetsDivision",
-      "title": "Assets",
-      "value": 2
-    },
-    {
-      "id": "idImpactDivision",
-      "title": "Impact",
-      "value": "$10K"
-    }
-  ]
-  }
+{
+  "kpi": [
+    {
+      "id": "ratio",
+      "title": "Ratio Alert to Incident",
+      "value": "900:1",
+      "increase": true,
+      "sequence": 1,
+      "percentChange": 100
+    },
+    {
+      "id": "playbookRun",
+      "title": "Playbook Run",
+      "value": "3.2K",
+      "increase": true,
+      "sequence": 2,
+      "percentChange": 50
+    },
+    {
+      "id": "actionExecuted",
+      "title": "Actions Executed",
+      "value": "18K",
+      "increase": true,
+      "sequence": 3,
+      "percentChange": 50
+    },
+    {
+      "id": "roi",
+      "title": "ROI",
+      "value": "$185K",
+      "sequence": 4,
+      "percentChange": 50
+    },
+    {
+      "id": "alertResolved",
+      "title": "Alert Resolved",
+      "value": "1.3K",
+      "increase": true,
+      "sequence": 5,
+      "percentChange": 100
+    },
+    {
+      "id": "overallTimeSaved",
+      "title": "Overall Time Saved",
+      "value": "642 days",
+      "increase": true,
+      "sequence": 6,
+      "percentChange": 50
+    },
+    {
+      "id": "alertMttr",
+      "title": "Alert MTTR",
+      "value": "1h 5m",
+      "increase": true,
+      "sequence": 7,
+      "percentChange": 100
+    },
+    {
+      "id": "incidentMttr",
+      "title": "Incident MTTR",
+      "value": "3h 6m",
+      "increase": true,
+      "sequence": 8,
+      "percentChange": 0
+    }
+  ],
+  "dataBoxes": [
+    {
+      "id": "topThreeIndicators",
+      "data": {
+        "Malware": 132,
+        "Data Breach": 11,
+        "Ransomeware": 12
+      },
+      "title": "Top 3 Indicators"
+    },
+    {
+      "id": "topThreeAlertTypes",
+      "data": {
+        "Malware": 150,
+        "Suspicious Email": 1200,
+        "Vulnerable Asset": 50
+      },
+      "title": "Top 3 Alert Types"
+    },
+    {
+      "id": "topThreePlaybooks",
+      "data": {
+        "Track Vulnerable Asset": 5150,
+        "Investigate Suspicious Email": 300,
+        "Triage Based on Severe Indicators": 1850
+      },
+      "title": "Top 3 Playbooks",
+      "template_iri": [
+        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38",
+        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38",
+        "/api/3/workflows/e3137f50-34ca-44e9-85d4-1b840ab0cb38"
+      ]
+    },
+    {
+      "id": "topThreeDetections",
+      "data": {
+        "User Reported": 1200,
+        "Azure Sentinel": 400,
+        "CrowdStrike EDR": 250
+      },
+      "title": "Top 3 Detections"
+    }
+  ],
+  "alertsFlow": [
+    {
+      "id": "totalIncidents",
+      "title": "Incidents",
+      "value": 3
+    },
+    {
+      "id": "truePositives",
+      "title": "True positive",
+      "value": "320"
+    },
+    {
+      "id": "falsePositives",
+      "title": "False positive",
+      "value": "1K"
+    },
+    {
+      "id": "resolvedAutomatedly",
+      "title": "by Automation )",
+      "value": "( 45% "
+    },
+    {
+      "id": "closed",
+      "title": "Closed",
+      "value": "1.3K"
+    },
+    {
+      "id": "totalAlerts",
+      "title": "Alerts",
+      "value": "2.7K"
+    }
+  ],
+  "impactAnalysis": [
+    {
+      "id": "artifactsAnalysed",
+      "title": "Artifacts analysed",
+      "value": 34
+    },
+    {
+      "id": "totalAssets",
+      "title": "Assets",
+      "value": 2
+    },
+    {
+      "id": "impact",
+      "title": "Impact",
+      "value": "$10K"
+    }
+  ]
+}
   ```
 
 
@@ -253,7 +253,15 @@ The following matrices are displayed by the SOC Management Widget:
    Detailed view of the record
   ![](./media/module_view.png)
 
-  
-  
+
+**Troubleshooting**
+
+Error: **Key Not Found** 
+Symptom:: This error is shown to an user, if a key or multiple keys are not present in an input JSON
+Remediation:
+- Please verify the JSON format is correct as mentioned in the widget documentation.
+- Please check browser console logs for which key is missing.
+
+
 
 
