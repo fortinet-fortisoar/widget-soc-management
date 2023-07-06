@@ -253,7 +253,15 @@ The following matrices are displayed by the SOC Management Widget:
    Detailed view of the record
   ![](./media/module_view.png)
 
-  
-  
+
+**Troubleshooting**
+
+**Key Not Found** 
+
+This Exception occures if a key/ multiple keys are not present in JSON
+- To avoid this please use the JSON format as given above in the documentation
+- In case "Key not found" is displayed on the widget check console.log for which key is missing, and update the JSON for widget to run seamlessly. 
+
+
 
 
