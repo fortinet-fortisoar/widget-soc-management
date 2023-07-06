@@ -1415,9 +1415,17 @@
           var keyToDelete =  kpi[i].id;          
           //mapping json ID's with the required ids for SVG
           kpi[i].id = allCustomDataIds[kpi[i].id];
+          if(kpi[i].id === 'roi'){
+            kpi[i]['value'] = kpi[i]['value'].replace(/^\$/, '');
+          }
           if (!isNaN(kpi[i]['value'])) { 
             kpi[i]['value'] = $filter('numberToDisplay')(kpi[i]['value']); 
           }
+          if (kpi[i].id === 'roi' && !kpi[i]['value'].startsWith('$')) {
+            kpi[i]['value'] = '$' + kpi[i]['value'];
+          }
+
+
           $scope.percentageData.push(kpi[i]);
         }
         //removing present IDs
