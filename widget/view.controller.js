@@ -1424,8 +1424,6 @@
           if (kpi[i].id === 'roi' && !kpi[i]['value'].startsWith('$')) {
             kpi[i]['value'] = '$' + kpi[i]['value'];
           }
-
-
           $scope.percentageData.push(kpi[i]);
         }
         //removing present IDs
