@@ -139,8 +139,8 @@
   "dataBoxes": [
     {
       "id": "idTopThreeIncidents",
-      "inputJsonId": "topThreeIndicators",
-      "title": "Top 3 Indicators"
+      "inputJsonId": "topThreeIncidents",
+      "title": "Top 3 Incidents"
     },
     {
       "id": "idTopThreeAlerts",
@@ -239,7 +239,7 @@
       "totalAlerts": "idAlertLabel"
     },
     "dataBoxes": {
-      "topThreeIndicators": "idTopThreeIncidents",
+      "topThreeIncidents": "idTopThreeIncidents",
       "topThreeAlertTypes": "idTopThreeAlerts",
       "topThreePlaybooks": "idAutomationCalculation",
       "topThreeDetections": "idIncomingAlertSources"
