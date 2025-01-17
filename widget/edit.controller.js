@@ -10,9 +10,9 @@
       .module('cybersponse')
       .controller('editSocManagement211Ctrl', editSocManagement211Ctrl);
   
-      editSocManagement211Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity', 'Field', 'modelMetadatasService', 'appModulesService'];
+      editSocManagement211Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'Entity', 'Field', 'modelMetadatasService', 'appModulesService', 'toaster'];
   
-    function editSocManagement211Ctrl($scope, $uibModalInstance, config, Entity, Field, modelMetadatasService, appModulesService) {
+    function editSocManagement211Ctrl($scope, $uibModalInstance, config, Entity, Field, modelMetadatasService, appModulesService, toaster) {
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config || {};
@@ -111,6 +111,10 @@
       }
   
       function save() {
+        if ('Single Module' === $scope.config.moduleType && $scope.config.query.filters.length === 0) {
+         toaster.error('Please provide a value for \'Filter Record Which Contains The JSON Data\'.');
+         return; 
+        }
         if ($scope.socManagementForm.$invalid) {
           $scope.socManagementForm.$setTouched();
           $scope.socManagementForm.$focusOnFirstError();
