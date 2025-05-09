@@ -2,8 +2,8 @@
   MIT License
   Copyright (c) 2025 Fortinet Inc
   Copyright end -->
-<link rel="stylesheet" type="text/css" href="socManagement-2.1.1/assets/css/socManagement.css" />
-<script src="socManagement-2.1.1/assets/service/socManagement.service.js"></script>
+<link rel="stylesheet" type="text/css" href="socManagement-2.1.2/assets/css/socManagement.css" />
+<script src="socManagement-2.1.2/assets/service/socManagement.service.js"></script>
 <div class="{{currentTheme}} widget widget-container">
   <div class="display-flex-space-between widget-title widget-title-padding">
     <div class="widget-title-width padding-right-0 padding-left-0">
@@ -13,9 +13,7 @@
   <div class="widget-content-{{currentTheme}} margin-left-15 margin-right-15" data-ng-hide="collapsed">
     <div class="widget-cardview">
       <div id="svg-container">
-        <object
-          data="widgets/installed/socManagement-2.1.1/assets/soc_background_{{currentTheme}}.svg"
-          id="socSvgBackground" alt="soc background"></object>
+        <div id="socSvgBackground-{{ config.wid }}" ng-bind-html="svgContent"></div>
         <div class="bottomContainer">
           <div class="bottomSections" data-ng-repeat="data in percentageData">
             <div class="bottomSectionBlocks">
