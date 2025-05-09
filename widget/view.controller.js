@@ -8,12 +8,12 @@
 
 (function () {
   angular.module('cybersponse')
-    .controller('socManagement211Ctrl', socManagement211Ctrl);
+    .controller('socManagement212Ctrl', socManagement212Ctrl);
 
-  socManagement211Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection'];
+  socManagement212Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection', '$http', '$sce', '$timeout'];
 
-  function socManagement211Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection) {
+  function socManagement212Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection, $http, $sce, $timeout) {
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -30,12 +30,21 @@
       $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
-      checkForSVGLoad();
+      const path = `widgets/installed/socManagement-2.1.1/assets/soc_background_${$scope.currentTheme}.svg`;
 
-      socManagementService.getConfig().then(function (response) {
-        $scope.config = angular.extend(response.data, config);
-        configLoaded = true;
-        initializeData();
+      $http.get(path).then(function(response) {
+        $scope.svgContent = $sce.trustAsHtml(response.data);
+        $timeout(function () {
+          const svgEl = document.querySelector('#svg-container svg');
+          if (svgEl) {
+            checkForSVGLoad();
+            socManagementService.getConfig().then(function (response) {
+              $scope.config = angular.extend(response.data, config);
+              configLoaded = true;
+              initializeData();
+            });
+          }
+        }, 0);
       });
     }
 
@@ -52,11 +61,12 @@
     }
 
     function checkForSVGLoad() {
-      document.getElementById('socSvgBackground').addEventListener('load', function () {
-        loadedSVGDocument = this.getSVGDocument();
+      const svgEl = document.querySelector('#svg-container svg');
+      if (svgEl) {
+        loadedSVGDocument = svgEl;
         svgLoaded = true;
         initializeData();
-      });
+      }
     }
     //to populate funnel for custom module
     function populateCustomData() {
