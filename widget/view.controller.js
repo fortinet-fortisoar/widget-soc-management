@@ -11,9 +11,9 @@
     .controller('socManagement212Ctrl', socManagement212Ctrl);
 
   socManagement212Ctrl.$inject = ['$scope', 'config', '$q', 'Query', '_', 'playbookService', '$filter',
-    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection', '$http', '$sce', '$timeout'];
+    'currentDateMinusService', '$rootScope', 'socManagementService', 'ALL_RECORDS_SIZE', '$state', '$window', 'PagedCollection', '$http', '$sce', '$timeout', 'widgetBasePath'];
 
-  function socManagement212Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection, $http, $sce, $timeout) {
+  function socManagement212Ctrl($scope, config, $q, Query, _, playbookService, $filter, currentDateMinusService, $rootScope, socManagementService, ALL_RECORDS_SIZE, $state, $window, PagedCollection, $http, $sce, $timeout, widgetBasePath) {
     var loadedSVGDocument;
     $scope.percentageData = [];
     var configLoaded = false;
@@ -30,14 +30,14 @@
       $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
-      const path = `widgets/installed/socManagement-2.1.2/assets/soc_background_${$scope.currentTheme}.svg`;
+      const path = widgetBasePath + `assets/soc_background_${$scope.currentTheme}.svg`;
 
       $http.get(path).then(function(response) {
         $scope.svgContent = $sce.trustAsHtml(response.data);
         $timeout(function () {
           const svgEl = document.querySelector('#svg-container svg');
           if (svgEl) {
-            checkForSVGLoad();
+            checkForSVGLoad(svgEl);
             socManagementService.getConfig().then(function (response) {
               $scope.config = angular.extend(response.data, config);
               configLoaded = true;
@@ -60,13 +60,10 @@
       }
     }
 
-    function checkForSVGLoad() {
-      const svgEl = document.querySelector('#svg-container svg');
-      if (svgEl) {
-        loadedSVGDocument = svgEl;
-        svgLoaded = true;
-        initializeData();
-      }
+    function checkForSVGLoad(svgEl) {
+      loadedSVGDocument = svgEl;
+      svgLoaded = true;
+      initializeData();
     }
     //to populate funnel for custom module
     function populateCustomData() {
