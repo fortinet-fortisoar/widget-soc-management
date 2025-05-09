@@ -30,7 +30,7 @@
       $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       $scope.socResult = {};
-      const path = `widgets/installed/socManagement-2.1.1/assets/soc_background_${$scope.currentTheme}.svg`;
+      const path = `widgets/installed/socManagement-2.1.2/assets/soc_background_${$scope.currentTheme}.svg`;
 
       $http.get(path).then(function(response) {
         $scope.svgContent = $sce.trustAsHtml(response.data);
