@@ -1,12 +1,12 @@
 ## Release Information
 
-- **Version**: 2.1.1
+- **Version**: 2.1.2
 
 - **Certified**: Yes
 
 - **Publisher**: Fortinet  
 
-- **Compatibility**: 7.2.2 and later
+- **Compatibility**: 7.6.3 and later
 
 - **Applicable**: Dashboards
 
